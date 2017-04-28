@@ -5,8 +5,10 @@
 # This script takes a yaml or json file as an input. To run this script, do:
 #	./generateJavaClient.sh ../api/knowledge-beacon_1.0.6.yaml
 #
-#  Note that the SWAGGER_CODEGEN_PATH environment variable should point
-#  to the folder where your downloaded swagger-codegen-cli.jar is located.
+#  Note that if an executable swagger JAR is not on your PATH
+#  (e.g. like a HomeBrew installed copy on a Mac OSX system), then
+#  the SWAGGER_CODEGEN_PATH environment variable should point to the folder
+#  where a downloaded copy of the swagger-codegen-cli.jar is located.
 #
 if [ -z $SWAGGER_CODEGEN_PATH ]; then
 	# current directory is default if no path given?
