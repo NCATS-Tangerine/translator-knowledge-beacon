@@ -10,7 +10,13 @@ The KBAPI is formally specified as an OpenAPI ("Swagger") specification, as arch
 
 The [swagger-codegen](https://github.com/swagger-api/swagger-codegen) project can be used to generate client and server libraries/applications to use the API. 
 
-The swagger-codegene Java JAR should be downloaded and a "SWAGGER_CODEGEN_PATH" variable set to the folder containing the software.
+On Mac OSX machines, Homebrew can be used to install the swagger-codegen tool:
+
+	brew install swagger-codegen
+
+which downloads the JAR and installs an executable wrapper on your PATH.
+
+Alternately, the swagger-codegene Java JAR should be downloaded and a "SWAGGER_CODEGEN_PATH" environmental variable set to point to the folder containing the jar.
 
 Some sample scripts are given in the scripts subfolder to wrap this tool to facilitate the creation of some clients and servers (the '.sh' is a Linux bash shell version; the '.bat' is a Windows version)
 
