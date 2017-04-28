@@ -9,6 +9,9 @@
 @rem  cd scripts
 @rem  ./generateJavaClient.bat ..\api\knowledge-beacon_1.0.6.yaml
 @rem
+@rem  Note that the SWAGGER_CODEGEN_PATH environment variable should point
+@rem  to the folder where your downloaded swagger-codegen-cli.jar is located.
+@rem
 @rem ##########################################################################
 
 if "%SWAGGER_CODEGEN_PATH%" == "" set SWAGGER_CODEGEN_PATH=.
