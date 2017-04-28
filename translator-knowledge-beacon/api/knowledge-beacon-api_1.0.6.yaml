@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.6
+  version: 1.0.7
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
@@ -249,7 +249,7 @@ paths:
           examples:
             application/json:
               - 'wd:Q12345 mon:67890'
-  /exactMatches:
+  /exactmatches:
     get:
       description: >
         Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers
