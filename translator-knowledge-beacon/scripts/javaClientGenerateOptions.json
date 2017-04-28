@@ -1,0 +1,6 @@
+{
+	"basePackage":"bio.knowledge.client",
+	"configPackage":"bio.knowledge.client.configuration",
+	"apiPackage":"bio.knowledge.client.api",
+	"modelPackage":"bio.knowledge.client.model"
+}

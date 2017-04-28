@@ -1,0 +1,3 @@
+rootProject.name = 'translator-knowledge-beacon'
+include 'server'
+include 'client'
