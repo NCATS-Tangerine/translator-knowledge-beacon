@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Translator Knowledge Beacon API",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
@@ -282,7 +282,7 @@
         }
       }
     },
-    "/exactMatches": {
+    "/exactmatches": {
       "get": {
         "description": "Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers of known exactly matched concepts [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of (CURIE)[https://www.w3.org/TR/curie/] identifiers of additional concepts that are deemed to be exact matches to one or more of the input concepts. This new list of concept identifiers is returned with the full list of any additional identifiers deemed by the KS to also be identifying exactly matched concepts.\n",
         "tags": [

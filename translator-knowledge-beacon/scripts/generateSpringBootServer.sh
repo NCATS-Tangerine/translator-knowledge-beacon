@@ -3,7 +3,7 @@
 # STAR Informatics/Delphinai Corporation, Port Moody, BC, Canada
 #
 # This script takes a yaml or json file as an input. To run this script, do:
-#	./generateSpringBootServer.sh ../api/knowledge-beacon_1.0.6.yaml
+#	./generateSpringBootServer.sh ../api/knowledge-beacon.yaml
 #
 #  Note that if an executable swagger JAR is not on your PATH
 #  (e.g. like a HomeBrew installed copy on a Mac OSX system), then

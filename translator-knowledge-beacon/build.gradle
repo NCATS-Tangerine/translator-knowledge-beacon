@@ -20,6 +20,7 @@ allprojects {
     
     apply plugin: 'maven'
     apply plugin: 'java'
+    //apply plugin: 'war'
     apply plugin: 'eclipse-wtp'
     apply plugin: 'spring-boot'
     apply plugin: 'io.spring.dependency-management'
@@ -76,3 +77,14 @@ eclipse {
 task wrapper(type: Wrapper) {
     gradleVersion = '3.5'
 }
+
+
+jar {
+    manifest {
+        attributes("Main-Class": "bio.knowledge.server.Swagger2SpringBoot")
+    }
+}
+
+//war {
+//	from 'src/main/webapp'
+//}
