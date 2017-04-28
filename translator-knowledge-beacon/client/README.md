@@ -1,1 +1,0 @@
-Swagger-Codegen code for a client will be generated here?

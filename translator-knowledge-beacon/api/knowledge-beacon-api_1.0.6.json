@@ -4,8 +4,6 @@
     "title": "Translator Knowledge Beacon API",
     "version": "1.0.6",
     "contact": {
-      "responsibleDeveloper": "Richard Bruskiewich",
-      "responsibleOrganization": "STAR Informatics/Delphinai Corporation",
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
     },

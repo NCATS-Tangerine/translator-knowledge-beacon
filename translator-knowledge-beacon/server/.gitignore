@@ -1,0 +1,6 @@
+build/
+target/
+src/
+pom.xml/
+README.md/
+.swagger-codegen-ignore
