@@ -1,8 +1,10 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.7
+  version: 1.0.9
   contact:
+    responsibleDeveloper: Richard Bruskiewich
+    responsibleOrganization: STAR Informatics/Delphinai Corporation
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
   description: >
@@ -13,9 +15,7 @@ info:
     to generate client and server code stubs implementing the API, in any one of
     several supported computer languages and frameworks. In order to customize
     usage to your web site, you should change the 'host' directive below to your
-    hostname.  Note that where the term 'local' is used below to describe an
-    identifier or other resource, it is referring to the specific Knowledge
-    Source (KS) upon which the Knowledge Beacon API is hosted.
+    hostname.
 host: api.knowledge.bio
 basePath: /api
 schemes:
@@ -27,7 +27,7 @@ tags:
     description: Queries for concepts
   - name: exactmatches
     description: >-
-      Queries for exactly matching concepts sensa SKOS;
+      Queries for exactly matching concepts *sensa*-SKOS;
       http://www.w3.org/2004/02/skos/core#exactMatch
   - name: statements
     description: Queries for concept-relationship statements
@@ -38,13 +38,13 @@ paths:
     get:
       description: >
         Retrieves details for a specified concepts in the system, as specified
-        by a local (simple, non-qualified) object identifier.
+        by a (url-encoded) CURIE identifier of a concept known the given knowledge source.
       tags:
         - concepts
       parameters:
         - name: conceptId
           in: path
-          description: local object identifier of concept of interest
+          description: (url-encoded) CURIE identifier of concept of interest
           required: true
           type: string
       operationId: getConceptDetails
@@ -59,9 +59,7 @@ paths:
                   type: string
                   description: >
                     local object identifier for the concept in the specified
-                    knowledge
-
-                    source database
+                    knowledge source database
                 name:
                   type: string
                   description: |
@@ -117,10 +115,10 @@ paths:
             which to match concept names and synonyms
           required: true
           type: string
-        - name: sg
+        - name: semgroups
           in: query
           description: >
-            a (urlencoded) space-delimited set of semantic groups (specified as
+            a (url-encoded) space-delimited set of semantic groups (specified as
             codes CHEM, GENE, ANAT, etc.) to which to constrain concepts matched
             by the main keyword search (see
             [SemGroups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for
@@ -145,83 +143,55 @@ paths:
       responses:
         '200':
           schema:
-            type: object
-            properties:
-              keywords:
-                type: array
-                items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
                   type: string
-              semanticGroups:
-                type: array
-                items:
+                  description: >
+                    local object identifier for the concept in the specified knowledge source database
+                name:
                   type: string
-              pageNumber:
-                type: integer
-              pageSize:
-                type: integer
-              totalEntries:
-                type: integer
-              dataPage:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: >
-                        local object identifier for the concept in the specified
-                        knowledge
-
-                        source database
-                    name:
-                      type: string
-                      description: |
-                        canonical human readable name of the concept
-                    semanticGroup:
-                      type: string
-                      description: |
-                        concept semantic type
-                    synonyms:
-                      type: array
-                      description: |
-                        list of synonyms for concept
-                      items:
-                        type: string
-                    definition:
-                      type: string
-                      description: |
-                        concept definition
+                  description: |
+                    canonical human readable name of the concept
+                semanticGroup:
+                  type: string
+                  description: |
+                    concept semantic type
+                synonyms:
+                  type: array
+                  description: |
+                    list of synonyms for concept
+                  items:
+                    type: string
+                definition:
+                  type: string
+                  description: |
+                    concept definition
           description: |
             Successful response with concept list returned
           examples:
             application/json:
-              keywords:
-                - Diabetes
-              semanticGroups:
-                - null
-              pageNumber: 3
-              pageSize: 5
-              totalEntries: 20
-              datapage:
-                - id: 'wd:Q2898645'
-                  name: Neonatal diabetes mellitus
-                  semanticGroup: DISO
-                  synonyms: []
-                  definition: Neonatal diabetes mellitus
-                - id: 'wd:Q631361'
-                  name: Diabetic Retinopathy
-                  semanticGroup: DISO
-                  synonyms: []
-                  definition: >-
-                    diabetic eye disease when damage occurs to the retina due to
-                    diabetes.
+            - id: 'wd:Q2898645'
+              name: Neonatal diabetes mellitus
+              semanticGroup: DISO
+              synonyms: []
+              definition: Neonatal diabetes mellitus
+            - id: 'wd:Q631361'
+              name: Diabetic Retinopathy
+              semanticGroup: DISO
+              synonyms: []
+              definition: >-
+                diabetic eye disease when damage occurs to the retina due to
+                diabetes.
   '/exactmatches/{conceptId}':
     get:
       description: >
         Retrieves a list of qualified identifiers of "exact match" concepts,
-        [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated
-        with an specified local concept object identifier, typically, of a
-        concept selected from the list of concepts originally returned by a
+        [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a
+        specified (url-encoded) CURIE (without brackets) concept object identifier, 
+        typically, of a concept selected from the list of concepts originally returned by a
         /concepts API call on a given KS. This API call should generally only be
         run against the same KS (only) from which the originally selected
         concept was retrieved.
@@ -230,7 +200,7 @@ paths:
       parameters:
         - name: conceptId
           in: path
-          description: local object identifier of the concept to be matched
+          description: (url-encoded) CURIE identifier of the concept to be matched
           required: true
           type: string
       operationId: getExactMatchesToConcept
@@ -253,20 +223,15 @@ paths:
     get:
       description: >
         Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers
-        of known exactly matched concepts [sensa
-        SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the
-        list of (CURIE)[https://www.w3.org/TR/curie/] identifiers of additional
-        concepts that are deemed to be exact matches to one or more of the input
-        concepts. This new list of concept identifiers is returned with the full
-        list of any additional identifiers deemed by the KS to also be
-        identifying exactly matched concepts.
+        of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers of **additional**
+        concepts that are deemed by the given knowledge source to be exact matches to one or more of the input concepts.  If an empty set is returned, the it can be assumed that the given knowledge source does not know of any new equivalent concepts to add to the input set.
       tags:
         - exactmatches
       parameters:
         - name: emci
           in: query
           description: >
-            a (urlencoded) space-delimited set of
+            a (url-encoded) space-delimited set of
             [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly
             matching concepts, to be used in a search for additional exactly
             matching concepts
@@ -387,95 +352,71 @@ paths:
             Successful response returns a list of concept-relations with one or
             more subject or object matches to input concept identifiers
           schema:
-            type: object
-            properties:
-              keywords:
-                type: array
-                items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
                   type: string
-              semanticGroups:
-                type: array
-                items:
-                  type: string
-              pageNumber:
-                type: integer
-              pageSize:
-                type: integer
-              totalEntries:
-                type: integer
-              dataPage:
-                type: array
-                items:
+                  description: CURIE-encoded identifier for statement
+                subject:
                   type: object
                   properties:
                     id:
                       type: string
-                      description: local statement identifiers
-                    subject:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: |
-                            CURIE-encoded identifier
-                        name:
-                          type: string
-                          description: human readable label of concept
-                    predicate:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: |
-                            CURIE-encoded identifier
-                        name:
-                          type: string
-                          description: human readable label of concept
-                    object:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                        description: |
-                          CURIE-encoded identifier
-                        name:
-                          type: string
-                          description: human readable label of concept
-                    evidence:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: local identifier to evidence record
-                        count:
-                          type: integer
+                      description: |
+                        CURIE-encoded identifier of concept
+                    name:
+                      type: string
+                      description: human readable label of subject concept
+                predicate:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: |
+                        CURIE-encoded identifier of predicate resource
+                    name:
+                      type: string
+                      description: human readable label of concept
+                object:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: |
+                        CURIE-encoded identifier of object concept
+                    name:
+                      type: string
+                      description: human readable label of object concept
+                evidence:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: CURIE-encoded identifier to evidence record
+                    count:
+                      type: integer
           examples:
             application/json:
-              keywords:
-                - Neonatal
-              semanticGroups:
-                - GENE
-              pageNumber: 2
-              pageSize: 25
-              totalEntries: 120
-              datapage:
-                - source: semmeddb
-                  id: 12345
-                  subject:
-                    id:
-                      - 'wd:Q14912054'
-                    name: KCNJ11
-                  predicate:
-                    id:
-                      - 'kbp:10'
-                    name: Causes
-                  object:
-                    id:
-                      - 'wd:Q2898645'
-                    name: Neonatal diabetes mellitus
-                  evidence:
-                    id: 67890
-                    count: 10
+              - source: semmeddb
+                id: kb:12345
+                subject:
+                  id:
+                    - 'wd:Q14912054'
+                  name: KCNJ11
+                predicate:
+                  id:
+                    - 'kbp:10'
+                  name: Causes
+                object:
+                  id:
+                    - 'wd:Q2898645'
+                  name: Neonatal diabetes mellitus
+                evidence:
+                  id: 
+                    - kb:67890
+                  count: 10
   '/evidence/{evidenceId}':
     get:
       description: >
@@ -487,7 +428,7 @@ paths:
         - name: evidenceId
           in: path
           description: >
-            local identifier of evidence subset, of cited references supporting
+            (url-encoded) CURIE identifier of an evidence subset, of cited references supporting
             a given concept-relationship statement
           required: true
           type: string
@@ -509,10 +450,7 @@ paths:
         - name: pageSize
           in: query
           description: >
-            number of cited references per page to be returned in a paged set of
-            query
-
-            results
+            number of cited references per page to be returned in a paged set of query results
           required: false
           type: integer
       operationId: getEvidence
@@ -520,48 +458,29 @@ paths:
         '200':
           description: >
             successful call returns a
-            [CURIE-encoded](https://www.w3.org/TR/curie/) list of cited
-            references
+            [CURIE-encoded](https://www.w3.org/TR/curie/) list of cited references
           schema:
-            type: object
-            properties:
-              keywords:
-                type: array
-                items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
                   type: string
-              pageNumber:
-                type: integer
-              pageSize:
-                type: integer
-              totalEntries:
-                type: integer
-              dataPage:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: |
-                        CURIE-encoded identifier for the cited reference
-                    name:
-                      type: string
-                      description: |
-                        canonical human readable title of the cited reference
-                    publicationDate:
-                      type: string
-                      description: |
-                        publication date of reference (yyyy-mm-dd)
+                  description: |
+                    CURIE-encoded identifier for the cited reference
+                name:
+                  type: string
+                  description: |
+                    canonical human readable title of the cited reference
+                publicationDate:
+                  type: string
+                  description: |
+                    publication date of reference (yyyy-mm-dd)
           examples:
-            keywords:
-              - hernia
-            pageNumber: 1
-            pageSize: 5
-            totalEntries: 14
-            dataPage:
+            application/json:
               - id:
                   - 'pmid:22781086'
                 name: >-
                   Neonatal diabetes mellitus and congenital diaphragmatic hernia
                   coincidence or concurrent etiology?
-                publicationDate: 212-07-10
+                publicationDate: 2012-07-10
