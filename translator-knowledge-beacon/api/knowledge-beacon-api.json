@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "Translator Knowledge Beacon API",
-        "version": "1.0.9",
+        "version": "1.0.10",
         "contact": {
             "responsibleDeveloper": "Richard Bruskiewich",
             "responsibleOrganization": "STAR Informatics/Delphinai Corporation",
@@ -379,7 +379,7 @@
                 "operationId": "getStatements",
                 "responses": {
                     "200": {
-                        "description": "Successful response returns a list of concept-relations with one or more subject or object matches to input concept identifiers\n",
+                        "description": "Successful response returns a list of concept-relations where there is an exact match of an input concept identifier either to the subject or object concepts of the statement\n",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -387,7 +387,7 @@
                                 "properties": {
                                     "id": {
                                         "type": "string",
-                                        "description": "CURIE-encoded identifier for statement"
+                                        "description": "CURIE-encoded identifier for statement (can be used to retrieve associated evidence)"
                                     },
                                     "subject": {
                                         "type": "object",
@@ -427,18 +427,6 @@
                                                 "description": "human readable label of object concept"
                                             }
                                         }
-                                    },
-                                    "evidence": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string",
-                                                "description": "CURIE-encoded identifier to evidence record"
-                                            },
-                                            "count": {
-                                                "type": "integer"
-                                            }
-                                        }
                                     }
                                 }
                             }
@@ -465,12 +453,6 @@
                                             "wd:Q2898645"
                                         ],
                                         "name": "Neonatal diabetes mellitus"
-                                    },
-                                    "evidence": {
-                                        "id": [
-                                            "kb:67890"
-                                        ],
-                                        "count": 10
                                     }
                                 }
                             ]
@@ -479,24 +461,24 @@
                 }
             }
         },
-        "/evidence/{evidenceId}": {
+        "/evidence/{statementId}": {
             "get": {
-                "description": "Retrieves a (paged) list of references cited as evidence for a specified statement\n",
+                "description": "Retrieves a (paged) list of annotations cited as evidence for a specified concept-relationship statement\n",
                 "tags": [
                     "evidence"
                 ],
                 "parameters": [
                     {
-                        "name": "evidenceId",
+                        "name": "statementId",
                         "in": "path",
-                        "description": "(url-encoded) CURIE identifier of an evidence subset, of cited references supporting a given concept-relationship statement\n",
+                        "description": "(url-encoded) CURIE identifier of the concept-relationship statement (\"assertion\", \"claim\") for which associated evidence is sought\n",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "keywords",
                         "in": "query",
-                        "description": "keyword filter to apply against the citation titles of references related to the evidence supporting given concept-relationship statement\n",
+                        "description": "(url-encoded, space delimited) keyword filter to apply against the label field of the annotation\n",
                         "required": false,
                         "type": "string"
                     },
@@ -518,7 +500,7 @@
                 "operationId": "getEvidence",
                 "responses": {
                     "200": {
-                        "description": "successful call returns a [CURIE-encoded](https://www.w3.org/TR/curie/) list of cited references\n",
+                        "description": "successful call returns a list of annotation with metadata\n",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -526,15 +508,15 @@
                                 "properties": {
                                     "id": {
                                         "type": "string",
-                                        "description": "CURIE-encoded identifier for the cited reference\n"
+                                        "description": "CURIE-encoded identifier to an associated external resources (e.g. PMID of a pubmed citation)\n"
                                     },
-                                    "name": {
+                                    "label": {
                                         "type": "string",
-                                        "description": "canonical human readable title of the cited reference\n"
+                                        "description": "canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)\n"
                                     },
-                                    "publicationDate": {
+                                    "date": {
                                         "type": "string",
-                                        "description": "publication date of reference (yyyy-mm-dd)\n"
+                                        "description": "publication date of annotation (generally of format 'yyyy-mm-dd')\n"
                                     }
                                 }
                             }
@@ -545,8 +527,8 @@
                                     "id": [
                                         "pmid:22781086"
                                     ],
-                                    "name": "Neonatal diabetes mellitus and congenital diaphragmatic hernia coincidence or concurrent etiology?",
-                                    "publicationDate": "2012-07-10T00:00:00.000Z"
+                                    "label": "Neonatal diabetes mellitus and congenital diaphragmatic hernia coincidence or concurrent etiology?",
+                                    "date": "2012-07-10T00:00:00.000Z"
                                 }
                             ]
                         }

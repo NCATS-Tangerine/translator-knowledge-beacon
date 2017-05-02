@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.9
+  version: 1.0.10
   contact:
     responsibleDeveloper: Richard Bruskiewich
     responsibleOrganization: STAR Informatics/Delphinai Corporation
@@ -349,8 +349,7 @@ paths:
       responses:
         '200':
           description: >
-            Successful response returns a list of concept-relations with one or
-            more subject or object matches to input concept identifiers
+            Successful response returns a list of concept-relations where there is an exact match of an input concept identifier either to the subject or object concepts of the statement
           schema:
             type: array
             items:
@@ -358,7 +357,7 @@ paths:
               properties:
                 id:
                   type: string
-                  description: CURIE-encoded identifier for statement
+                  description: CURIE-encoded identifier for statement (can be used to retrieve associated evidence)
                 subject:
                   type: object
                   properties:
@@ -389,14 +388,6 @@ paths:
                     name:
                       type: string
                       description: human readable label of object concept
-                evidence:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: CURIE-encoded identifier to evidence record
-                    count:
-                      type: integer
           examples:
             application/json:
               - source: semmeddb
@@ -413,31 +404,24 @@ paths:
                   id:
                     - 'wd:Q2898645'
                   name: Neonatal diabetes mellitus
-                evidence:
-                  id: 
-                    - kb:67890
-                  count: 10
-  '/evidence/{evidenceId}':
+  '/evidence/{statementId}':
     get:
       description: >
-        Retrieves a (paged) list of references cited as evidence for a specified
+        Retrieves a (paged) list of annotations cited as evidence for a specified concept-relationship
         statement
       tags:
         - evidence
       parameters:
-        - name: evidenceId
+        - name: statementId
           in: path
           description: >
-            (url-encoded) CURIE identifier of an evidence subset, of cited references supporting
-            a given concept-relationship statement
+            (url-encoded) CURIE identifier of the concept-relationship statement ("assertion", "claim") for which associated evidence is sought
           required: true
           type: string
         - name: keywords
           in: query
           description: >
-            keyword filter to apply against the citation titles of references
-            related to the evidence supporting given concept-relationship
-            statement
+            (url-encoded, space delimited) keyword filter to apply against the label field of the annotation
           required: false
           type: string
         - name: pageNumber
@@ -457,8 +441,7 @@ paths:
       responses:
         '200':
           description: >
-            successful call returns a
-            [CURIE-encoded](https://www.w3.org/TR/curie/) list of cited references
+            successful call returns a list of annotation with metadata
           schema:
             type: array
             items:
@@ -467,20 +450,20 @@ paths:
                 id:
                   type: string
                   description: |
-                    CURIE-encoded identifier for the cited reference
-                name:
+                    CURIE-encoded identifier to an associated external resources (e.g. PMID of a pubmed citation)
+                label:
                   type: string
                   description: |
-                    canonical human readable title of the cited reference
-                publicationDate:
+                    canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)
+                date:
                   type: string
                   description: |
-                    publication date of reference (yyyy-mm-dd)
+                    publication date of annotation (generally of format 'yyyy-mm-dd')
           examples:
             application/json:
               - id:
                   - 'pmid:22781086'
-                name: >-
+                label: >-
                   Neonatal diabetes mellitus and congenital diaphragmatic hernia
                   coincidence or concurrent etiology?
-                publicationDate: 2012-07-10
+                date: 2012-07-10
