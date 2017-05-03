@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "Translator Knowledge Beacon API",
-        "version": "1.0.10",
+        "version": "1.0.11",
         "contact": {
             "responsibleDeveloper": "Richard Bruskiewich",
             "responsibleOrganization": "STAR Informatics/Delphinai Corporation",
@@ -215,7 +215,7 @@
         },
         "/exactmatches/{conceptId}": {
             "get": {
-                "description": "Retrieves a list of qualified identifiers of \"exact match\" concepts, [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a specified (url-encoded) CURIE (without brackets) concept object identifier,  typically, of a concept selected from the list of concepts originally returned by a /concepts API call on a given KS. This API call should generally only be run against the same KS (only) from which the originally selected concept was retrieved.\n",
+                "description": "Retrieves a list of qualified identifiers of \"exact match\" concepts, [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a specified (url-encoded) CURIE (without brackets) concept object identifier,  typically, of a concept selected from the list of concepts originally returned by a /concepts API call on a given KS. \n",
                 "tags": [
                     "exactmatches"
                 ],
@@ -231,7 +231,7 @@
                 "operationId": "getExactMatchesToConcept",
                 "responses": {
                     "200": {
-                        "description": "Successful response returns a list of [CURIE](https://www.w3.org/TR/curie/) identifiers to 3rd party concepts defined outside of the local KS, which are deemed semantic exact matches to  the specified identified concept (maybe an empty list?)\n",
+                        "description": "Successful response returns a set of [CURIE](https://www.w3.org/TR/curie/) identifiers to 3rd party concepts defined outside of the local KS, which are deemed semantic exact matches [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) to  the specified identified concept (maybe an empty set?)\n",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -240,7 +240,8 @@
                         },
                         "examples": {
                             "application/json": [
-                                "wd:Q12345 mon:67890"
+                                "wd:Q14883734",
+                                "NCBIGene:7486"
                             ]
                         }
                     }
@@ -255,78 +256,31 @@
                 ],
                 "parameters": [
                     {
-                        "name": "emci",
+                        "name": "c",
                         "in": "query",
-                        "description": "a (url-encoded) space-delimited set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts, to be used in a search for additional exactly matching concepts\n",
+                        "description": "set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts, to be used in a search for additional exactly matching concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch).\n",
                         "required": true,
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "operationId": "getExactMatchesToConceptList",
                 "responses": {
                     "200": {
-                        "description": "Successful response returns a list of [CURIE-encoded](https://www.w3.org/TR/curie/)  identifiers of concepts (with supporting evidence code and reference) matching at least one identifier in the input list of known exactly matched concepts [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch). Each concept identifier is returned with  the full list of any additional associated [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers known to the local Knowledge Source.\n",
+                        "description": "Successful response returns a set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of concepts (with supporting evidence code and reference) matching at least one identifier in the input list of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch). Each concept identifier is returned with  the full list of any additional associated [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exact match concepts known to the given Knowledge Source.\n",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "exactMatches": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string",
-                                                    "description": "[CURIE](https://www.w3.org/TR/curie/) identifier of asserted exact matching concept\n"
-                                                },
-                                                "evidenceCode": {
-                                                    "type": "string",
-                                                    "description": "identifier of [GENE Ontology Evidence Codes](http://geneontology.org/page/guide-go-evidence-codes)\n"
-                                                },
-                                                "reference": {
-                                                    "type": "string",
-                                                    "description": "[CURIE](https://www.w3.org/TR/curie/) identifier of supporting reference\n"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                "type": "string",
+                                "description": "[CURIE](https://www.w3.org/TR/curie/) identifier of an exact matching concept not yet listed in the input set of exact matching concepts.\n"
                             }
                         },
                         "examples": {
                             "application/json": [
-                                {
-                                    "id": "wd:Q12345",
-                                    "exactMatches": [
-                                        {
-                                            "id": [
-                                                "mon:67890"
-                                            ],
-                                            "evidenceCode": "EXP",
-                                            "reference": [
-                                                "pmid:1234"
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "mon:67890",
-                                    "exactMatches": [
-                                        {
-                                            "id": [
-                                                "wd:Q12345"
-                                            ],
-                                            "evidenceCode": "IAP",
-                                            "reference": [
-                                                "pmid:5678"
-                                            ]
-                                        }
-                                    ]
-                                }
+                                "wd:Q14883734",
+                                "NCBIGene:7486"
                             ]
                         }
                     }
@@ -341,11 +295,14 @@
                 ],
                 "parameters": [
                     {
-                        "name": "emci",
+                        "name": "c",
                         "in": "query",
-                        "description": "a (urlencoded) space-delimited set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts to be used in a search for associated concept-relation statements\n",
+                        "description": "set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts to be used in a search for associated concept-relation statements\n",
                         "required": true,
-                        "type": "string"
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "pageNumber",
@@ -364,14 +321,14 @@
                     {
                         "name": "keywords",
                         "in": "query",
-                        "description": "a (urlencoded) space delimited set of keywords or substrings against which to apply against the subject, predicate or object names of the set of concept-relations matched by any of the input exact matching concepts\n",
+                        "description": "a (url-encoded, space-delimited) string of keywords or substrings against which to match the subject, predicate or object names of the set of concept-relations matched by any of the input exact matching concepts\n",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "semgroups",
                         "in": "query",
-                        "description": "a (urlencoded) space-delimited set of semantic groups (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain the subject or object concepts associated with the query seed concept (see [SemGroups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n",
+                        "description": "a (url-encoded, space-delimited) string of semantic groups (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain the subject or object concepts associated with the query seed concept (see [SemGroups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n",
                         "required": false,
                         "type": "string"
                     }
