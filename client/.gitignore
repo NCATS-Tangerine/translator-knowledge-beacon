@@ -16,20 +16,20 @@ hs_err_pid*
 
 # build files
 **/target
-target
-.gradle
-build
-/docs/
-/gradle/
-/src/
-/.swagger-codegen-ignore
-/.travis.yml
-/build.gradle
-/build.sbt
-/git_push.sh
-/gradle.properties
-/gradlew
-/gradlew.bat
-/pom.xml
-/README.md
-/settings.gradle
+target/
+.gradle/
+build/
+docs/
+gradle/
+src/
+.swagger-codegen-ignore
+.travis.yml
+build.gradle
+build.sbt
+git_push.sh
+gradle.properties
+gradlew
+gradlew.bat
+pom.xml
+README.md
+settings.gradle
