@@ -6,7 +6,7 @@ Spring Boot Server
 
 This project contains the Knowledge Beacon Application Programming Interface (KBAPI). 
 
-The KBAPI is formally specified as an OpenAPI ("Swagger") specification, as archived in the 'api' subfolder. 
+The KBAPI is formally specified as an OpenAPI ("Swagger") specification, as archived in the 'api' subfolder.   A "Knowledge Beacon Workflow" document is also provided.
 
 The [swagger-codegen](https://github.com/swagger-api/swagger-codegen) project can be used to generate client and server libraries/applications to use the API. 
 
