@@ -173,18 +173,73 @@ paths:
             Successful response with concept list returned
           examples:
             application/json:
-            - id: 'wd:Q2898645'
-              name: Neonatal diabetes mellitus
+            - id: 'wd:Q6591532'
+              name: 'WRN protein, human'
+              semanticGroup: CHEM
+              synonyms:
+                - RecQ3
+                - Werner Syndrome ATP-Dependent Helicase
+                - 'RECQL2 protein, human'
+                - EC 3.1.-.-
+                - 'WRN protein, human'
+                - WRN
+                - Exonuclease WRN
+                - Werner Syndrome Protein
+                - RecQ Protein-Like 2
+                - EC 3.6.4.12
+                - 'RECQ3 protein, human'
+                - 'Werner syndrome helicase, human'
+                - WRN Protein
+                - 'DNA Helicase, RecQ-Like Type 3'
+              definition: 'Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\''->5\'' exonuclease activity towards double-stranded DNA with a 5\''-overhang.'
+            - id: 'wd:Q18042562'
+              name: WRNIP1
+              semanticGroup: GENE
+              synonyms:
+                - WHIP
+                - Werner helicase interacting protein 1
+                - WRNIP1
+                - bA420G6.2
+              definition: human gene
+            - id: 'wd:Q14883734'
+              name: WRN
+              semanticGroup: GENE
+              synonyms:
+                - RECQ3
+                - RECQL3
+                - Werner syndrome RecQ like helicase
+                - RECQL2
+              definition: human gene
+            - id: 'wd:Q1154619'
+              name: Werner Syndrome
               semanticGroup: DISO
-              synonyms: []
-              definition: Neonatal diabetes mellitus
-            - id: 'wd:Q631361'
-              name: Diabetic Retinopathy
-              semanticGroup: DISO
-              synonyms: []
-              definition: >-
-                diabetic eye disease when damage occurs to the retina due to
-                diabetes.
+              synonyms:
+                - Werner Syndrome
+                - Pangeria
+                - 'Syndrome, Werner'
+                - 'Progeria, Adult'
+                - 'Werner Syndrome [Disease/Finding]'
+                - Werner syndrome (disorder)
+                - adult progeria
+                - Werner
+                - syndromes werner
+                - 'Syndrome, Werner\''s'
+                - WRN
+                - Werner\'s syndrome
+                - adults progeria
+                - Werner syndrome (adult progeria) (diagnosis)
+                - Werner syndrome (adult progeria)
+                - 'Syndrome, Werners'
+                - Adult premature aging syndrome
+                - syndromes werner\'s
+                - Werners Syndrome
+                - syndrome werner
+                - Progeria of the adult
+                - WS
+                - syndromes werners
+                - Adult premature ageing syndrome
+              definition: 'autosomal recessive disorder that causes premature aging in adults, characterized by sclerodermal skin changes, cataracts, subcutaneous calcifications, muscular atrophy, a tendency to diabetes mellitus, aged appearance of the face, baldness, and a high incidence of neoplastic disease.'
+
   '/exactmatches/{conceptId}':
     get:
       description: >
