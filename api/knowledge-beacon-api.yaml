@@ -1,14 +1,12 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.12
+  version: 1.0.11
   contact:
     responsibleDeveloper: Richard Bruskiewich
     responsibleOrganization: STAR Informatics/Delphinai Corporation
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
-    contributor: 
-        - Michel Dumontier
   description: >
     This is the Translator Knowledge Beacon web service application programming
     interface (API).  This OpenAPI ("Swagger") document may be used as the input
@@ -42,10 +40,10 @@ paths:
   '/types':
     get:
       description: >
-        Get a list of types and # of instances in the knowledge source
+        Get a list of types and # of instances in the knowledge source, and a link to the API call for the list of equivalent terminology
       tags:
         - summary
-      operationId: getTypes
+      operationId: linkedTypes
       responses:
         '200':
           schema:
@@ -57,6 +55,10 @@ paths:
                   type: string
                   description: >
                     the type 
+                idmap:
+                  type: string
+                  description:
+                    The URL to execute the exactmatches API call on the id
                 frequency:
                   type: integer
                   description: |
@@ -67,8 +69,10 @@ paths:
             application/json:
               - id: CHEM
                 frequency: 12355
+                idmap: http://myservice.net/api/v1/exactmatches/CHEM
               - id: ANAT
                 frequency: 1234
+                idmap: http://myservice.net/api/v1/exactmatches/ANAT
       
   '/concepts/{conceptId}':
     get:
