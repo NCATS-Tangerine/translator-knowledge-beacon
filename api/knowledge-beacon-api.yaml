@@ -23,6 +23,8 @@ schemes:
 produces:
   - application/json
 tags:
+  - name: summary
+    description: Summary statistics about the knowledge source
   - name: concepts
     description: Queries for concepts
   - name: exactmatches
@@ -33,7 +35,45 @@ tags:
     description: Queries for concept-relationship statements
   - name: evidence
     description: Queries for references cited as evidence for statements
+
 paths:
+  '/types':
+    get:
+      description: >
+        Get a list of types and # of instances in the knowledge source, and a link to the API call for the list of equivalent terminology
+      tags:
+        - summary
+      operationId: linkedTypes
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: >
+                    the type 
+                idmap:
+                  type: string
+                  description:
+                    The URL to execute the exactmatches API call on the id
+                frequency:
+                  type: integer
+                  description: |
+                    the number of instances of the specified type
+          description: |
+            Successful response with types and frequency returned
+          examples:
+            application/json:
+              - id: CHEM
+                frequency: 12355
+                idmap: http://myservice.net/api/v1/exactmatches/CHEM
+              - id: ANAT
+                frequency: 1234
+                idmap: http://myservice.net/api/v1/exactmatches/ANAT
+      
   '/concepts/{conceptId}':
     get:
       description: >
