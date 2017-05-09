@@ -1,12 +1,14 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.11
+  version: 1.0.12
   contact:
     responsibleDeveloper: Richard Bruskiewich
     responsibleOrganization: STAR Informatics/Delphinai Corporation
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
+    contributor: 
+        - Michel Dumontier
   description: >
     This is the Translator Knowledge Beacon web service application programming
     interface (API).  This OpenAPI ("Swagger") document may be used as the input
@@ -23,6 +25,8 @@ schemes:
 produces:
   - application/json
 tags:
+  - name: summary
+    description: Summary statistics about the knowledge source
   - name: concepts
     description: Queries for concepts
   - name: exactmatches
@@ -33,7 +37,39 @@ tags:
     description: Queries for concept-relationship statements
   - name: evidence
     description: Queries for references cited as evidence for statements
+
 paths:
+  '/types':
+    get:
+      description: >
+        Get a list of types and # of instances in the knowledge source
+      tags:
+        - summary
+      operationId: getTypes
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: >
+                    the type 
+                frequency:
+                  type: integer
+                  description: |
+                    the number of instances of the specified type
+          description: |
+            Successful response with types and frequency returned
+          examples:
+            application/json:
+              - id: CHEM
+                frequency: 12355
+              - id: ANAT
+                frequency: 1234
+      
   '/concepts/{conceptId}':
     get:
       description: >
