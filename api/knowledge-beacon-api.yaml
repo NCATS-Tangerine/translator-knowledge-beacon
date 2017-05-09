@@ -512,6 +512,10 @@ paths:
                   type: string
                   description: |
                     canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)
+                type:
+                  type: string
+                  description: |
+                    CURIE-encoded evidence type (e.g. use an evidence ontology CURIE)
                 date:
                   type: string
                   description: |
