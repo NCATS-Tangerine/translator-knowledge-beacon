@@ -1,0 +1,14 @@
+beacons:
+- url: http://beacon.medgeninformatics.net/api
+  name: SemMedDB
+  description: Reference implementation, wikidata IDs linked by 
+  contact: RichardBruskiewich
+- url: http://garbanzo.sulab.org/
+  name: Wikidata
+  description: Wikidata SPARQL
+  repo: https://github.com/stuppie/garbanzo
+  contact: stuppie
+- name: Red
+  description: Drug-Drug interactions from red team
+  status: in_progress
+  contact: victorganic
