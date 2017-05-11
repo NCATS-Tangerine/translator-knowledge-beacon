@@ -31,3 +31,7 @@ beacons:
   description: Wraps Bio2RDF
   status: in_progress
   contact: micheldumontier
+- name: Pharos
+  description: wraps pharos
+  wraps: https://pharos.nih.gov
+  contact: veleritas
