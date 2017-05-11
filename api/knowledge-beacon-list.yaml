@@ -6,9 +6,28 @@ beacons:
 - url: http://garbanzo.sulab.org/
   name: Wikidata
   description: Wikidata SPARQL
+  wraps: http://query.wikidata.org/sparql
   repo: https://github.com/stuppie/garbanzo
   contact: stuppie
 - name: Red
   description: Drug-Drug interactions from red team
   status: in_progress
   contact: victorganic
+- name: Monarch Biolink
+  description: Wraps Monarch biolink API
+  wraps: https://api.monarchinitiative.org/api/
+  status: in_progress
+  contact: lance
+- name: Monarch Ontologies
+  description: Wraps Monarch SciGraph ontology
+  wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
+  status: in_progress
+  contact: kshefchek
+- name: Chem2Bio2Rdf
+  description: Wraps Chem2Bio2Rdf
+  status: in_progress
+  contact: stevencox
+- name: Bio2RDF
+  description: Wraps Bio2RDF
+  status: in_progress
+  contact: micheldumontier
