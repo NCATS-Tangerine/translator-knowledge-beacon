@@ -35,3 +35,5 @@ beacons:
   description: wraps pharos
   wraps: https://pharos.nih.gov
   contact: veleritas
+clients:
+ - url: http://tkbio.medgeninformatics.net/
