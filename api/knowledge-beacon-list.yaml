@@ -28,7 +28,8 @@ beacons:
   wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
   status: in_progress
   contact: kshefchek
-- name: Chem2Bio2Rdf
+- url: http://stars.renci.org:5000/
+  name: Chem2Bio2Rdf
   description: Wraps Chem2Bio2Rdf
   status: in_progress
   contact: stevencox
