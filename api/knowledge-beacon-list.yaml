@@ -40,5 +40,7 @@ beacons:
   description: wraps pharos
   wraps: https://pharos.nih.gov
   contact: veleritas
+  repo: https://github.com/NCATS-Tangerine/cq-notebooks/tree/master/pharos
+  status: in_progress
 clients:
  - url: http://tkbio.medgeninformatics.net/
