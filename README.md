@@ -1,3 +1,9 @@
+# Purpose #
+
+This repository holds the Swagger definition of the Knowledge Beacon API: https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-api.yaml
+
+Swagger API documents can be used to generate both client and server code as described below.  
+
 # Swagger generated server #
 
 Spring Boot Server 
