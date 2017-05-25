@@ -14,6 +14,11 @@ beacons:
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
   contact: goodb
+- url:  http://52.14.14.106:8090/api
+  name: Monarch wrapper
+  description: wraps monarch services
+  wraps: https://api.monarchinitiative.org/api/
+  contact: goodb
 - name: Red
   description: Drug-Drug interactions from red team
   status: in_progress
