@@ -48,5 +48,11 @@ beacons:
   contact: veleritas
   repo: https://github.com/NCATS-Tangerine/cq-notebooks/tree/master/pharos
   status: in_progress
+- name: ISB Translator API
+  description: correlation networks generated from the Hundred Person Welless Project, The Cancer Genome Atlas and Gene-Tissue Expression project
+  wraps: http://isbtranslatorapi.adversary.us/
+  contact: Blue team
+  status: proposed
+ 
 clients:
  - url: http://tkbio.medgeninformatics.net/
