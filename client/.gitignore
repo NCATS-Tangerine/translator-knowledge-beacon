@@ -33,3 +33,6 @@ gradlew.bat
 pom.xml
 README.md
 settings.gradle
+/.settings/
+/.classpath
+/.project
