@@ -5,11 +5,11 @@
         "version": "1.0.12",
         "contact": {
             "responsibleDeveloper": "Richard Bruskiewich",
-            "responsibleOrganization": "STAR Informatics/Delphinai Corporation",
-            "url": "http://starinformatics.com",
+            "responsibleOrganization": "NCATS",
+            "url": "https://ncats.nih.gov/translator",
             "email": "richard@starinformatics.com"
         },
-        "description": "This is the Translator Knowledge Beacon web service application programming interface (API).  This OpenAPI (\"Swagger\") document may be used as the input specification into a tool like [Swagger-Codegen](https://github.com/swagger-api/swagger-codegen/blob/master/README.md) to generate client and server code stubs implementing the API, in any one of several supported computer languages and frameworks. In order to customize usage to your web site, you should change the 'host' directive below to your hostname.\n"
+        "description": "This is the Translator Knowledge Beacon web service application programming interface (API).  See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).\n"
     },
     "host": "api.knowledge.bio",
     "basePath": "/api",
@@ -20,6 +20,10 @@
         "application/json"
     ],
     "tags": [
+        {
+            "name": "summary",
+            "description": "Summary statistics about the knowledge source"
+        },
         {
             "name": "concepts",
             "description": "Queries for concepts"
@@ -38,6 +42,54 @@
         }
     ],
     "paths": {
+        "/types": {
+            "get": {
+                "description": "Get a list of types and # of instances in the knowledge source, and a link to the API call for the list of equivalent terminology\n",
+                "tags": [
+                    "summary"
+                ],
+                "operationId": "linkedTypes",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "the type \n"
+                                    },
+                                    "idmap": {
+                                        "type": "string",
+                                        "description": "The URL to execute the exactmatches API call on the id"
+                                    },
+                                    "frequency": {
+                                        "type": "integer",
+                                        "description": "the number of instances of the specified type\n"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Successful response with types and frequency returned\n",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id": "CHEM",
+                                    "frequency": 12355,
+                                    "idmap": "http://myservice.net/api/v1/exactmatches/CHEM"
+                                },
+                                {
+                                    "id": "ANAT",
+                                    "frequency": 1234,
+                                    "idmap": "http://myservice.net/api/v1/exactmatches/ANAT"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/concepts/{conceptId}": {
             "get": {
                 "description": "Retrieves details for a specified concepts in the system, as specified by a (url-encoded) CURIE identifier of a concept known the given knowledge source.\n",
@@ -534,6 +586,10 @@
                                     "label": {
                                         "type": "string",
                                         "description": "canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)\n"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "description": "CURIE-encoded evidence type (e.g. use an evidence ontology CURIE)\n"
                                     },
                                     "date": {
                                         "type": "string",
