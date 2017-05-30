@@ -9,7 +9,11 @@
             "url": "https://ncats.nih.gov/translator",
             "email": "richard@starinformatics.com"
         },
-        "description": "This is the Translator Knowledge Beacon web service application programming interface (API).  See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).\n"
+        "description": "This is the Translator Knowledge Beacon web service application programming interface (API).  See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).\n",
+		"license": {
+			"name": "MIT License",
+    		"url": "http://opensource.org/licenses/MIT"
+		}
     },
     "host": "api.knowledge.bio",
     "basePath": "/api",

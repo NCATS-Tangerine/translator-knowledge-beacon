@@ -11,6 +11,9 @@ info:
     This is the Translator Knowledge Beacon web service application programming
     interface (API). 
     See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).
+  license:
+    name: MIT License
+    url: 'http://opensource.org/licenses/MIT'
 host: api.knowledge.bio
 basePath: /api
 schemes:
