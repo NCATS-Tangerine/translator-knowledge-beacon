@@ -1,5 +1,5 @@
 beacons:
-- url: http://beacon.medgeninformatics.net/api
+- url: http://beacon.medgeninformatics.net
   name: SemMedDB
   description: Reference implementation, wikidata IDs linked by 
   contact: RichardBruskiewich
