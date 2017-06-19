@@ -1,7 +1,7 @@
 beacons:
-- url: http://beacon.medgeninformatics.net/api
+- url: http://rkb.ncats.io
   name: SemMedDB
-  description: Reference implementation, wikidata IDs linked by 
+  description: Reference Knowledge Beacon implementation indexed by Wikidata
   contact: RichardBruskiewich
 - url: http://garbanzo.sulab.org/
   name: Wikidata
