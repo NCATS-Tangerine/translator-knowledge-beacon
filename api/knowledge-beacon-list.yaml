@@ -25,9 +25,8 @@ beacons:
   contact: victorganic
 - name: Monarch Biolink
   description: Wraps Monarch biolink API
-  wraps: https://api.monarchinitiative.org/api/
-  status: in_progress
-  contact: lance
+  wraps: https://biolink-kb.ncats.io
+  contact: Lance Hannestad
 - name: Monarch Ontologies
   description: Wraps Monarch SciGraph ontology
   wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
