@@ -40,7 +40,7 @@ beacons:
 - name: Pharos
   description: wraps pharos
   wraps: https://pharos.nih.gov
-  contact: stuppie
+  contact: amalic
   repo: https://github.com/NCATS-Tangerine/cq-notebooks/tree/master/pharos
   status: in_progress
 - name: ISB Translator API
