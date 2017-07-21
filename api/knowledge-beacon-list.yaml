@@ -3,17 +3,20 @@ beacons:
   name: SemMedDB
   description: Reference Knowledge Beacon implementation indexed by Wikidata
   contact: RichardBruskiewich
+  status: deployed
 - url: http://garbanzo.sulab.org/
   name: Wikidata
   description: Wikidata SPARQL
   wraps: http://query.wikidata.org/sparql
   repo: https://github.com/stuppie/garbanzo
   contact: stuppie
+  status: deployed
 - url: http://52.14.164.71:8090/api
   name: String-db.org wrapper
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
   contact: goodb
+  status: deployed
 - name: Red
   description: Drug-Drug interactions from red team
   status: in_progress
@@ -23,6 +26,7 @@ beacons:
   description: Wraps Monarch biolink API
   wraps: https://api.monarchinitiative.org/api/
   contact: Lance Hannestad
+  status: deployed
 - name: Monarch Ontologies
   description: Wraps Monarch SciGraph ontology
   wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
@@ -48,6 +52,11 @@ beacons:
   wraps: http://isbtranslatorapi.adversary.us/
   contact: Blue team
   status: proposed
+- url: http://ndex.ncats.io
+  name: nDex Bio
+  description: Knowledge Beacon wrapper for ndexbio.org
+  contact: meera-gd
+  status: deployed
  
 clients:
  - url: http://tkbio.medgeninformatics.net/
