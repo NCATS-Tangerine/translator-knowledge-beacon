@@ -52,7 +52,7 @@ beacons:
   wraps: http://isbtranslatorapi.adversary.us/
   contact: Blue team
   status: proposed
-- url: http://kba.ncats.io
+- url: http://ndex-kb.ncats.io
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
   contact: meera-gd
