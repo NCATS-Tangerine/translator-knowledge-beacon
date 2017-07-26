@@ -4,6 +4,10 @@ This repository holds the Swagger definition of the Knowledge Beacon API: https:
 
 Swagger API documents can be used to generate both client and server code as described below.  
 
+# Knowledge Beacons in Action! #
+
+An initial prototype web application client "Translator Knowledge.Bio" accessing Knowledge Beacons is implemented and running at **http://tkbio.ncats.io.**, the code for which is available at **https://github.com/NCATS-Tangerine/tkbio**. A "Reference" beacon implementation (in Java) that wraps Semantic Medline Database concepts and relationships, is available at http://rkb.ncats.io (code at **https://github.com/NCATS-Tangerine/reference-beacon**). A list of beacons is available at **https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml**. REST clients may also access aggregate data via the API from all these registered beacons, through a "Knowledge Beacon Aggregator" running at https://kba.ncats.io
+
 # Swagger generated server #
 
 Spring Boot Server 
