@@ -10,10 +10,10 @@
             "email": "richard@starinformatics.com"
         },
         "description": "This is the Translator Knowledge Beacon web service application programming interface (API).  See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).\n",
-		"license": {
-			"name": "MIT License",
-    		"url": "http://opensource.org/licenses/MIT"
-		}
+        "license": {
+            "name": "MIT License",
+            "url": "http://opensource.org/licenses/MIT"
+        }
     },
     "host": "api.knowledge.bio",
     "basePath": "/api",
@@ -593,7 +593,7 @@
                                     },
                                     "type": {
                                         "type": "string",
-                                        "description": "CURIE-encoded evidence type (e.g. use an evidence ontology CURIE)\n"
+                                        "description": "Gene Ontology Evidence Code (http://www.geneontology.org/page/guide-go-evidence-codes)\n"
                                     },
                                     "date": {
                                         "type": "string",
@@ -605,11 +605,10 @@
                         "examples": {
                             "application/json": [
                                 {
-                                    "id": [
-                                        "pmid:22781086"
-                                    ],
+                                    "id": "pmid:22781086",
                                     "label": "Neonatal diabetes mellitus and congenital diaphragmatic hernia coincidence or concurrent etiology?",
-                                    "date": "2012-07-10T00:00:00.000Z"
+                                    "type": "TAS",
+                                    "date": "2012-07-10"
                                 }
                             ]
                         }
