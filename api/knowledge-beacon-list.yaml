@@ -16,7 +16,7 @@ beacons:
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
   contact: goodb
-  status: deployed
+  status: in_progress
 - name: Red
   description: Drug-Drug interactions from red team
   status: in_progress
