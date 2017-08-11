@@ -15,6 +15,7 @@ beacons:
   name: String-db.org wrapper
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
+  repo: https://github.com/goodb/beacons
   contact: goodb
   status: in_progress
 - name: Red
