@@ -6,7 +6,7 @@ This project documents the Knowledge Beacon Application Programming Interface (K
 
 Specifically, this repository holds the OpenAPI ("Swagger") definition of the KBAPI archived in the 'api' subfolder: https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-api.yaml
 
-These Swagger API definitions can be directly used to generate both client and server code as described below. A "Knowledge Beacon Workflow" document discusses the use of the API.
+These OpenAPI definitions can be directly used to generate both client and server code as described below. A "Knowledge Beacon Workflow" document discusses the use of the API.
 
 # Knowledge Beacons in Action! #
 
@@ -28,19 +28,19 @@ which downloads the JAR and installs an executable wrapper on your PATH.
 
 Alternately, the swagger-codegene Java JAR should be downloaded and a "SWAGGER_CODEGEN_PATH" environmental variable set to point to the folder containing the jar.
 
-Some sample scripts are given in the scripts subfolder to wrap this tool to facilitate the creation of some clients and servers (the '.sh' is a Linux bash shell version; the '.bat' is a Windows version)
+Some sample scripts are given in the scripts subfolder to use for the creation of Java clients and servers (the '.sh' is a Linux bash shell version; the '.bat' is a Windows version)
 
 * generateJavaClient.sh - generates a Java client library
 * generateSpringBootServer.sh - generates a Java Spring Boot Server stub implementation
 
-See the swagger-codegen web site for more language and framework implementation options for stub generation.  For proper execution, these scripts should be executed directly inside the 'scripts' folder.
+See the swagger-codegen web site for additional language and framework implementation options for stub generation.  For proper execution, these scripts should be executed directly inside the 'scripts' folder.
 
 ## Building a Web Server using the API ##
 
 The 'generateSpringBootServer' script (re-)generates a Java Spring Boot server code tree under 'server' subfolder in the root folder. Usage:
 
 	cd scripts
-	./generateSpringBootServer.sh api/knowledge-beacon_1.0.6.yaml  # use the .bat file for MS Windows  
+	./generateSpringBootServer.sh api/knowledge-beacon.yaml  # use the .bat file for MS Windows  
 
 The resulting code base is put in a 'server' subfolder may be directly built with Maven into an executable Java JAR file:
 
@@ -50,27 +50,29 @@ where the resulting JAR is placed into the 'target' subdirectory.  Alternately, 
 
 ## Running the Web Server ##
 
-Start your server as an simple java application, something like
+Start your server as an simple java application (where '*' is the version of the API, e.g. '1.0.12') as follows:
 
-	java -jar target/knowledge-beacon-server-1.0.6.jar
+For a Maven generated version, type:
 
-(for the Maven generated version) or
+	java -jar target/knowledge-beacon-server-*.jar
 
-	java -jar build/libs/knowledge-beacon-server-1.0.6.jar
 
-(for the Gradle generated version).
+Alternately, for the Gradle generated version, type:
 
-You can view the api documentation in swagger-ui by pointing to
+	java -jar build/libs/knowledge-beacon-server-*.jar
+
+
+You can view the api documentation online by pointing to
   
 	http://localhost:8080/api
 
-Change default port value in application.properties
+(where 'api' is the basepath in the OpenAPI document).  You can change default port value in **application.properties** under server/src/main/resources.
 
 ## Building a Client Library using the API ##
 
-The 'generateJavaClient' script (re-)generates a Java Spring Boot server code tree under 'client' folder in the project. Usage:
+The 'generateJavaClient' script (re-)generates a Java client access code tree under 'client' folder in the project, as follows:
 
 	cd scripts
-	./generateJavaClient.sh api/knowledge-beacon_1.0.6.yaml   # use the .bat file for MS Windows
+	./generateJavaClient.sh api/knowledge-beacon_*.yaml   # use the .bat file for MS Windows
 
-The resulting code base is put in a 'server' subfolder may be directly built with Maven into an executable Java JAR file:
+(where '*' is the version of the API, e.g. '1.0.12')  The resulting code base is put in a 'client' subfolder to be directly customized then built into an executable Java JAR file.
