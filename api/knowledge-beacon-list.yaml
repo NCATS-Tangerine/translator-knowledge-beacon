@@ -57,7 +57,7 @@ beacons:
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
   contact: meera-gd
-  status: deployed
+  status: in_progress
  
 clients:
- - url: http://tkbio.medgeninformatics.net/
+ - url: http://tkbio.ncats.io/
