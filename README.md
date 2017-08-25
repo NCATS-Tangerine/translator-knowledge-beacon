@@ -10,9 +10,18 @@ These OpenAPI definitions can be directly used to generate both client and serve
 
 # Knowledge Beacons in Action! #
 
-An initial prototype web application client "Translator Knowledge.Bio" accessing Knowledge Beacons is implemented and running at **http://tkbio.ncats.io.**, the code for which is available at **https://github.com/NCATS-Tangerine/tkbio**. A "Reference" beacon implementation (in Java) that wraps Semantic Medline Database concepts and relationships, is available at http://rkb.ncats.io (code at **https://github.com/NCATS-Tangerine/reference-beacon**). 
+An initial prototype web application client "Translator Knowledge.Bio" accessing Knowledge Beacons is implemented and running at **http://tkbio.ncats.io.**, the code for which is available **[here](https://github.com/NCATS-Tangerine/tkbio)**. 
 
-A list of beacons is available at **https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml**. REST clients may also access aggregate data via the API from all these registered beacons, through a "Knowledge Beacon Aggregator" running at **https://kba.ncats.io**.
+The pool of known beacons is currently documented in a **[master YAML-formatted catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)**. REST clients may also access aggregate data via the API from all these registered beacons, through a [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator), a public version for which is hosted online at **https://kba.ncats.io**. 
+
+Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
+
+* [Reference Beacon](https://github.com/NCATS-Tangerine/reference-beacon): a Java Spring Boot KBAPI accessing a Neo4j server containing Semantic Medline Database concepts and relationships textmined from PubMed abstracts
+* [Monarch Database "Biolink" Beacon](https://github.com/NCATS-Tangerine/biolink-beacon): a Python KSAPI accessing the Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/)
+* [nDex Beacon]9https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive.
+* [StringDb Beacon](https://github.com/NCATS-Tangerine/stringdb-beacon) : a Python wrapper for the [STRING Protein-Protein interactions database](https://string-db.org/).
+
+Other beacon wrappers (e.g. Wikidata) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
 # Swagger generated server #
 
