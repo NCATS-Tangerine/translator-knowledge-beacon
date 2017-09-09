@@ -28,8 +28,8 @@ If we run this command, it will generate a project structure looking like the fo
 │   │   ├── models
 │   │   ├── swagger
 │   │   │   └── swagger.yaml
-│   │   ├── test
-├── swagger-codegen-cli.jar
+│   │   └── test
+└── swagger-codegen-cli.jar
 ```
 Your project will require version 1.1.15 or newer of Connexion. If the version is set to 1.1.9 in `requirements.txt` then change it. (This should be automatic in the near future).
 Official documentation can be found here: https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO#python-flask-connexion
