@@ -16,7 +16,7 @@ A more detailed explanation can be found at https://github.com/swagger-api/swagg
 
 **2. Generate the server project stub.** The `-i` flag is for the yaml or json specification file, the `-l` flag is for the project language, and the `-o` flag sets the directory name that the project will be generated into.
 ```
-java -jar swagger-codegen-cli.jar -i specification.json -l python-flask -o server
+java -jar swagger-codegen-cli.jar generate -i specification.json -l python-flask -o server
 ```
 If we run this command, it will generate a project structure looking like the following. Much of what will be generated has been omitted for clarity.
 ```
