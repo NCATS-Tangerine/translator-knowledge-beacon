@@ -10,7 +10,7 @@ beacons:
   wraps: http://query.wikidata.org/sparql
   repo: https://github.com/stuppie/garbanzo
   contact: stuppie
-  status: offline # as of the evening of 2017-09-18?
+  status: deployed
 - url: http://52.14.164.71:8090/api
   name: String-db.org wrapper
   description: protein-protein interactions for demo..
