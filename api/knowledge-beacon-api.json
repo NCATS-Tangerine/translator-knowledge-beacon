@@ -592,7 +592,8 @@
                     "id": [
                       "wd:Q14912054"
                     ],
-                    "name": "KCNJ11"
+                    "name": "KCNJ11",
+                    "semanticGroup": "GENE"
                   },
                   "predicate": {
                     "id": [
@@ -604,7 +605,8 @@
                     "id": [
                       "wd:Q2898645"
                     ],
-                    "name": "Neonatal diabetes mellitus"
+                    "name": "Neonatal diabetes mellitus",
+                    "semanticGroup":"DISO"
                   }
                 }
               ]
