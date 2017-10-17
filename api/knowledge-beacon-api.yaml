@@ -1,23 +1,22 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.12
+  version: 1.0.14
   contact:
-    responsibleDeveloper: Richard Bruskiewich
-    responsibleOrganization: NCATS
-    url: 'https://ncats.nih.gov/translator'
+    url: 'http://starinformatics.com'
     email: richard@starinformatics.com
+    responsibleDeveloper: Richard Bruskiewich
+    responsibleOrganization: STAR Informatics/Delphinai Corporation
   description: >
-    This is the Translator Knowledge Beacon web service application programming
-    interface (API). 
-    See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).
+    This is the Translator Knowledge Beacon Aggregator web service application
+    programming interface (API).
   license:
     name: MIT License
     url: 'http://opensource.org/licenses/MIT'
-host: api.knowledge.bio
-basePath: /api
+host: reference-beacon.ncats.io
+basePath: /
 schemes:
-  - http
+  - https
 produces:
   - application/json
 tags:
@@ -25,6 +24,8 @@ tags:
     description: Summary statistics about the knowledge source
   - name: concepts
     description: Queries for concepts
+  - name: predicates
+    description: Queries for predicates
   - name: exactmatches
     description: >-
       Queries for exactly matching concepts *sensa*-SKOS;
@@ -33,12 +34,12 @@ tags:
     description: Queries for concept-relationship statements
   - name: evidence
     description: Queries for references cited as evidence for statements
-
 paths:
-  '/types':
+  /types:
     get:
       description: >
-        Get a list of types and # of instances in the knowledge source, and a link to the API call for the list of equivalent terminology
+        Get a list of types and # of instances in the knowledge source, and a
+        link to the API call for the list of equivalent terminology
       tags:
         - summary
       operationId: linkedTypes
@@ -47,16 +48,16 @@ paths:
           schema:
             type: array
             items:
+              title: Summary
               type: object
               properties:
                 id:
                   type: string
-                  description: >
+                  description: |
                     the type 
                 idmap:
                   type: string
-                  description:
-                    The URL to execute the exactmatches API call on the id
+                  description: The URL to execute the exactmatches API call on the id
                 frequency:
                   type: integer
                   description: |
@@ -67,16 +68,16 @@ paths:
             application/json:
               - id: CHEM
                 frequency: 12355
-                idmap: http://myservice.net/api/v1/exactmatches/CHEM
+                idmap: 'http://myservice.net/api/v1/exactmatches/CHEM'
               - id: ANAT
                 frequency: 1234
-                idmap: http://myservice.net/api/v1/exactmatches/ANAT
-      
+                idmap: 'http://myservice.net/api/v1/exactmatches/ANAT'
   '/concepts/{conceptId}':
     get:
       description: >
         Retrieves details for a specified concepts in the system, as specified
-        by a (url-encoded) CURIE identifier of a concept known the given knowledge source.
+        by a (url-encoded) CURIE identifier of a concept known the given
+        knowledge source.
       tags:
         - concepts
       parameters:
@@ -91,6 +92,7 @@ paths:
           schema:
             type: array
             items:
+              title: ConceptDetail
               type: object
               properties:
                 id:
@@ -153,13 +155,13 @@ paths:
             which to match concept names and synonyms
           required: true
           type: string
-        - name: semgroups
+        - name: semanticGroups
           in: query
           description: >
             a (url-encoded) space-delimited set of semantic groups (specified as
             codes CHEM, GENE, ANAT, etc.) to which to constrain concepts matched
             by the main keyword search (see
-            [SemGroups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for
+            [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for
             the full list of codes)
           required: false
           type: string
@@ -183,12 +185,14 @@ paths:
           schema:
             type: array
             items:
+              title: Concept
               type: object
               properties:
                 id:
                   type: string
                   description: >
-                    local object identifier for the concept in the specified knowledge source database
+                    local object identifier for the concept in the specified
+                    knowledge source database
                 name:
                   type: string
                   description: |
@@ -211,81 +215,130 @@ paths:
             Successful response with concept list returned
           examples:
             application/json:
-            - id: 'wd:Q6591532'
-              name: 'WRN protein, human'
-              semanticGroup: CHEM
-              synonyms:
-                - RecQ3
-                - Werner Syndrome ATP-Dependent Helicase
-                - 'RECQL2 protein, human'
-                - EC 3.1.-.-
-                - 'WRN protein, human'
-                - WRN
-                - Exonuclease WRN
-                - Werner Syndrome Protein
-                - RecQ Protein-Like 2
-                - EC 3.6.4.12
-                - 'RECQ3 protein, human'
-                - 'Werner syndrome helicase, human'
-                - WRN Protein
-                - 'DNA Helicase, RecQ-Like Type 3'
-              definition: 'Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\''->5\'' exonuclease activity towards double-stranded DNA with a 5\''-overhang.'
-            - id: 'wd:Q18042562'
-              name: WRNIP1
-              semanticGroup: GENE
-              synonyms:
-                - WHIP
-                - Werner helicase interacting protein 1
-                - WRNIP1
-                - bA420G6.2
-              definition: human gene
-            - id: 'wd:Q14883734'
-              name: WRN
-              semanticGroup: GENE
-              synonyms:
-                - RECQ3
-                - RECQL3
-                - Werner syndrome RecQ like helicase
-                - RECQL2
-              definition: human gene
-            - id: 'wd:Q1154619'
-              name: Werner Syndrome
-              semanticGroup: DISO
-              synonyms:
-                - Werner Syndrome
-                - Pangeria
-                - 'Syndrome, Werner'
-                - 'Progeria, Adult'
-                - 'Werner Syndrome [Disease/Finding]'
-                - Werner syndrome (disorder)
-                - adult progeria
-                - Werner
-                - syndromes werner
-                - 'Syndrome, Werner\''s'
-                - WRN
-                - Werner\'s syndrome
-                - adults progeria
-                - Werner syndrome (adult progeria) (diagnosis)
-                - Werner syndrome (adult progeria)
-                - 'Syndrome, Werners'
-                - Adult premature aging syndrome
-                - syndromes werner\'s
-                - Werners Syndrome
-                - syndrome werner
-                - Progeria of the adult
-                - WS
-                - syndromes werners
-                - Adult premature ageing syndrome
-              definition: 'autosomal recessive disorder that causes premature aging in adults, characterized by sclerodermal skin changes, cataracts, subcutaneous calcifications, muscular atrophy, a tendency to diabetes mellitus, aged appearance of the face, baldness, and a high incidence of neoplastic disease.'
-
+              - id: 'wd:Q6591532'
+                name: 'WRN protein, human'
+                semanticGroup: CHEM
+                synonyms:
+                  - RecQ3
+                  - Werner Syndrome ATP-Dependent Helicase
+                  - 'RECQL2 protein, human'
+                  - EC 3.1.-.-
+                  - 'WRN protein, human'
+                  - WRN
+                  - Exonuclease WRN
+                  - Werner Syndrome Protein
+                  - RecQ Protein-Like 2
+                  - EC 3.6.4.12
+                  - 'RECQ3 protein, human'
+                  - 'Werner syndrome helicase, human'
+                  - WRN Protein
+                  - 'DNA Helicase, RecQ-Like Type 3'
+                definition: >-
+                  Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is
+                  encoded by the human WRN gene. This protein plays a role in
+                  both magnesium and ATP-dependent DNA-helicase activity and
+                  3\'->5\' exonuclease activity towards double-stranded DNA with
+                  a 5\'-overhang.
+              - id: 'wd:Q18042562'
+                name: WRNIP1
+                semanticGroup: GENE
+                synonyms:
+                  - WHIP
+                  - Werner helicase interacting protein 1
+                  - WRNIP1
+                  - bA420G6.2
+                definition: human gene
+              - id: 'wd:Q14883734'
+                name: WRN
+                semanticGroup: GENE
+                synonyms:
+                  - RECQ3
+                  - RECQL3
+                  - Werner syndrome RecQ like helicase
+                  - RECQL2
+                definition: human gene
+              - id: 'wd:Q1154619'
+                name: Werner Syndrome
+                semanticGroup: DISO
+                synonyms:
+                  - Werner Syndrome
+                  - Pangeria
+                  - 'Syndrome, Werner'
+                  - 'Progeria, Adult'
+                  - 'Werner Syndrome [Disease/Finding]'
+                  - Werner syndrome (disorder)
+                  - adult progeria
+                  - Werner
+                  - syndromes werner
+                  - 'Syndrome, Werner\''s'
+                  - WRN
+                  - Werner\'s syndrome
+                  - adults progeria
+                  - Werner syndrome (adult progeria) (diagnosis)
+                  - Werner syndrome (adult progeria)
+                  - 'Syndrome, Werners'
+                  - Adult premature aging syndrome
+                  - syndromes werner\'s
+                  - Werners Syndrome
+                  - syndrome werner
+                  - Progeria of the adult
+                  - WS
+                  - syndromes werners
+                  - Adult premature ageing syndrome
+                definition: >-
+                  autosomal recessive disorder that causes premature aging in
+                  adults, characterized by sclerodermal skin changes, cataracts,
+                  subcutaneous calcifications, muscular atrophy, a tendency to
+                  diabetes mellitus, aged appearance of the face, baldness, and
+                  a high incidence of neoplastic disease.
+  /predicates:
+    get:
+      description: >
+        Get a list of predicates used in statements issued by the knowledge
+        source
+      tags:
+        - predicates
+      operationId: getPredicates
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              title: Predicate
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: |
+                    CURIE-encoded identifier of predicate resource
+                name:
+                  type: string
+                  description: |
+                    human readable name of predicate relation
+                definition:
+                  type: string
+                  description: >
+                    human readable definition of predicate relation provided by
+                    this beacon
+          description: >
+            Successful response with predicates with CURIE and definitions
+            indexed by beacons which support the relation
+          examples:
+            application/json:
+              - id: 'wd:P123'
+                name: interacts with
+                definition: influences in some manner
+              - id: 'wd:P456'
+                name: has phenotype
+                definition: exhibits biological morphology or behaviour
   '/exactmatches/{conceptId}':
     get:
       description: >
         Retrieves a list of qualified identifiers of "exact match" concepts,
-        [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a
-        specified (url-encoded) CURIE (without brackets) concept object identifier, 
-        typically, of a concept selected from the list of concepts originally returned by a
-        /concepts API call on a given KS. 
+        [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated
+        with a specified (url-encoded) CURIE (without brackets) concept object
+        identifier,  typically, of a concept selected from the list of concepts
+        originally returned by a /concepts API call on a given KS. 
       tags:
         - exactmatches
       parameters:
@@ -301,28 +354,38 @@ paths:
             Successful response returns a set of
             [CURIE](https://www.w3.org/TR/curie/) identifiers to 3rd party
             concepts defined outside of the local KS, which are deemed semantic
-            exact matches [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) to  the specified identified concept (maybe an empty set?)
+            exact matches
+            [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) to 
+            the specified identified concept (maybe an empty set?)
           schema:
             type: array
             items:
               type: string
           examples:
             application/json:
-              [ 'wd:Q14883734', 'NCBIGene:7486' ]
+              - 'wd:Q14883734'
+              - 'NCBIGene:7486'
   /exactmatches:
     get:
       description: >
         Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers
-        of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers of **additional** concepts that are deemed by the given knowledge source to be exact matches to one or more of the input concepts.  If an empty set is returned, the it can be assumed that the given knowledge source does not know of any new equivalent concepts to add to the input set.
+        of known exactly matched concepts
+        [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch),
+        retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers
+        of **additional** concepts that are deemed by the given knowledge source
+        to be exact matches to one or more of the input concepts.  If an empty
+        set is returned, the it can be assumed that the given knowledge source
+        does not know of any new equivalent concepts to add to the input set.
       tags:
         - exactmatches
       parameters:
         - name: c
           in: query
           description: >
-            set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly
-            matching concepts, to be used in a search for additional exactly
-            matching concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch).
+            set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
+            exactly matching concepts, to be used in a search for additional
+            exactly matching concepts
+            [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch).
           required: true
           type: array
           items:
@@ -335,8 +398,9 @@ paths:
             [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
             concepts (with supporting evidence code and reference) matching at
             least one identifier in the input list of known exactly matched
-            concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch). Each concept
-            identifier is returned with  the full list of any additional
+            concepts
+            [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch). Each
+            concept identifier is returned with  the full list of any additional
             associated [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers
             of exact match concepts known to the given Knowledge Source.
           schema:
@@ -344,10 +408,13 @@ paths:
             items:
               type: string
               description: >
-                [CURIE](https://www.w3.org/TR/curie/) identifier of an exact matching concept not yet listed in the input set of exact matching concepts.
+                [CURIE](https://www.w3.org/TR/curie/) identifier of an exact
+                matching concept not yet listed in the input set of exact
+                matching concepts.
           examples:
             application/json:
-              [ 'wd:Q14883734', 'NCBIGene:7486' ]
+              - 'wd:Q14883734'
+              - 'NCBIGene:7486'
   /statements:
     get:
       description: >
@@ -361,8 +428,8 @@ paths:
         - name: c
           in: query
           description: >
-            set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly
-            matching concepts to be used in a search for associated
+            set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
+            exactly matching concepts to be used in a search for associated
             concept-relation statements
           required: true
           type: array
@@ -385,36 +452,53 @@ paths:
         - name: keywords
           in: query
           description: >
-            a (url-encoded, space-delimited) string of keywords or substrings against
-            which to match the subject, predicate or object names of the
+            a (url-encoded, space-delimited) string of keywords or substrings
+            against which to match the subject, predicate or object names of the
             set of concept-relations matched by any of the input exact matching
             concepts
           required: false
           type: string
-        - name: semgroups
+        - name: semanticGroups
           in: query
           description: >
-            a (url-encoded, space-delimited) string of semantic groups (specified as
-            codes CHEM, GENE, ANAT, etc.) to which to constrain the subject or
-            object concepts associated with the query seed concept (see
-            [SemGroups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for
+            a (url-encoded, space-delimited) string of semantic groups
+            (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain
+            the subject or object concepts associated with the query seed
+            concept (see
+            [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for
             the full list of codes)
+          required: false
+          type: string
+        - name: relations
+          in: query
+          description: >
+            a (url-encoded, space-delimited) string of predicate relation
+            identifiers with which to constrain the statement relations
+            retrieved  for the given query seed concept. The predicate ids sent
+            should  be as published by the beacon-aggregator by the /predicates
+            API endpoint.
           required: false
           type: string
       operationId: getStatements
       responses:
         '200':
           description: >
-            Successful response returns a list of concept-relations where there is an exact match of an input concept identifier either to the subject or object concepts of the statement
+            Successful response returns a list of concept-relations where there
+            is an exact match of an input concept identifier either to the
+            subject or object concepts of the statement
           schema:
             type: array
             items:
+              title: Statement
               type: object
               properties:
                 id:
                   type: string
-                  description: CURIE-encoded identifier for statement (can be used to retrieve associated evidence)
+                  description: >-
+                    CURIE-encoded identifier for statement (can be used to
+                    retrieve associated evidence)
                 subject:
+                  title: StatementSubject
                   type: object
                   properties:
                     id:
@@ -424,7 +508,15 @@ paths:
                     name:
                       type: string
                       description: human readable label of subject concept
+                    semanticGroup:
+                      type: string
+                      description: >
+                        a semantic group for the subject concept (specified as a
+                        code CHEM, GENE, etc. - see
+                        [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt)
+                        for the full list of codes)
                 predicate:
+                  title: StatementPredicate
                   type: object
                   properties:
                     id:
@@ -435,6 +527,7 @@ paths:
                       type: string
                       description: human readable label of concept
                 object:
+                  title: StatementObject
                   type: object
                   properties:
                     id:
@@ -444,10 +537,17 @@ paths:
                     name:
                       type: string
                       description: human readable label of object concept
+                    semanticGroup:
+                      type: string
+                      description: >
+                        a semantic group for the object concept (specified as a
+                        code CHEM, GENE, etc. - see
+                        [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt)
+                        for the full list of codes)
           examples:
             application/json:
               - source: semmeddb
-                id: kb:12345
+                id: 'kb:12345'
                 subject:
                   id:
                     - 'wd:Q14912054'
@@ -463,20 +563,23 @@ paths:
   '/evidence/{statementId}':
     get:
       description: >
-        Retrieves a (paged) list of annotations cited as evidence for a specified concept-relationship statement
+        Retrieves a (paged) list of annotations cited as evidence for a
+        specified concept-relationship statement
       tags:
         - evidence
       parameters:
         - name: statementId
           in: path
           description: >
-            (url-encoded) CURIE identifier of the concept-relationship statement ("assertion", "claim") for which associated evidence is sought
+            (url-encoded) CURIE identifier of the concept-relationship statement
+            ("assertion", "claim") for which associated evidence is sought
           required: true
           type: string
         - name: keywords
           in: query
           description: >
-            (url-encoded, space delimited) keyword filter to apply against the label field of the annotation
+            (url-encoded, space delimited) keyword filter to apply against the
+            label field of the annotation
           required: false
           type: string
         - name: pageNumber
@@ -489,43 +592,47 @@ paths:
         - name: pageSize
           in: query
           description: >
-            number of cited references per page to be returned in a paged set of query results
+            number of cited references per page to be returned in a paged set of
+            query results
           required: false
           type: integer
       operationId: getEvidence
       responses:
         '200':
-          description: >
+          description: |
             successful call returns a list of annotation with metadata
           schema:
             type: array
             items:
+              title: Annotation
               type: object
               properties:
                 id:
                   type: string
-                  description: |
-                    CURIE-encoded identifier to an associated external resources (e.g. PMID of a pubmed citation)
+                  description: >
+                    CURIE-encoded identifier to an associated external resources
+                    (e.g. PMID of a pubmed citation)
                 label:
                   type: string
-                  description: |
-                    canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)
+                  description: >
+                    canonical human readable and searchable label of the
+                    annotation (i.e. comment, matched sentence, etc.)
                 type:
                   type: string
-                  description: |
-                    Gene Ontology Evidence Code (http://www.geneontology.org/page/guide-go-evidence-codes)
+                  description: >
+                    Gene Ontology Evidence Code
+                    (http://www.geneontology.org/page/guide-go-evidence-codes)
                 date:
                   type: string
-                  description: |
-                    publication date of annotation (generally of format 'yyyy-mm-dd')
+                  description: >
+                    publication date of annotation (generally of format
+                    'yyyy-mm-dd')
           examples:
             application/json:
               - id:
-                  'pmid:22781086'
+                  - 'pmid:22781086'
                 label: >-
                   Neonatal diabetes mellitus and congenital diaphragmatic hernia
                   coincidence or concurrent etiology?
-                type: >-
-                  TAS
-                date: >-
-                  2012-07-10
+                type: TAS
+                date: 2012-07-10T00:00:00.000Z
