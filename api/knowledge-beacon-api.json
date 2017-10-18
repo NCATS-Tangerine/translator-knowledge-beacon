@@ -120,7 +120,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "title": "ConceptDetail",
+                "title": "ConceptWithDetails",
                 "type": "object",
                 "properties": {
                   "id": {
@@ -149,6 +149,7 @@
                   "details": {
                     "type": "array",
                     "items": {
+                      "title": "ConceptDetail",
                       "type": "object",
                       "properties": {
                         "tag": {
