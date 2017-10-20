@@ -2,6 +2,8 @@ beacons:
 - url: http://rkb.ncats.io
   name: SemMedDB
   description: Reference Knowledge Beacon implementation indexed by Wikidata
+  wraps: an internally (private subnet accessed) NCATS Neo4j database server populated with Semantic Medline Database
+  repo: https://github.com/NCATS-Tangerine/reference-beacon
   contact: RichardBruskiewich
   status: deployed
 - url: http://garbanzo.sulab.org/
@@ -56,6 +58,8 @@ beacons:
 - url: http://ndex-kb.ncats.io
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
+  wraps: http://ndexbio.org
+  repo: https://github.com/NCATS-Tangerine/ndex-beacon
   contact: meera-gd
   status: deployed
  
