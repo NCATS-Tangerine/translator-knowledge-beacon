@@ -673,6 +673,27 @@ paths:
                       description: >
                         publication date of annotation (generally of format
                         'yyyy-mm-dd')
+                    provenance:
+                      title: Provenance
+                      type: object
+                      properties:
+                        authority:
+                          type: string
+                          description: >
+                            Specific scientific authority asserting the
+                            evidence. Maybe be a database name, software tool or
+                            human scientific authority(?)
+                        url:
+                          type: string
+                          description: |
+                            URL to provenance authority details
+                        metadata:
+                          type: string
+                          description: >
+                            Optional comma delimited tag = value key pairs
+                            qualifying the nature of the provenance, e.g.
+                            database or software version, software input
+                            parameters, etc.
               examples:
                 response:
                   value:
