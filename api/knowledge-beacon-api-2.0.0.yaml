@@ -7,6 +7,8 @@ info:
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
+    responsibleDeveloper: Richard Bruskiewich
+    responsibleOrganization: STAR Informatics/Delphinai Corporation
   description: >
     This is Release 2.0 of the Translator Knowledge Beacon Aggregator web
     service application programming interface (API). Release 2.0 is a major
@@ -448,9 +450,11 @@ paths:
     get:
       description: >
         Given a list of [CURIE-encoded](https://www.w3.org/TR/curie/)
-        identifiers of exactly matching concepts, retrieves a paged list of
+        identifiers of exactly matching concepts, OR the CUIR of a target 
+        'subject' and/or 'object' concept, retrieves a paged list of
         concept-relations where either the subject or object concept matches at
-        least one concept in the input list
+        least one concept in the input list, or the given  'subject' and/or
+        'object' concept.
       tags:
         - statements
       parameters:
@@ -459,28 +463,44 @@ paths:
           description: >
             set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
             exactly matching concepts to be used in a search for associated
-            concept-relation statements
-          required: true
+            concept-relation statements. From 1.0.15 onwards, the 'c' list 
+            parameter is now NOT mandatory; however IF it is not given, then a
+            specific subject and/or object parameter must be provided (see
+            below)
+          required: false
           schema:
             type: array
             items:
               type: string
-        - name: pageNumber
+        - name: subject
           in: query
-          description: |
-            (1-based) number of the page to be returned in a paged set of query
-            results
+          description: >
+            a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the
+            concept to be used as the 'subject' target in the  search for
+            associated concept - relationship statements.
           required: false
           schema:
-            type: integer
-        - name: pageSize
+            type: string
+        - name: relations
           in: query
-          description: |
-            number of concepts per page to be returned in a paged set of query
-            results
+          description: >
+            a (url-encoded, space-delimited) string of predicate relation
+            identifiers with which to constrain the statement relations
+            retrieved  for the given query seed concept. The predicate ids sent
+            should  be as published by the beacon-aggregator by the /predicates
+            API endpoint.
           required: false
           schema:
-            type: integer
+            type: string
+        - name: object
+          in: query
+          description: >
+            a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the
+            concept to be used as the 'object' target in the  search for
+            associated concept - relationship statements.
+          required: false
+          schema:
+            type: string
         - name: keywords
           in: query
           description: >
@@ -503,17 +523,22 @@ paths:
           required: false
           schema:
             type: string
-        - name: relations
+        - name: pageNumber
           in: query
-          description: >
-            a (url-encoded, space-delimited) string of predicate relation
-            identifiers with which to constrain the statement relations
-            retrieved  for the given query seed concept. The predicate ids sent
-            should  be as published by the beacon-aggregator by the /predicates
-            API endpoint.
+          description: |
+            (1-based) number of the page to be returned in a paged set of query
+            results
           required: false
           schema:
-            type: string
+            type: integer
+        - name: pageSize
+          in: query
+          description: |
+            number of concepts per page to be returned in a paged set of query
+            results
+          required: false
+          schema:
+            type: integer
       operationId: getStatements
       responses:
         '200':
