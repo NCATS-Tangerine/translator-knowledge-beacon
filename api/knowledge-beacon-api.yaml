@@ -5,10 +5,9 @@ info:
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
-    responsibleDeveloper: Richard Bruskiewich
-    responsibleOrganization: STAR Informatics/Delphinai Corporation
   description: >
-    This is the Translator Knowledge Beacon web service application programming interface (API).
+    This is the Translator Knowledge Beacon web service application programming
+    interface (API).
   license:
     name: MIT License
     url: 'http://opensource.org/licenses/MIT'
@@ -434,22 +433,11 @@ paths:
           description: >
             set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
             exactly matching concepts to be used in a search for associated
-            concept-relation statements. From 1.0.15 onwards, the 'c' list 
-            parameter is now NOT mandatory; however IF it is not given, then a
-            specific subject and/or object parameter must be provided (see
-            below)
-          required: false
+            concept-relation statements.
+          required: true
           type: array
           items:
             type: string
-        - name: subject
-          in: query
-          description: >
-            a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the
-            concept to be used as the 'subject' target in the  search for
-            associated concept - relationship statements.
-          required: false
-          type: string
         - name: relations
           in: query
           description: >
@@ -460,14 +448,18 @@ paths:
             API endpoint.
           required: false
           type: string
-        - name: object
+        - name: o
           in: query
           description: >
-            a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the
-            concept to be used as the 'object' target in the  search for
-            associated concept - relationship statements.
+            (optional) set of [CURIE-encoded](https://www.w3.org/TR/curie/)
+            identifiers of exactly matching concepts to be used in a search for
+            associated concept-relation statements in opposition to the 'c'
+            concepts, that is, if 'c' matches a subject, then 'o' should match
+            the object of a given statement.
           required: false
-          type: string
+          type: array
+          items:
+            type: string
         - name: keywords
           in: query
           description: >
