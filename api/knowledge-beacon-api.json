@@ -2,14 +2,14 @@
   "swagger": "2.0",
   "info": {
     "title": "Translator Knowledge Beacon API",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com",
       "responsibleDeveloper": "Richard Bruskiewich",
       "responsibleOrganization": "STAR Informatics/Delphinai Corporation"
     },
-    "description": "This is the Translator Knowledge Beacon Aggregator web service application programming interface (API).\n",
+    "description": "This is the Translator Knowledge Beacon web service application programming interface (API).\n",
     "license": {
       "name": "MIT License",
       "url": "http://opensource.org/licenses/MIT"
@@ -427,7 +427,7 @@
     },
     "/exactmatches": {
       "get": {
-        "description": "Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers of of additional concepts that are deemed by the given knowledge source to be exact matches to one or more of the input concepts **plus** whichever identifiers from the input list which specifically matched these new additional concepts.  If an empty set is returned, the it can be assumed that the given knowledge source does not know of any new equivalent concepts matching the input set.\n",
+        "description": "Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers of additional concepts that are deemed by the given knowledge source to be exact matches to one or more of the input concepts **plus** whichever identifiers from the input list which specifically matched these new additional concepts.  If an empty set is returned, the it can be assumed that the given  knowledge source does not know of any new equivalent concepts matching the input set.\n",
         "tags": [
           "exactmatches"
         ],
@@ -466,7 +466,7 @@
     },
     "/statements": {
       "get": {
-        "description": "Given a list of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts, retrieves a paged list of concept-relations where either the subject or object concept matches at least one concept in the input list\n",
+        "description": "Given a list of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts, OR the CUIR of a target  'subject' and/or 'object' concept, retrieves a paged list of concept-relations where either the subject or object concept matches at least one concept in the input list, or the given  'subject' and/or 'object' concept.\n",
         "tags": [
           "statements"
         ],
@@ -474,26 +474,33 @@
           {
             "name": "c",
             "in": "query",
-            "description": "set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts to be used in a search for associated concept-relation statements\n",
-            "required": true,
+            "description": "set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of exactly matching concepts to be used in a search for associated concept-relation statements. From 1.0.15 onwards, the 'c' list  parameter is now NOT mandatory; however IF it is not given, then a specific subject and/or object parameter must be provided (see below)\n",
+            "required": false,
             "type": "array",
             "items": {
               "type": "string"
             }
           },
           {
-            "name": "pageNumber",
+            "name": "subject",
             "in": "query",
-            "description": "(1-based) number of the page to be returned in a paged set of query\nresults\n",
+            "description": "a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the concept to be used as the 'subject' target in the  search for associated concept - relationship statements.\n",
             "required": false,
-            "type": "integer"
+            "type": "string"
           },
           {
-            "name": "pageSize",
+            "name": "relations",
             "in": "query",
-            "description": "number of concepts per page to be returned in a paged set of query\nresults\n",
+            "description": "a (url-encoded, space-delimited) string of predicate relation identifiers with which to constrain the statement relations retrieved  for the given query seed concept. The predicate ids sent should  be as published by the beacon-aggregator by the /predicates API endpoint.\n",
             "required": false,
-            "type": "integer"
+            "type": "string"
+          },
+          {
+            "name": "object",
+            "in": "query",
+            "description": "a [CURIE-encoded](https://www.w3.org/TR/curie/) identifier of the concept to be used as the 'object' target in the  search for associated concept - relationship statements.\n",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "keywords",
@@ -510,11 +517,18 @@
             "type": "string"
           },
           {
-            "name": "relations",
+            "name": "pageNumber",
             "in": "query",
-            "description": "a (url-encoded, space-delimited) string of predicate relation identifiers with which to constrain the statement relations retrieved  for the given query seed concept. The predicate ids sent should  be as published by the beacon-aggregator by the /predicates API endpoint.\n",
+            "description": "(1-based) number of the page to be returned in a paged set of query\nresults\n",
             "required": false,
-            "type": "string"
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "number of concepts per page to be returned in a paged set of query\nresults\n",
+            "required": false,
+            "type": "integer"
           }
         ],
         "operationId": "getStatements",
@@ -607,7 +621,7 @@
                       "wd:Q2898645"
                     ],
                     "name": "Neonatal diabetes mellitus",
-                    "semanticGroup":"DISO"
+                    "semanticGroup": "DISO"
                   }
                 }
               ]
