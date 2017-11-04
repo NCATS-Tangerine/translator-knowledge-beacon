@@ -419,21 +419,24 @@ paths:
   /statements:
     get:
       description: >
-        Given a list of [CURIE-encoded](https://www.w3.org/TR/curie/)
-        identifiers of exactly matching concepts, OR the CUIR of a target 
-        'subject' and/or 'object' concept, retrieves a paged list of
-        concept-relations where either the subject or object concept matches at
-        least one concept in the input list, or the given  'subject' and/or
-        'object' concept.
+        Given a specified set of [CURIE-encoded](https://www.w3.org/TR/curie/) 
+        'source' ('s') concept identifiers,  retrieves a paged list of
+        relationship statements where either the subject or object concept
+        matches any of the input 'source' concepts provided.  Optionally, a set
+        of 'target' ('t') concept  identifiers may also be given, in which case
+        a member of the 'target' identifier set should match the concept
+        opposing the 'source' in the  statement, that is, if the'source' matches
+        a subject, then the  'target' should match the object of a given
+        statement (or vice versa).
       tags:
         - statements
       parameters:
-        - name: c
+        - name: s
           in: query
           description: >
-            set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
-            exactly matching concepts to be used in a search for associated
-            concept-relation statements.
+            a set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers
+            of  'source' concepts possibly known to the beacon. Unknown CURIES
+            should simply be ignored (silent match failure).
           required: true
           type: array
           items:
@@ -448,14 +451,13 @@ paths:
             API endpoint.
           required: false
           type: string
-        - name: o
+        - name: t
           in: query
           description: >
-            (optional) set of [CURIE-encoded](https://www.w3.org/TR/curie/)
-            identifiers of exactly matching concepts to be used in a search for
-            associated concept-relation statements in opposition to the 'c'
-            concepts, that is, if 'c' matches a subject, then 'o' should match
-            the object of a given statement.
+            (optional) an array set of
+            [CURIE-encoded](https://www.w3.org/TR/curie/)  identifiers of
+            'target' concepts possibly known to the beacon.  Unknown CURIEs
+            should simply be ignored (silent match failure).
           required: false
           type: array
           items:
