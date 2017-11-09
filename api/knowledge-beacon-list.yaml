@@ -43,7 +43,7 @@ beacons:
 - name: Bio2RDF
   description: Wraps Bio2RDF
   status: in_progress
-  contact: micheldumontier
+  contact: amalic
 - name: Pharos
   description: wraps pharos
   wraps: https://pharos.nih.gov
