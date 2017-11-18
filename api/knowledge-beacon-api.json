@@ -183,7 +183,7 @@
     },
     "/concepts": {
       "get": {
-        "description": "Retrieves a (paged) list of concepts in the system\n",
+        "description": "Retrieves a (paged) list of whose concept in the beacon knowledge base with names and/or synonyms matching a set of keywords or substrings. The (possibly paged) results returned should generally be returned in order of the quality of the match, that is, the highest ranked concepts should exactly match the most keywords, in the same order as the keywords were given. Lower quality hits with fewer keyword matches or out-of-order keyword matches, should be returned lower in the list.\n",
         "tags": [
           "concepts"
         ],

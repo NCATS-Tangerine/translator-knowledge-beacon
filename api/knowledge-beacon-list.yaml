@@ -4,7 +4,7 @@ beacons:
   description: Reference Knowledge Beacon implementation indexed by Wikidata
   wraps: an internally (private subnet accessed) NCATS Neo4j database server populated with Semantic Medline Database
   repo: https://github.com/NCATS-Tangerine/reference-beacon
-  contact: RichardBruskiewich
+  contact: Richard Bruskiewich
   status: deployed
 - url: http://garbanzo.sulab.org/
   name: Wikidata
@@ -18,7 +18,7 @@ beacons:
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
   repo: https://github.com/goodb/beacons
-  contact: goodb
+  contact: Richard Bruskiewich (formerly Ben Good)
   status: in_progress
 - name: Red
   description: Drug-Drug interactions from red team
@@ -28,7 +28,7 @@ beacons:
   name: Monarch Biolink
   description: Wraps Monarch biolink API
   wraps: https://api.monarchinitiative.org/api/
-  contact: Lance Hannestad
+  contact: Richard Bruskiewich (formerly Lance Hannestad)
   status: deployed
 - name: Monarch Ontologies
   description: Wraps Monarch SciGraph ontology
@@ -43,7 +43,7 @@ beacons:
 - name: Bio2RDF
   description: Wraps Bio2RDF
   status: in_progress
-  contact: micheldumontier
+  contact: amalic
 - name: Pharos
   description: wraps pharos
   wraps: https://pharos.nih.gov
@@ -60,7 +60,7 @@ beacons:
   description: Knowledge Beacon wrapper for ndexbio.org
   wraps: http://ndexbio.org
   repo: https://github.com/NCATS-Tangerine/ndex-beacon
-  contact: meera-gd
+  contact: Richard Bruskiewich (formerly Meera Godden (meera-gd))
   status: deployed
  
 clients:
