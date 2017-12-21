@@ -62,6 +62,10 @@ beacons:
   repo: https://github.com/NCATS-Tangerine/ndex-beacon
   contact: Richard Bruskiewich (formerly Meera Godden (meera-gd))
   status: deployed
- 
+- name: generic smartAPI wrapper
+  description: wrapping smartAPI as a beacon
+  wraps: http://smartapi.info
+  contact: todo
+  status: discussion 
 clients:
  - url: http://tkbio.ncats.io/
