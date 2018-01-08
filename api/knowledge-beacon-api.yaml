@@ -33,7 +33,49 @@ tags:
   - name: evidence
     description: Queries for references cited as evidence for statements
 paths:
-  /types:
+  /metamap:
+    get:
+      description: >
+        Get a list of concept type -> relation -> concept type that is available in the database
+      tags:
+        - summary
+      operationId: getMetamap
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              title: What
+              type: object
+              properties:
+                subject_type:
+                  type: string
+                  description: |
+                    the subject's semantic type
+                relation_type:
+                  type: string
+                  description: |
+                    the relation's semantic type
+                object_type:
+                  type: string
+                  description: |
+                    the object's semantic type
+                frequency:
+                  type: integer
+                  description: |
+                    the number of items of this type 
+                # idmap:
+                #   type: string
+                #   description: The URL to execute the exactmatches API call on the id
+          description: |
+            Successful response with types and frequency returned
+          examples:
+            application/json:
+              - subject_type: GENE
+                frequency: 12355
+                object_type: DISO
+                relation_type: causes
+  '/types':
     get:
       description: >
         Get a list of types and # of instances in the knowledge source, and a
