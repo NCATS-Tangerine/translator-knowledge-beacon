@@ -30,6 +30,7 @@ beacons:
   wraps: https://api.monarchinitiative.org/api/
   contact: Richard Bruskiewich (formerly Lance Hannestad)
   status: deployed
+  repo: https://github.com/NCATS-Tangerine/biolink-beacon
 - name: Monarch Ontologies
   description: Wraps Monarch SciGraph ontology
   wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
@@ -62,6 +63,7 @@ beacons:
   repo: https://github.com/NCATS-Tangerine/ndex-beacon
   contact: Richard Bruskiewich (formerly Meera Godden (meera-gd))
   status: deployed
+  repo: https://github.com/NCATS-Tangerine/ndex-beacon
 - name: generic smartAPI wrapper
   description: wrapping smartAPI as a beacon
   wraps: http://smartapi.info
