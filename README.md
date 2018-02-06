@@ -4,11 +4,19 @@
 
 This project documents the Knowledge Beacon Application Programming Interface (KBAPI). 
 
-Specifically, this repository holds the OpenAPI ("Swagger") definition of the KBAPI archived in the 'api' subfolder: https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-api.yaml
+Specifically, this repository holds the OpenAPI ("Swagger") definition of the **KBAPI** archived in the 'api' subfolder: https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-api.yaml
 
-These OpenAPI definitions can be directly used to generate both client and server code as described below. A "Knowledge Beacon Workflow" document discusses the use of the API.
+These OpenAPI definitions can be directly used to generate both client and server code as described below. 
 
-# Knowledge Beacons in Action! #
+# Knowledge Beacons Workflow
+
+The **KBAPI** is primarily designed to support a simple knowledge discovery workflow, as illustrated in following diagram:
+
+![alt text](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/docs/KB_Workflow.png "Knowledge Beacon Workflow")
+
+Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon.
+
+# Knowledge Beacons in Action!
 
 An initial prototype web application client "Translator Knowledge.Bio" accessing Knowledge Beacons is implemented and running at **http://tkbio.ncats.io.**, the code for which is available **[here](https://github.com/NCATS-Tangerine/tkbio)**. 
 
