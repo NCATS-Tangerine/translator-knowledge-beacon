@@ -14,7 +14,9 @@ The **KBAPI** is primarily designed to support a simple knowledge discovery work
 
 ![alt text](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/docs/KB_Workflow.png "Knowledge Beacon Workflow")
 
-Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon.
+Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon.  
+
+It also provides endpoints (*/exactmatches*) to report CURIE identifiers which are deemed to globally identify the functionally equivalent (*sensa*-[SKOS exactMatch](http://www.w3.org/2004/02/skos/core#exactMatch) or [OWL sameAs](https://www.w3.org/2002/07/owl)).
 
 # Knowledge Beacons in Action!
 
