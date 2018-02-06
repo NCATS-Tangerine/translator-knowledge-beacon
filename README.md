@@ -14,9 +14,11 @@ The **KBAPI** is primarily designed to support a simple knowledge discovery work
 
 ![alt text](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/docs/KB_Workflow.png "Knowledge Beacon Workflow")
 
-Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon.  
+Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon. 
 
-It also provides endpoints (*/exactmatches*) to report CURIE identifiers which are deemed to globally identify the functionally equivalent (*sensa*-[SKOS exactMatch](http://www.w3.org/2004/02/skos/core#exactMatch) or [OWL sameAs](https://www.w3.org/2002/07/owl)).
+In fact, concept instances returned by various calls - */concepts?keywords=..*, */concepts/{conceptId}* and the subject/object concepts in knowledge assertions returned by the */statements* endpoint, are specified by the API to be tagged by the semantic concept types (i.e. "gene", "drug", "disease", etc.) reported by the */types* endpoint, which is assumed to be based on a semantic data type controlled vocabulary (originally based on the [UMLS Metamap concept categories](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt), but which is now undergoing NCATS Translator curation to a richer ontology).
+
+The **KBAPI** also provides endpoints (*/exactmatches*) to report CURIE identifiers which are deemed to globally identify the functionally equivalent (*sensa*-[SKOS exactMatch](http://www.w3.org/2004/02/skos/core#exactMatch) or [OWL sameAs](https://www.w3.org/2002/07/owl)).
 
 # Knowledge Beacons in Action!
 
