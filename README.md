@@ -6,7 +6,7 @@ This project documents the Knowledge Beacon Application Programming Interface (K
 
 Specifically, this repository holds the OpenAPI ("Swagger") definition of the **KBAPI** archived in the 'api' subfolder: https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-api.yaml
 
-These OpenAPI definitions can be directly used to generate both client and server code as described below. 
+Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/wiki) for additional documentation on the status of Knowledge Beacon API implementations and some additional notes on how to build your own.
 
 # Knowledge Beacons Workflow
 
@@ -35,7 +35,4 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 
 Other beacon wrappers (e.g. Wikidata) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
-# Knowledge Beacon Wiki
-
-Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/wiki) for additional documentation on the status of Knowledge Beacon implementations and some additional notes on how to build your own.
 
