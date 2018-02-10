@@ -35,65 +35,7 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 
 Other beacon wrappers (e.g. Wikidata) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
-# Swagger generated server #
+# Knowledge Beacon Wiki
 
-##Spring Boot Server## 
+Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/wiki) for additional documentation on the status of Knowledge Beacon implementations and some additional notes on how to build your own.
 
-The [swagger-codegen](https://github.com/swagger-api/swagger-codegen) project can be used to generate client and server libraries/applications to use the API. 
-
-On Mac OSX machines, Homebrew can be used to install the swagger-codegen tool:
-
-	brew install swagger-codegen
-
-which downloads the JAR and installs an executable wrapper on your PATH.
-
-Alternately, the swagger-codegene Java JAR should be downloaded and a "SWAGGER_CODEGEN_PATH" environmental variable set to point to the folder containing the jar.
-
-Some sample scripts are given in the scripts subfolder to use for the creation of Java clients and servers (the '.sh' is a Linux bash shell version; the '.bat' is a Windows version)
-
-* generateJavaClient.sh - generates a Java client library
-* generateSpringBootServer.sh - generates a Java Spring Boot Server stub implementation
-
-See the swagger-codegen web site for additional language and framework implementation options for stub generation.  For proper execution, these scripts should be executed directly inside the 'scripts' folder.
-
-## Building a Web Server using the API ##
-
-The 'generateSpringBootServer' script (re-)generates a Java Spring Boot server code tree under 'server' subfolder in the root folder. Usage:
-
-	cd scripts
-	./generateSpringBootServer.sh api/knowledge-beacon.yaml  # use the .bat file for MS Windows  
-
-The resulting code base is put in a 'server' subfolder may be directly built with Maven into an executable Java JAR file:
-
-	mvn package
-
-where the resulting JAR is placed into the 'target' subdirectory.  Alternately, the project may be converted to a Gradle project by simply running the 'gradle init' function inside the root project folder.
-
-## Running the Web Server ##
-
-Start your server as an simple java application (where '*' is the version of the API, e.g. '1.0.12') as follows:
-
-For a Maven generated version, type:
-
-	java -jar target/knowledge-beacon-server-*.jar
-
-
-Alternately, for the Gradle generated version, type:
-
-	java -jar build/libs/knowledge-beacon-server-*.jar
-
-
-You can view the api documentation online by pointing to
-  
-	http://localhost:8080/api
-
-(where 'api' is the basepath in the OpenAPI document).  You can change default port value in **application.properties** under server/src/main/resources.
-
-## Building a Client Library using the API ##
-
-The 'generateJavaClient' script (re-)generates a Java client access code tree under 'client' folder in the project, as follows:
-
-	cd scripts
-	./generateJavaClient.sh api/knowledge-beacon_*.yaml   # use the .bat file for MS Windows
-
-(where '*' is the version of the API, e.g. '1.0.12')  The resulting code base is put in a 'client' subfolder to be directly customized then built into an executable Java JAR file.
