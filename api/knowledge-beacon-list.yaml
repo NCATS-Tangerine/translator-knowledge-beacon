@@ -67,7 +67,7 @@ beacons:
 - name: generic smartAPI wrapper
   description: wrapping smartAPI as a beacon
   wraps: http://smartapi.info
-  contact: todo
+  contact: Tim Putman OHSU
   status: discussion 
 clients:
  - url: http://tkbio.ncats.io/
