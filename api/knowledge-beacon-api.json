@@ -146,77 +146,64 @@
             "schema": {
               "type": "array",
               "items": {
-                "title": "BeaconKnowledgeMap",
+                "title": "BeaconKnowledgeMapStatement",
                 "type": "object",
                 "properties": {
-                  "beacon": {
-                    "type": "string",
-                    "description": "beacon ID\n"
-                  },
-                  "statements": {
-                    "type": "array",
-                    "items": {
-                      "title": "BeaconKnowledgeMapStatement",
-                      "type": "object",
-                      "properties": {
-                        "subject": {
-                          "title": "BeaconKnowledgeMapSubject",
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "description": "the concept semantic type of a statement subject\n"
-                            },
-                            "prefixes": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "description": "the prefix of the namespace of statement subject concept identifiers which may conceivably be bound to the given relationship\n"
-                              }
-                            }
-                          }
-                        },
-                        "predicate": {
-                          "title": "BeaconKnowledgeMapPredicate",
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "description": "CURIE of the predicate of the given relationship"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "human readable name of the given relationship predicate"
-                            }
-                          }
-                        },
-                        "object": {
-                          "title": "BeaconKnowledgeMapObject",
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "description": "the concept semantic type of a statement object\n"
-                            },
-                            "prefixes": {
-                              "type": "array",
-                              "items": {
-                                "type": "string",
-                                "description": "the prefix of the namespace of statement object concept identifiers which may conceivably be bound to the given relationship\n"
-                              }
-                            }
-                          }
-                        },
-                        "frequency": {
-                          "type": "integer",
-                          "description": "the frequency of statements of the specified relationship within the given beacon\n"
-                        },
-                        "description": {
+                  "subject": {
+                    "title": "BeaconKnowledgeMapSubject",
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "the concept semantic type of a statement subject\n"
+                      },
+                      "prefixes": {
+                        "type": "array",
+                        "items": {
                           "type": "string",
-                          "description": "a description of the nature of the relationship\n"
+                          "description": "the prefix of the namespace of statement subject concept identifiers which may conceivably be bound to the given relationship\n"
                         }
                       }
                     }
+                  },
+                  "predicate": {
+                    "title": "BeaconKnowledgeMapPredicate",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "CURIE of the predicate of the given relationship"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "human readable name of the given relationship predicate"
+                      }
+                    }
+                  },
+                  "object": {
+                    "title": "BeaconKnowledgeMapObject",
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "the concept semantic type of a statement object\n"
+                      },
+                      "prefixes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "the prefix of the namespace of statement object concept identifiers which may conceivably be bound to the given relationship\n"
+                        }
+                      }
+                    }
+                  },
+                  "frequency": {
+                    "type": "integer",
+                    "description": "the frequency of statements of the specified relationship within the given beacon\n"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "a description of the nature of the relationship\n"
                   }
                 }
               }
@@ -225,54 +212,49 @@
             "examples": {
               "application/json": [
                 {
-                  "beacon": 1,
-                  "statements": [
-                    {
-                      "subject": {
-                        "type": "gene",
-                        "prefixes": [
-                          "DRUGBANK",
-                          "CHEMBL",
-                          "UNIPROT"
-                        ]
-                      },
-                      "predicate": {
-                        "id": "RO:0002606",
-                        "label": "is substance that treats"
-                      },
-                      "object": {
-                        "type": "disease or phenotypic feature",
-                        "prefixes": [
-                          "MP",
-                          "HP",
-                          "DOID"
-                        ]
-                      },
-                      "count": 500,
-                      "description": "a small molecule or compound that is capable of some activity that negative regulates or decreases the magnitude of a pathological process, phenotype or disease\n"
-                    },
-                    {
-                      "subject": {
-                        "type": "drug",
-                        "prefixes": [
-                          "DRUGBANK",
-                          "CHEMBL"
-                        ]
-                      },
-                      "predicate": {
-                        "id": "SIO:001250",
-                        "label": "chemical to pathway association"
-                      },
-                      "object": {
-                        "type": "pathway",
-                        "prefixes": [
-                          "KEGG"
-                        ]
-                      },
-                      "count": 100,
-                      "description": "Drug interacts with a given protein\n"
-                    }
-                  ]
+                  "subject": {
+                    "type": "gene",
+                    "prefixes": [
+                      "DRUGBANK",
+                      "CHEMBL",
+                      "UNIPROT"
+                    ]
+                  },
+                  "predicate": {
+                    "id": "RO:0002606",
+                    "label": "is substance that treats"
+                  },
+                  "object": {
+                    "type": "disease or phenotypic feature",
+                    "prefixes": [
+                      "MP",
+                      "HP",
+                      "DOID"
+                    ]
+                  },
+                  "count": 500,
+                  "description": "a small molecule or compound that is capable of some activity that negative regulates or decreases the magnitude of a pathological process, phenotype or disease\n"
+                },
+                {
+                  "subject": {
+                    "type": "drug",
+                    "prefixes": [
+                      "DRUGBANK",
+                      "CHEMBL"
+                    ]
+                  },
+                  "predicate": {
+                    "id": "SIO:001250",
+                    "label": "chemical to pathway association"
+                  },
+                  "object": {
+                    "type": "pathway",
+                    "prefixes": [
+                      "KEGG"
+                    ]
+                  },
+                  "count": 100,
+                  "description": "Drug interacts with a given protein\n"
                 }
               ]
             }
