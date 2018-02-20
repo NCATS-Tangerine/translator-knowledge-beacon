@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.0.15
+  version: 1.0.16
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
@@ -18,20 +18,12 @@ schemes:
 produces:
   - application/json
 tags:
-  - name: summary
-    description: Summary statistics about the knowledge source
+  - name: metadata
+    description: Queries about global characteristics of the knowledge source
   - name: concepts
-    description: Queries for concepts
-  - name: predicates
-    description: Queries for predicates
-  - name: exactmatches
-    description: >-
-      Queries for exactly matching concepts *sensa*-SKOS;
-      http://www.w3.org/2004/02/skos/core#exactMatch
+    description: Queries relating to concepts
   - name: statements
-    description: Queries for concept-relationship statements
-  - name: evidence
-    description: Queries for references cited as evidence for statements
+    description: Queries relating to concept-relationship statements and their evidence
 paths:
   /types:
     get:
@@ -39,14 +31,14 @@ paths:
         Get a list of types and # of instances in the knowledge source, and a
         link to the API call for the list of equivalent terminology
       tags:
-        - summary
-      operationId: linkedTypes
+        - metadata
+      operationId: getConceptTypes
       responses:
         '200':
           schema:
             type: array
             items:
-              title: Summary
+              title: BeaconConceptType
               type: object
               properties:
                 id:
@@ -64,82 +56,158 @@ paths:
             Successful response with types and frequency returned
           examples:
             application/json:
-              - id: CHEM
+              - id: gene
                 frequency: 12355
-                idmap: 'http://myservice.net/api/v1/exactmatches/CHEM'
-              - id: ANAT
+                idmap: 'https://biolink.github.io/biolink-model/docs/Gene.html'
+              - id: cell
                 frequency: 1234
-                idmap: 'http://myservice.net/api/v1/exactmatches/ANAT'
-  '/concepts/{conceptId}':
+                idmap: 'https://biolink.github.io/biolink-model/docs/Cell.html'
+  /predicates:
     get:
       description: >
-        Retrieves details for a specified concepts in the system, as specified
-        by a (url-encoded) CURIE identifier of a concept known the given
-        knowledge source.
+        Get a list of predicates used in statements issued by the knowledge
+        source
       tags:
-        - concepts
-      parameters:
-        - name: conceptId
-          in: path
-          description: (url-encoded) CURIE identifier of concept of interest
-          required: true
-          type: string
-      operationId: getConceptDetails
+        - metadata
+      operationId: getPredicates
       responses:
         '200':
           schema:
             type: array
             items:
-              title: ConceptWithDetails
+              title: BeaconPredicate
               type: object
               properties:
                 id:
                   type: string
-                  description: >
-                    local object identifier for the concept in the specified
-                    knowledge source database
+                  description: |
+                    CURIE-encoded identifier of predicate resource
                 name:
                   type: string
                   description: |
-                    canonical human readable name of the concept
-                semanticGroup:
-                  type: string
-                  description: |
-                    concept semantic type
-                synonyms:
-                  type: array
-                  description: |
-                    list of synonyms for concept
-                  items:
-                    type: string
+                    human readable name of predicate relation
                 definition:
                   type: string
-                  description: |
-                    concept definition
-                details:
-                  type: array
-                  items:
-                    title: ConceptDetail
-                    type: object
-                    properties:
-                      tag:
-                        type: string
-                        description: |
-                          property name
-                      value:
-                        type: string
-                        description: |
-                          property value
-          description: |
-            Successful response with concept details returned
+                  description: >
+                    human readable definition of predicate relation provided by
+                    this beacon
+          description: >
+            Successful response with predicates with CURIE and definitions
+            indexed by beacons which support the relation
           examples:
             application/json:
-              - id: 'wd:Q14883734'
-                name: WRN
-                semanticGroup: GENE
-                synonyms: []
-                definition: Werner Syndrome Gene
-                details: []
+              - id: 'wd:P123'
+                name: interacts with
+                definition: influences in some manner
+              - id: 'wd:P456'
+                name: has phenotype
+                definition: exhibits biological morphology or behaviour
+  /kmap:
+    get:
+      description: >
+        Get a high level knowledge map of the all the beacons by subject
+        semantic type, predicate and semantic object type
+      tags:
+        - metadata
+      operationId: getKnowledgeMap
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              title: BeaconKnowledgeMapStatement
+              type: object
+              properties:
+                subject:
+                  title: BeaconKnowledgeMapSubject
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: |
+                        the concept semantic type of a statement subject
+                    prefixes:
+                      type: array
+                      items:
+                        type: string
+                        description: >
+                          the prefix of the namespace of statement subject
+                          concept identifiers which may conceivably be bound to
+                          the given relationship
+                predicate:
+                  title: BeaconKnowledgeMapPredicate
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: CURIE of the predicate of the given relationship
+                    name:
+                      type: string
+                      description: human readable name of the given relationship predicate
+                object:
+                  title: BeaconKnowledgeMapObject
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      description: |
+                        the concept semantic type of a statement object
+                    prefixes:
+                      type: array
+                      items:
+                        type: string
+                        description: >
+                          the prefix of the namespace of statement object
+                          concept identifiers which may conceivably be bound to
+                          the given relationship
+                frequency:
+                  type: integer
+                  description: >
+                    the frequency of statements of the specified relationship
+                    within the given beacon
+                description:
+                  type: string
+                  description: |
+                    a description of the nature of the relationship
+          description: |
+            Successful response with types and frequency returned
+          examples:
+            application/json:
+              - subject:
+                  type: gene
+                  prefixes:
+                    - DRUGBANK
+                    - CHEMBL
+                    - UNIPROT
+                predicate:
+                  id: 'RO:0002606'
+                  label: is substance that treats
+                object:
+                  type: disease or phenotypic feature
+                  prefixes:
+                    - MP
+                    - HP
+                    - DOID
+                count: 500
+                description: >
+                  a small molecule or compound that is capable of some activity
+                  that negative regulates or decreases the magnitude of a
+                  pathological process, phenotype or disease
+              - subject:
+                  type: drug
+                  prefixes:
+                    - DRUGBANK
+                    - CHEMBL
+                predicate:
+                  id: 'SIO:001250'
+                  label: chemical to pathway association
+                object:
+                  type: pathway
+                  prefixes:
+                    - KEGG
+                count: 100
+                description: |
+                  Drug interacts with a given protein
   /concepts:
     get:
       description: |
@@ -163,14 +231,14 @@ paths:
             which to match concept names and synonyms
           required: true
           type: string
-        - name: semanticGroups
+        - name: types
           in: query
           description: >
             a (url-encoded) space-delimited set of semantic groups (specified as
-            codes CHEM, GENE, ANAT, etc.) to which to constrain concepts matched
-            by the main keyword search (see [Semantic
-            Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the
-            full list of codes)
+            codes gene, pathway, etc.) to which to constrain concepts matched by
+            the main keyword search (see [Biolink
+            Model](https://biolink.github.io/biolink-model) for the full list of
+            codes)
           required: false
           type: string
         - name: pageNumber
@@ -193,7 +261,7 @@ paths:
           schema:
             type: array
             items:
-              title: Concept
+              title: BeaconConcept
               type: object
               properties:
                 id:
@@ -205,7 +273,7 @@ paths:
                   type: string
                   description: |
                     canonical human readable name of the concept
-                semanticGroup:
+                type:
                   type: string
                   description: |
                     concept semantic type
@@ -225,7 +293,7 @@ paths:
             application/json:
               - id: 'wd:Q6591532'
                 name: 'WRN protein, human'
-                semanticGroup: CHEM
+                type: chemical substance
                 synonyms:
                   - RecQ3
                   - Werner Syndrome ATP-Dependent Helicase
@@ -249,7 +317,7 @@ paths:
                   a 5\'-overhang.
               - id: 'wd:Q18042562'
                 name: WRNIP1
-                semanticGroup: GENE
+                type: gene
                 synonyms:
                   - WHIP
                   - Werner helicase interacting protein 1
@@ -258,7 +326,7 @@ paths:
                 definition: human gene
               - id: 'wd:Q14883734'
                 name: WRN
-                semanticGroup: GENE
+                type: gene
                 synonyms:
                   - RECQ3
                   - RECQL3
@@ -267,7 +335,7 @@ paths:
                 definition: human gene
               - id: 'wd:Q1154619'
                 name: Werner Syndrome
-                semanticGroup: DISO
+                type: disease
                 synonyms:
                   - Werner Syndrome
                   - Pangeria
@@ -299,46 +367,76 @@ paths:
                   subcutaneous calcifications, muscular atrophy, a tendency to
                   diabetes mellitus, aged appearance of the face, baldness, and
                   a high incidence of neoplastic disease.
-  /predicates:
+  '/concepts/{conceptId}':
     get:
       description: >
-        Get a list of predicates used in statements issued by the knowledge
-        source
+        Retrieves details for a specified concepts in the system, as specified
+        by a (url-encoded) CURIE identifier of a concept known the given
+        knowledge source.
       tags:
-        - predicates
-      operationId: getPredicates
+        - concepts
+      parameters:
+        - name: conceptId
+          in: path
+          description: (url-encoded) CURIE identifier of concept of interest
+          required: true
+          type: string
+      operationId: getConceptDetails
       responses:
         '200':
           schema:
             type: array
             items:
-              title: Predicate
+              title: BeaconConceptWithDetails
               type: object
               properties:
                 id:
                   type: string
-                  description: |
-                    CURIE-encoded identifier of predicate resource
+                  description: >
+                    local object identifier for the concept in the specified
+                    knowledge source database
                 name:
                   type: string
                   description: |
-                    human readable name of predicate relation
+                    canonical human readable name of the concept
+                type:
+                  type: string
+                  description: |
+                    concept semantic type
+                synonyms:
+                  type: array
+                  description: |
+                    list of synonyms for concept
+                  items:
+                    type: string
                 definition:
                   type: string
-                  description: >
-                    human readable definition of predicate relation provided by
-                    this beacon
-          description: >
-            Successful response with predicates with CURIE and definitions
-            indexed by beacons which support the relation
+                  description: |
+                    concept definition
+                details:
+                  type: array
+                  items:
+                    title: BeaconConceptDetail
+                    type: object
+                    properties:
+                      tag:
+                        type: string
+                        description: |
+                          property name
+                      value:
+                        type: string
+                        description: |
+                          property value
+          description: |
+            Successful response with concept details returned
           examples:
             application/json:
-              - id: 'wd:P123'
-                name: interacts with
-                definition: influences in some manner
-              - id: 'wd:P456'
-                name: has phenotype
-                definition: exhibits biological morphology or behaviour
+              - id: 'wd:Q14883734'
+                name: WRN
+                type: gene
+                synonyms: []
+                definition: Werner Syndrome Gene
+                details: []
   '/exactmatches/{conceptId}':
     get:
       description: >
@@ -348,7 +446,7 @@ paths:
         identifier,  typically, of a concept selected from the list of concepts
         originally returned by a /concepts API call on a given KS. 
       tags:
-        - exactmatches
+        - concepts
       parameters:
         - name: conceptId
           in: path
@@ -387,7 +485,7 @@ paths:
         that the given  knowledge source does not know of any new equivalent
         concepts matching the input set.
       tags:
-        - exactmatches
+        - concepts
       parameters:
         - name: c
           in: query
@@ -480,15 +578,14 @@ paths:
             concepts
           required: false
           type: string
-        - name: semanticGroups
+        - name: types
           in: query
           description: >
-            a (url-encoded, space-delimited) string of semantic groups
-            (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain
-            the subject or object concepts associated with the query seed
-            concept (see [Semantic
-            Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the
-            full list of codes)
+            a (url-encoded, space-delimited) string of concept types (specified
+            as codes gene, pathway, etc.) to which to constrain the subject or
+            object concepts associated with the query seed concept (see [Biolink
+            Model](https://biolink.github.io/biolink-model) for the full list of
+            codes)
           required: false
           type: string
         - name: pageNumber
@@ -515,7 +612,7 @@ paths:
           schema:
             type: array
             items:
-              title: Statement
+              title: BeaconStatement
               type: object
               properties:
                 id:
@@ -524,7 +621,7 @@ paths:
                     CURIE-encoded identifier for statement (can be used to
                     retrieve associated evidence)
                 subject:
-                  title: StatementSubject
+                  title: BeaconStatementSubject
                   type: object
                   properties:
                     id:
@@ -534,15 +631,15 @@ paths:
                     name:
                       type: string
                       description: human readable label of subject concept
-                    semanticGroup:
+                    type:
                       type: string
                       description: >
                         a semantic group for the subject concept (specified as a
-                        code CHEM, GENE, etc. - see [Semantic
-                        Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt)
-                        for the full list of codes)
+                        code gene, pathway, disease, etc. - see [Biolink
+                        Model](https://biolink.github.io/biolink-model) for the
+                        full list of codes)
                 predicate:
-                  title: StatementPredicate
+                  title: BeaconStatementPredicate
                   type: object
                   properties:
                     id:
@@ -553,7 +650,7 @@ paths:
                       type: string
                       description: human readable label of concept
                 object:
-                  title: StatementObject
+                  title: BeaconStatementObject
                   type: object
                   properties:
                     id:
@@ -563,13 +660,13 @@ paths:
                     name:
                       type: string
                       description: human readable label of object concept
-                    semanticGroup:
+                    type:
                       type: string
                       description: >
                         a semantic group for the object concept (specified as a
-                        code CHEM, GENE, etc. - see [Semantic
-                        Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt)
-                        for the full list of codes)
+                        code gene, pathway, disease, etc. - see [Biolink
+                        Model](https://biolink.github.io/biolink-model) for the
+                        full list of codes)
           examples:
             application/json:
               - source: semmeddb
@@ -578,7 +675,7 @@ paths:
                   id:
                     - 'wd:Q14912054'
                   name: KCNJ11
-                  semanticGroup: GENE
+                  type: gene
                 predicate:
                   id:
                     - 'kbp:10'
@@ -587,14 +684,14 @@ paths:
                   id:
                     - 'wd:Q2898645'
                   name: Neonatal diabetes mellitus
-                  semanticGroup: DISO
+                  type: disease
   '/evidence/{statementId}':
     get:
       description: >
         Retrieves a (paged) list of annotations cited as evidence for a
         specified concept-relationship statement
       tags:
-        - evidence
+        - statements
       parameters:
         - name: statementId
           in: path
@@ -632,7 +729,7 @@ paths:
           schema:
             type: array
             items:
-              title: Annotation
+              title: BeaconAnnotation
               type: object
               properties:
                 id:

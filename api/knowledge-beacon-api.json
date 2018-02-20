@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Translator Knowledge Beacon API",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
@@ -23,28 +23,16 @@
   ],
   "tags": [
     {
-      "name": "summary",
-      "description": "Summary statistics about the knowledge source"
+      "name": "metadata",
+      "description": "Queries about global characteristics of the knowledge source"
     },
     {
       "name": "concepts",
-      "description": "Queries for concepts"
-    },
-    {
-      "name": "predicates",
-      "description": "Queries for predicates"
-    },
-    {
-      "name": "exactmatches",
-      "description": "Queries for exactly matching concepts *sensa*-SKOS; http://www.w3.org/2004/02/skos/core#exactMatch"
+      "description": "Queries relating to concepts"
     },
     {
       "name": "statements",
-      "description": "Queries for concept-relationship statements"
-    },
-    {
-      "name": "evidence",
-      "description": "Queries for references cited as evidence for statements"
+      "description": "Queries relating to concept-relationship statements and their evidence"
     }
   ],
   "paths": {
@@ -52,15 +40,15 @@
       "get": {
         "description": "Get a list of types and # of instances in the knowledge source, and a link to the API call for the list of equivalent terminology\n",
         "tags": [
-          "summary"
+          "metadata"
         ],
-        "operationId": "linkedTypes",
+        "operationId": "getConceptTypes",
         "responses": {
           "200": {
             "schema": {
               "type": "array",
               "items": {
-                "title": "Summary",
+                "title": "BeaconConceptType",
                 "type": "object",
                 "properties": {
                   "id": {
@@ -82,256 +70,14 @@
             "examples": {
               "application/json": [
                 {
-                  "id": "CHEM",
+                  "id": "gene",
                   "frequency": 12355,
-                  "idmap": "http://myservice.net/api/v1/exactmatches/CHEM"
+                  "idmap": "https://biolink.github.io/biolink-model/docs/Gene.html"
                 },
                 {
-                  "id": "ANAT",
+                  "id": "cell",
                   "frequency": 1234,
-                  "idmap": "http://myservice.net/api/v1/exactmatches/ANAT"
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/concepts/{conceptId}": {
-      "get": {
-        "description": "Retrieves details for a specified concepts in the system, as specified by a (url-encoded) CURIE identifier of a concept known the given knowledge source.\n",
-        "tags": [
-          "concepts"
-        ],
-        "parameters": [
-          {
-            "name": "conceptId",
-            "in": "path",
-            "description": "(url-encoded) CURIE identifier of concept of interest",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "operationId": "getConceptDetails",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "title": "ConceptWithDetails",
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "local object identifier for the concept in the specified knowledge source database\n"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "canonical human readable name of the concept\n"
-                  },
-                  "semanticGroup": {
-                    "type": "string",
-                    "description": "concept semantic type\n"
-                  },
-                  "synonyms": {
-                    "type": "array",
-                    "description": "list of synonyms for concept\n",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "definition": {
-                    "type": "string",
-                    "description": "concept definition\n"
-                  },
-                  "details": {
-                    "type": "array",
-                    "items": {
-                      "title": "ConceptDetail",
-                      "type": "object",
-                      "properties": {
-                        "tag": {
-                          "type": "string",
-                          "description": "property name\n"
-                        },
-                        "value": {
-                          "type": "string",
-                          "description": "property value\n"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "description": "Successful response with concept details returned\n",
-            "examples": {
-              "application/json": [
-                {
-                  "id": "wd:Q14883734",
-                  "name": "WRN",
-                  "semanticGroup": "GENE",
-                  "synonyms": [],
-                  "definition": "Werner Syndrome Gene",
-                  "details": []
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    "/concepts": {
-      "get": {
-        "description": "Retrieves a (paged) list of whose concept in the beacon knowledge base with names and/or synonyms matching a set of keywords or substrings. The (possibly paged) results returned should generally be returned in order of the quality of the match, that is, the highest ranked concepts should exactly match the most keywords, in the same order as the keywords were given. Lower quality hits with fewer keyword matches or out-of-order keyword matches, should be returned lower in the list.\n",
-        "tags": [
-          "concepts"
-        ],
-        "parameters": [
-          {
-            "name": "keywords",
-            "in": "query",
-            "description": "a (urlencoded) space delimited set of keywords or substrings against which to match concept names and synonyms",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "semanticGroups",
-            "in": "query",
-            "description": "a (url-encoded) space-delimited set of semantic groups (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain concepts matched by the main keyword search (see [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "description": "(1-based) number of the page to be returned in a paged set of query\nresults\n",
-            "required": false,
-            "type": "integer"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "description": "number of concepts per page to be returned in a paged set of query\nresults\n",
-            "required": false,
-            "type": "integer"
-          }
-        ],
-        "operationId": "getConcepts",
-        "responses": {
-          "200": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "title": "Concept",
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "local object identifier for the concept in the specified knowledge source database\n"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "canonical human readable name of the concept\n"
-                  },
-                  "semanticGroup": {
-                    "type": "string",
-                    "description": "concept semantic type\n"
-                  },
-                  "synonyms": {
-                    "type": "array",
-                    "description": "list of synonyms for concept\n",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "definition": {
-                    "type": "string",
-                    "description": "concept definition\n"
-                  }
-                }
-              }
-            },
-            "description": "Successful response with concept list returned\n",
-            "examples": {
-              "application/json": [
-                {
-                  "id": "wd:Q6591532",
-                  "name": "WRN protein, human",
-                  "semanticGroup": "CHEM",
-                  "synonyms": [
-                    "RecQ3",
-                    "Werner Syndrome ATP-Dependent Helicase",
-                    "RECQL2 protein, human",
-                    "EC 3.1.-.-",
-                    "WRN protein, human",
-                    "WRN",
-                    "Exonuclease WRN",
-                    "Werner Syndrome Protein",
-                    "RecQ Protein-Like 2",
-                    "EC 3.6.4.12",
-                    "RECQ3 protein, human",
-                    "Werner syndrome helicase, human",
-                    "WRN Protein",
-                    "DNA Helicase, RecQ-Like Type 3"
-                  ],
-                  "definition": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang."
-                },
-                {
-                  "id": "wd:Q18042562",
-                  "name": "WRNIP1",
-                  "semanticGroup": "GENE",
-                  "synonyms": [
-                    "WHIP",
-                    "Werner helicase interacting protein 1",
-                    "WRNIP1",
-                    "bA420G6.2"
-                  ],
-                  "definition": "human gene"
-                },
-                {
-                  "id": "wd:Q14883734",
-                  "name": "WRN",
-                  "semanticGroup": "GENE",
-                  "synonyms": [
-                    "RECQ3",
-                    "RECQL3",
-                    "Werner syndrome RecQ like helicase",
-                    "RECQL2"
-                  ],
-                  "definition": "human gene"
-                },
-                {
-                  "id": "wd:Q1154619",
-                  "name": "Werner Syndrome",
-                  "semanticGroup": "DISO",
-                  "synonyms": [
-                    "Werner Syndrome",
-                    "Pangeria",
-                    "Syndrome, Werner",
-                    "Progeria, Adult",
-                    "Werner Syndrome [Disease/Finding]",
-                    "Werner syndrome (disorder)",
-                    "adult progeria",
-                    "Werner",
-                    "syndromes werner",
-                    "Syndrome, Werner\\'s",
-                    "WRN",
-                    "Werner\\'s syndrome",
-                    "adults progeria",
-                    "Werner syndrome (adult progeria) (diagnosis)",
-                    "Werner syndrome (adult progeria)",
-                    "Syndrome, Werners",
-                    "Adult premature aging syndrome",
-                    "syndromes werner\\'s",
-                    "Werners Syndrome",
-                    "syndrome werner",
-                    "Progeria of the adult",
-                    "WS",
-                    "syndromes werners",
-                    "Adult premature ageing syndrome"
-                  ],
-                  "definition": "autosomal recessive disorder that causes premature aging in adults, characterized by sclerodermal skin changes, cataracts, subcutaneous calcifications, muscular atrophy, a tendency to diabetes mellitus, aged appearance of the face, baldness, and a high incidence of neoplastic disease."
+                  "idmap": "https://biolink.github.io/biolink-model/docs/Cell.html"
                 }
               ]
             }
@@ -343,7 +89,7 @@
       "get": {
         "description": "Get a list of predicates used in statements issued by the knowledge source\n",
         "tags": [
-          "predicates"
+          "metadata"
         ],
         "operationId": "getPredicates",
         "responses": {
@@ -351,7 +97,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "title": "Predicate",
+                "title": "BeaconPredicate",
                 "type": "object",
                 "properties": {
                   "id": {
@@ -388,11 +134,381 @@
         }
       }
     },
+    "/kmap": {
+      "get": {
+        "description": "Get a high level knowledge map of the all the beacons by subject semantic type, predicate and semantic object type\n",
+        "tags": [
+          "metadata"
+        ],
+        "operationId": "getKnowledgeMap",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "title": "BeaconKnowledgeMapStatement",
+                "type": "object",
+                "properties": {
+                  "subject": {
+                    "title": "BeaconKnowledgeMapSubject",
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "the concept semantic type of a statement subject\n"
+                      },
+                      "prefixes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "the prefix of the namespace of statement subject concept identifiers which may conceivably be bound to the given relationship\n"
+                        }
+                      }
+                    }
+                  },
+                  "predicate": {
+                    "title": "BeaconKnowledgeMapPredicate",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "CURIE of the predicate of the given relationship"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "human readable name of the given relationship predicate"
+                      }
+                    }
+                  },
+                  "object": {
+                    "title": "BeaconKnowledgeMapObject",
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "the concept semantic type of a statement object\n"
+                      },
+                      "prefixes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "the prefix of the namespace of statement object concept identifiers which may conceivably be bound to the given relationship\n"
+                        }
+                      }
+                    }
+                  },
+                  "frequency": {
+                    "type": "integer",
+                    "description": "the frequency of statements of the specified relationship within the given beacon\n"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "a description of the nature of the relationship\n"
+                  }
+                }
+              }
+            },
+            "description": "Successful response with types and frequency returned\n",
+            "examples": {
+              "application/json": [
+                {
+                  "subject": {
+                    "type": "gene",
+                    "prefixes": [
+                      "DRUGBANK",
+                      "CHEMBL",
+                      "UNIPROT"
+                    ]
+                  },
+                  "predicate": {
+                    "id": "RO:0002606",
+                    "label": "is substance that treats"
+                  },
+                  "object": {
+                    "type": "disease or phenotypic feature",
+                    "prefixes": [
+                      "MP",
+                      "HP",
+                      "DOID"
+                    ]
+                  },
+                  "count": 500,
+                  "description": "a small molecule or compound that is capable of some activity that negative regulates or decreases the magnitude of a pathological process, phenotype or disease\n"
+                },
+                {
+                  "subject": {
+                    "type": "drug",
+                    "prefixes": [
+                      "DRUGBANK",
+                      "CHEMBL"
+                    ]
+                  },
+                  "predicate": {
+                    "id": "SIO:001250",
+                    "label": "chemical to pathway association"
+                  },
+                  "object": {
+                    "type": "pathway",
+                    "prefixes": [
+                      "KEGG"
+                    ]
+                  },
+                  "count": 100,
+                  "description": "Drug interacts with a given protein\n"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/concepts": {
+      "get": {
+        "description": "Retrieves a (paged) list of whose concept in the \nbeacon knowledge base with names and/or synonyms \nmatching a set of keywords or substrings. \nThe (possibly paged) results returned should generally \nbe returned in order of the quality of the match, \nthat is, the highest ranked concepts should exactly \nmatch the most keywords, in the same order as the \nkeywords were given. Lower quality hits with fewer \nkeyword matches or out-of-order keyword matches, \nshould be returned lower in the list.\n",
+        "tags": [
+          "concepts"
+        ],
+        "parameters": [
+          {
+            "name": "keywords",
+            "in": "query",
+            "description": "a (urlencoded) space delimited set of keywords or substrings against which to match concept names and synonyms",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "description": "a (url-encoded) space-delimited set of semantic groups (specified as codes gene, pathway, etc.) to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "(1-based) number of the page to be returned in a paged set of query\nresults\n",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "number of concepts per page to be returned in a paged set of query\nresults\n",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "operationId": "getConcepts",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "title": "BeaconConcept",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "local object identifier for the concept in the specified knowledge source database\n"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "canonical human readable name of the concept\n"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "concept semantic type\n"
+                  },
+                  "synonyms": {
+                    "type": "array",
+                    "description": "list of synonyms for concept\n",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "definition": {
+                    "type": "string",
+                    "description": "concept definition\n"
+                  }
+                }
+              }
+            },
+            "description": "Successful response with concept list returned\n",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "wd:Q6591532",
+                  "name": "WRN protein, human",
+                  "type": "chemical substance",
+                  "synonyms": [
+                    "RecQ3",
+                    "Werner Syndrome ATP-Dependent Helicase",
+                    "RECQL2 protein, human",
+                    "EC 3.1.-.-",
+                    "WRN protein, human",
+                    "WRN",
+                    "Exonuclease WRN",
+                    "Werner Syndrome Protein",
+                    "RecQ Protein-Like 2",
+                    "EC 3.6.4.12",
+                    "RECQ3 protein, human",
+                    "Werner syndrome helicase, human",
+                    "WRN Protein",
+                    "DNA Helicase, RecQ-Like Type 3"
+                  ],
+                  "definition": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang."
+                },
+                {
+                  "id": "wd:Q18042562",
+                  "name": "WRNIP1",
+                  "type": "gene",
+                  "synonyms": [
+                    "WHIP",
+                    "Werner helicase interacting protein 1",
+                    "WRNIP1",
+                    "bA420G6.2"
+                  ],
+                  "definition": "human gene"
+                },
+                {
+                  "id": "wd:Q14883734",
+                  "name": "WRN",
+                  "type": "gene",
+                  "synonyms": [
+                    "RECQ3",
+                    "RECQL3",
+                    "Werner syndrome RecQ like helicase",
+                    "RECQL2"
+                  ],
+                  "definition": "human gene"
+                },
+                {
+                  "id": "wd:Q1154619",
+                  "name": "Werner Syndrome",
+                  "type": "disease",
+                  "synonyms": [
+                    "Werner Syndrome",
+                    "Pangeria",
+                    "Syndrome, Werner",
+                    "Progeria, Adult",
+                    "Werner Syndrome [Disease/Finding]",
+                    "Werner syndrome (disorder)",
+                    "adult progeria",
+                    "Werner",
+                    "syndromes werner",
+                    "Syndrome, Werner\\'s",
+                    "WRN",
+                    "Werner\\'s syndrome",
+                    "adults progeria",
+                    "Werner syndrome (adult progeria) (diagnosis)",
+                    "Werner syndrome (adult progeria)",
+                    "Syndrome, Werners",
+                    "Adult premature aging syndrome",
+                    "syndromes werner\\'s",
+                    "Werners Syndrome",
+                    "syndrome werner",
+                    "Progeria of the adult",
+                    "WS",
+                    "syndromes werners",
+                    "Adult premature ageing syndrome"
+                  ],
+                  "definition": "autosomal recessive disorder that causes premature aging in adults, characterized by sclerodermal skin changes, cataracts, subcutaneous calcifications, muscular atrophy, a tendency to diabetes mellitus, aged appearance of the face, baldness, and a high incidence of neoplastic disease."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/concepts/{conceptId}": {
+      "get": {
+        "description": "Retrieves details for a specified concepts in the system, as specified by a (url-encoded) CURIE identifier of a concept known the given knowledge source.\n",
+        "tags": [
+          "concepts"
+        ],
+        "parameters": [
+          {
+            "name": "conceptId",
+            "in": "path",
+            "description": "(url-encoded) CURIE identifier of concept of interest",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "operationId": "getConceptDetails",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "title": "BeaconConceptWithDetails",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "local object identifier for the concept in the specified knowledge source database\n"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "canonical human readable name of the concept\n"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "concept semantic type\n"
+                  },
+                  "synonyms": {
+                    "type": "array",
+                    "description": "list of synonyms for concept\n",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "definition": {
+                    "type": "string",
+                    "description": "concept definition\n"
+                  },
+                  "details": {
+                    "type": "array",
+                    "items": {
+                      "title": "BeaconConceptDetail",
+                      "type": "object",
+                      "properties": {
+                        "tag": {
+                          "type": "string",
+                          "description": "property name\n"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "property value\n"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Successful response with concept details returned\n",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "wd:Q14883734",
+                  "name": "WRN",
+                  "type": "gene",
+                  "synonyms": [],
+                  "definition": "Werner Syndrome Gene",
+                  "details": []
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "/exactmatches/{conceptId}": {
       "get": {
         "description": "Retrieves a list of qualified identifiers of \"exact match\" concepts, [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a specified (url-encoded) CURIE (without brackets) concept object identifier,  typically, of a concept selected from the list of concepts originally returned by a /concepts API call on a given KS. \n",
         "tags": [
-          "exactmatches"
+          "concepts"
         ],
         "parameters": [
           {
@@ -427,7 +543,7 @@
       "get": {
         "description": "Given an input list of [CURIE](https://www.w3.org/TR/curie/) identifiers of known exactly matched concepts [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch), retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers of additional concepts that are deemed by the given knowledge source to be exact matches to one or more of the input concepts **plus** whichever identifiers from the input list which specifically matched these new additional concepts.  If an empty set is returned, the it can be assumed that the given  knowledge source does not know of any new equivalent concepts matching the input set.\n",
         "tags": [
-          "exactmatches"
+          "concepts"
         ],
         "parameters": [
           {
@@ -504,9 +620,9 @@
             "type": "string"
           },
           {
-            "name": "semanticGroups",
+            "name": "types",
             "in": "query",
-            "description": "a (url-encoded, space-delimited) string of semantic groups (specified as codes CHEM, GENE, ANAT, etc.) to which to constrain the subject or object concepts associated with the query seed concept (see [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n",
+            "description": "a (url-encoded, space-delimited) string of concept types (specified as codes gene, pathway, etc.) to which to constrain the subject or object concepts associated with the query seed concept (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n",
             "required": false,
             "type": "string"
           },
@@ -532,7 +648,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "title": "Statement",
+                "title": "BeaconStatement",
                 "type": "object",
                 "properties": {
                   "id": {
@@ -540,7 +656,7 @@
                     "description": "CURIE-encoded identifier for statement (can be used to retrieve associated evidence)"
                   },
                   "subject": {
-                    "title": "StatementSubject",
+                    "title": "BeaconStatementSubject",
                     "type": "object",
                     "properties": {
                       "id": {
@@ -551,14 +667,14 @@
                         "type": "string",
                         "description": "human readable label of subject concept"
                       },
-                      "semanticGroup": {
+                      "type": {
                         "type": "string",
-                        "description": "a semantic group for the subject concept (specified as a code CHEM, GENE, etc. - see [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n"
+                        "description": "a semantic group for the subject concept (specified as a code gene, pathway, disease, etc. - see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n"
                       }
                     }
                   },
                   "predicate": {
-                    "title": "StatementPredicate",
+                    "title": "BeaconStatementPredicate",
                     "type": "object",
                     "properties": {
                       "id": {
@@ -572,7 +688,7 @@
                     }
                   },
                   "object": {
-                    "title": "StatementObject",
+                    "title": "BeaconStatementObject",
                     "type": "object",
                     "properties": {
                       "id": {
@@ -583,9 +699,9 @@
                         "type": "string",
                         "description": "human readable label of object concept"
                       },
-                      "semanticGroup": {
+                      "type": {
                         "type": "string",
-                        "description": "a semantic group for the object concept (specified as a code CHEM, GENE, etc. - see [Semantic Groups](https://metamap.nlm.nih.gov/Docs/SemGroups_2013.txt) for the full list of codes)\n"
+                        "description": "a semantic group for the object concept (specified as a code gene, pathway, disease, etc. - see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n"
                       }
                     }
                   }
@@ -602,7 +718,7 @@
                       "wd:Q14912054"
                     ],
                     "name": "KCNJ11",
-                    "semanticGroup": "GENE"
+                    "type": "gene"
                   },
                   "predicate": {
                     "id": [
@@ -615,7 +731,7 @@
                       "wd:Q2898645"
                     ],
                     "name": "Neonatal diabetes mellitus",
-                    "semanticGroup": "DISO"
+                    "type": "disease"
                   }
                 }
               ]
@@ -628,7 +744,7 @@
       "get": {
         "description": "Retrieves a (paged) list of annotations cited as evidence for a specified concept-relationship statement\n",
         "tags": [
-          "evidence"
+          "statements"
         ],
         "parameters": [
           {
@@ -667,7 +783,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "title": "Annotation",
+                "title": "BeaconAnnotation",
                 "type": "object",
                 "properties": {
                   "id": {
