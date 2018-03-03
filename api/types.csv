@@ -22,17 +22,18 @@ gene,SO:0000704|SIO:010035,
 gene_product,,The functional molecular product of a single gene. Gene products are either proteins or functional RNA molecules
 protein,PR:000000001|SIO:010043,
 RNA_product,CHEBI:33697|SIO:010450,
-noncoding_RNA_product,SIO:001235|SIO:001235,
+noncoding_RNA_product,SIO:001235,
 microRNA,SO:0000276|SIO:001397,
 macromolecular_complex,GO:0032991|SIO:010046,
 gene_family,NCIT:C20130|SIO:001380,any grouping of multiple genes or gene products related by common descent
-genotype,SIO:001079,"An information content entity that describes a genome by specifying the total variation in genomic sequence and/or gene expression, relative to some extablished background"
-allele,SIO:010277,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus
+genotype,GENO:0000536|SIO:001079,"An information content entity that describes a genome by specifying the total variation in genomic sequence and/or gene expression, relative to some extablished background"
+allele,GENO:0000512|SIO:010277,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus
 sequence_variant,GENO:0000512,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus.
 drug_exposure,ECTO:0000509|SIO:001005,A drug exposure is an intake of a particular chemical substance
 treatment,OGMS:0000090|SIO:001398,A treatment is targeted at a disease or phenotype and may involve multiple drug 'exposures'
 biological_process,GO:0008150|SIO:000006,One or more causally connected executions of molecular functions
-pathway,SIO:010526,
+pathway,GO:0007165|SIO:010526|PW:0000001,
 cellular_component,GO:0005575|SIO:001400,A location in or around a cell
 cell,GO:0005623|SIO:010001,
 gross_anatomical_structure,SIO:010046,
+
