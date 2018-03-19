@@ -27,8 +27,8 @@ microRNA,SO:0000276|SIO:001397,
 macromolecular_complex,GO:0032991|SIO:010046,
 gene_family,NCIT:C20130|SIO:001380,any grouping of multiple genes or gene products related by common descent
 genotype,SIO:001079,"An information content entity that describes a genome by specifying the total variation in genomic sequence and/or gene expression, relative to some extablished background"
-allele,SIO:010277,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus
-sequence_variant,GENO:0000512,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus.
+allele,GENO:0000512SIO:010277,One of a set of genomic features that exist at a particular genomic locus
+sequence_variant,GENO:0000002,An allele that varies in it sequence from what is considered the reference at that locus
 drug_exposure,ECTO:0000509|SIO:001005,A drug exposure is an intake of a particular chemical substance
 treatment,OGMS:0000090|SIO:001398,A treatment is targeted at a disease or phenotype and may involve multiple drug 'exposures'
 biological_process,GO:0008150|SIO:000006,One or more causally connected executions of molecular functions
