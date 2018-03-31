@@ -28,11 +28,11 @@ The pool of known beacons is currently documented in a **[master YAML-formatted 
 
 Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
 
-* [Reference Beacon](https://github.com/NCATS-Tangerine/reference-beacon): a Java Spring Boot KBAPI accessing a Neo4j server containing [Semantic Medline Database](https://skr3.nlm.nih.gov/SemMedDB/) concepts and relationships text-mined from PubMed abstracts
-* [Monarch Database "Biolink" Beacon](https://github.com/NCATS-Tangerine/biolink-beacon): a Python KSAPI accessing the Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/)
-* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive.
+* [Reference Beacon](https://github.com/NCATS-Tangerine/reference-beacon): a Java Spring Boot KBAPI accessing a Neo4j server containing [Semantic Medline Database](https://skr3.nlm.nih.gov/SemMedDB/) concepts and relationships text-mined from PubMed abstracts. NCATS prototype beacon deployed at https://rkb.ncats.io.
+* [Monarch Database "Biolink" Beacon](https://github.com/NCATS-Tangerine/biolink-beacon): a Python KSAPI accessing the Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). NCATS prototype beacon deployed at https://biolink-kb.ncats.io/.
+* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. NCATS prototype beacon deployed at https://ndex-kb.ncats.io.
 * [StringDb Beacon](https://github.com/NCATS-Tangerine/stringdb-beacon) : a Python wrapper for the [STRING Protein-Protein interactions database](https://string-db.org/).
 
-Other beacon wrappers (e.g. Wikidata) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
+Other beacon wrappers (e.g. Wikidata, prototype beacon deployed at http://garbanzo.sulab.org/) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
 
