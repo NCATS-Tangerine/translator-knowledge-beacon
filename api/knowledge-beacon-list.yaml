@@ -28,7 +28,7 @@ beacons:
   name: Monarch Biolink
   description: Wraps Monarch biolink API
   wraps: https://api.monarchinitiative.org/api/
-  contact: Richard Bruskiewich (formerly Lance Hannestad)
+  contact: Lance Hannestad or Richard Bruskiewich
   status: deployed
   repo: https://github.com/NCATS-Tangerine/biolink-beacon
 - name: Monarch Ontologies
