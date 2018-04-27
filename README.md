@@ -12,7 +12,7 @@ Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/transla
 
 The **KBAPI** is primarily designed to support a simple knowledge discovery workflow, as illustrated in following diagram:
 
-![alt text](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/docs/KBAPI_Workflow.png "Knowledge Beacon Workflow")
+![Knowledge Beacon Application Programming Interface](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/docs/KBAPI_Workflow.png "Knowledge Beacon Workflow")
 
 Aside from the concept and statement accessing endpoints, the **KBAPI** also provides access to the list of concept (*/types*) and relationship (*/predicates*) data types used by the beacon. 
 
