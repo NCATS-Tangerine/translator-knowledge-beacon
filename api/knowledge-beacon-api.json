@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Translator Knowledge Beacon API",
-    "version": "1.0.18",
+    "version": "1.1.0",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
@@ -130,15 +130,15 @@
                   },
                   "edge_label": {
                     "type": "string",
-                    "description": "human readable name of a 'minimal' Biolink model predicate relation\nterms (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n"
+                    "description": "A predicate edge label which must be taken from the minimal predicate ('slot') list of the [Biolink Model](https://biolink.github.io/biolink-model).\n"
                   },
                   "relation": {
                     "type": "string",
-                    "description": "human readable name of a 'maximal' Biolink model predicate relation\nterms (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n"
+                    "description": "The predicate relation, with the preferred format being a CURIE where one exists, but strings/labels acceptable. This relation  may be equivalent to the edge_label (e.g. edge_label: has_phenotype, relation: RO:0002200), or a more specific relation in cases where the source provides more granularity  (e.g. edge_label: molecularly_interacts_with, relation: RO:0002447)\n"
                   },
                   "local_id": {
                     "type": "string",
-                    "description": "CURIE-encoded identifier of the locally defined predicate relation. Such terms should be formally documented as mappings in the \n[Biolink Model](https://biolink.github.io/biolink-model)\n"
+                    "description": "CURIE-encoded identifier of the locally defined predicate relation. Such terms should be formally documented as mappings in the [Biolink Model](https://biolink.github.io/biolink-model)\n"
                   },
                   "local_uri": {
                     "type": "string",
@@ -163,14 +163,14 @@
             "examples": {
               "application/json": [
                 {
-                  "id": "biolink:gene_associated_with_condition",
-                  "uri": "http://bioentity.io/vocab/gene_associated_with_condition",
-                  "edge_label": "gene_associated_with_condition",
-                  "relation": "exacerbates disease course",
+                  "id": "biolink:has_phenotype",
+                  "uri": "http://bioentity.io/vocab/has_phenotype",
+                  "edge_label": "has_phenotype",
+                  "relation": "RO:001279",
                   "local_id": "SIO:000983",
-                  "local_uri": "http://semanticscience.org/resource/SIO_000983",
-                  "local_relation": "gene-disease association",
-                  "description": "A gene-disease association is an association between \na gene and a disease.\n",
+                  "local_uri": "http://semanticscience.org/resource/SIO_001279",
+                  "local_relation": "has phenotype",
+                  "description": "has phenotype is a relation between an object and an \nobservable/measurable characteristic\n",
                   "frequency": 1234
                 }
               ]
@@ -200,7 +200,7 @@
                     "properties": {
                       "category": {
                         "type": "string",
-                        "description": "the concept semantic type of a statement subject. This \nshould be specified as Biolink concept semantic type names \nlike gene, pathway, etc. (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n"
+                        "description": "the concept semantic type of a statement subject. This  should be specified as Biolink concept semantic type names like gene, pathway, etc. (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n"
                       },
                       "prefixes": {
                         "type": "array",
@@ -215,9 +215,13 @@
                     "title": "BeaconKnowledgeMapPredicate",
                     "type": "object",
                     "properties": {
+                      "edge_label": {
+                        "type": "string",
+                        "description": "Human readable name of the 'minimal' standard Biolink Model predicate relationship name.   See [Biolink Model](https://biolink.github.io/biolink-model)  for the full list of terms.\n"
+                      },
                       "relation": {
                         "type": "string",
-                        "description": "Human readable name of the maximal given predicate relation. This should be specified as Biolink predicate names like  gene_associated_with_condition. See [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms\n"
+                        "description": "Human readable name of a 'maximal' Biolink Model or  beacon-specific (or Reasoner-specific) predicate relationship name.\n"
                       }
                     }
                   },
@@ -283,7 +287,7 @@
     },
     "/concepts": {
       "get": {
-        "description": "Retrieves a (paged) list of whose concept in the \nbeacon knowledge base with names and/or synonyms \nmatching a set of keywords or substrings. \nThe (possibly paged) results returned should generally \nbe returned in order of the quality of the match, \nthat is, the highest ranked concepts should exactly \nmatch the most keywords, in the same order as the \nkeywords were given. Lower quality hits with fewer \nkeyword matches or out-of-order keyword matches, \nshould be returned lower in the list.\n",
+        "description": "Retrieves a list of whose concept in the \nbeacon knowledge base with names and/or synonyms \nmatching a set of keywords or substrings. \nThe results returned should generally \nbe returned in order of the quality of the match, \nthat is, the highest ranked concepts should exactly \nmatch the most keywords, in the same order as the \nkeywords were given. Lower quality hits with fewer \nkeyword matches or out-of-order keyword matches, \nshould be returned lower in the list.\n",
         "tags": [
           "concepts"
         ],
@@ -311,7 +315,7 @@
           {
             "name": "size",
             "in": "query",
-            "description": "maximum number of concept entries requested by the query (default 100)\n",
+            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all  the available data for the query\n",
             "required": false,
             "type": "integer"
           }
@@ -327,7 +331,7 @@
                 "properties": {
                   "id": {
                     "type": "string",
-                    "description": "local object identifier for the concept in the specified knowledge source database\n"
+                    "description": "local object CURIE for the concept in the specified knowledge source database\n"
                   },
                   "name": {
                     "type": "string",
@@ -335,102 +339,23 @@
                   },
                   "category": {
                     "type": "string",
-                    "description": "concept semantic type\n"
+                    "description": "concept semantic type 'category'. Should be specified from the\n[Biolink Model](https://biolink.github.io/biolink-model).\n"
                   },
-                  "synonyms": {
-                    "type": "array",
-                    "description": "list of synonyms for concept\n",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "definition": {
+                  "description": {
                     "type": "string",
-                    "description": "concept definition\n"
+                    "description": "(optional) narrative concept definition\n"
                   }
                 }
               }
             },
-            "description": "Successful response with concept list returned\n",
+            "description": "Successful response with list of core concept data returned\n",
             "examples": {
               "application/json": [
                 {
                   "id": "wd:Q6591532",
                   "name": "WRN protein, human",
-                  "category": "chemical substance",
-                  "synonyms": [
-                    "RecQ3",
-                    "Werner Syndrome ATP-Dependent Helicase",
-                    "RECQL2 protein, human",
-                    "EC 3.1.-.-",
-                    "WRN protein, human",
-                    "WRN",
-                    "Exonuclease WRN",
-                    "Werner Syndrome Protein",
-                    "RecQ Protein-Like 2",
-                    "EC 3.6.4.12",
-                    "RECQ3 protein, human",
-                    "Werner syndrome helicase, human",
-                    "WRN Protein",
-                    "DNA Helicase, RecQ-Like Type 3"
-                  ],
-                  "definition": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang."
-                },
-                {
-                  "id": "wd:Q18042562",
-                  "name": "WRNIP1",
-                  "category": "gene",
-                  "synonyms": [
-                    "WHIP",
-                    "Werner helicase interacting protein 1",
-                    "WRNIP1",
-                    "bA420G6.2"
-                  ],
-                  "definition": "human gene"
-                },
-                {
-                  "id": "wd:Q14883734",
-                  "name": "WRN",
-                  "category": "gene",
-                  "synonyms": [
-                    "RECQ3",
-                    "RECQL3",
-                    "Werner syndrome RecQ like helicase",
-                    "RECQL2"
-                  ],
-                  "definition": "human gene"
-                },
-                {
-                  "id": "wd:Q1154619",
-                  "name": "Werner Syndrome",
-                  "category": "disease",
-                  "synonyms": [
-                    "Werner Syndrome",
-                    "Pangeria",
-                    "Syndrome, Werner",
-                    "Progeria, Adult",
-                    "Werner Syndrome [Disease/Finding]",
-                    "Werner syndrome (disorder)",
-                    "adult progeria",
-                    "Werner",
-                    "syndromes werner",
-                    "Syndrome, Werner\\'s",
-                    "WRN",
-                    "Werner\\'s syndrome",
-                    "adults progeria",
-                    "Werner syndrome (adult progeria) (diagnosis)",
-                    "Werner syndrome (adult progeria)",
-                    "Syndrome, Werners",
-                    "Adult premature aging syndrome",
-                    "syndromes werner\\'s",
-                    "Werners Syndrome",
-                    "syndrome werner",
-                    "Progeria of the adult",
-                    "WS",
-                    "syndromes werners",
-                    "Adult premature ageing syndrome"
-                  ],
-                  "definition": "autosomal recessive disorder that causes premature aging in adults, characterized by sclerodermal skin changes, cataracts, subcutaneous calcifications, muscular atrophy, a tendency to diabetes mellitus, aged appearance of the face, baldness, and a high incidence of neoplastic disease."
+                  "category": "protein",
+                  "description": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang."
                 }
               ]
             }
@@ -457,50 +382,63 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "array",
-              "items": {
-                "title": "BeaconConceptWithDetails",
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "local object identifier for the concept in the specified knowledge source database\n"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "canonical human readable name of the concept\n"
-                  },
-                  "category": {
-                    "type": "string",
-                    "description": "concept semantic type\n"
-                  },
-                  "synonyms": {
-                    "type": "array",
-                    "description": "list of synonyms for concept\n",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "definition": {
-                    "type": "string",
-                    "description": "concept definition\n"
-                  },
-                  "details": {
-                    "type": "array",
-                    "items": {
-                      "title": "BeaconConceptDetail",
-                      "type": "object",
-                      "properties": {
-                        "tag": {
-                          "type": "string",
-                          "description": "property name\n"
-                        },
-                        "value": {
-                          "type": "string",
-                          "description": "property value\n"
-                        }
+              "title": "BeaconConceptWithDetails",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "local object CURIE for the concept in the specified knowledge source database\n"
+                },
+                "uri": {
+                  "type": "string",
+                  "description": "(optional) equivalent to expansion of the CURIE\n"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "canonical human readable name of the concept\n"
+                },
+                "symbol": {
+                  "type": "string",
+                  "description": "(optional) symbol, used for genomic data\n"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "concept semantic type 'category'. Should be specified from the\n[Biolink Model](https://biolink.github.io/biolink-model).\n"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "(optional) narrative concept definition\n"
+                },
+                "synonyms": {
+                  "type": "array",
+                  "description": "list of synonyms for concept\n",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "exact_matches": {
+                  "description": "List of [CURIE](https://www.w3.org/TR/curie/)  identifiers of concepts thought to be exactly matching concepts, [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch). This is generally the same list returned by the /exact_matches endpoint (given the concept 'id' as input)\n",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "details": {
+                  "type": "array",
+                  "items": {
+                    "title": "BeaconConceptDetail",
+                    "type": "object",
+                    "properties": {
+                      "tag": {
+                        "type": "string",
+                        "description": "property name\n"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "property value\n"
                       }
-                    }
+                    },
+                    "description": "Any other metadata returned by the beacon as tag = value \n"
                   }
                 }
               }
@@ -509,12 +447,37 @@
             "examples": {
               "application/json": [
                 {
-                  "id": "wd:Q14883734",
-                  "name": "WRN",
-                  "category": "gene",
-                  "synonyms": [],
-                  "definition": "Werner Syndrome Gene",
-                  "details": []
+                  "id": "wd:Q6591532",
+                  "name": "WRN protein, human",
+                  "category": "protein",
+                  "symbol": "WRN",
+                  "synonyms": [
+                    "RecQ3",
+                    "Werner Syndrome ATP-Dependent Helicase",
+                    "RECQL2 protein, human",
+                    "EC 3.1.-.-",
+                    "WRN protein, human",
+                    "WRN",
+                    "Exonuclease WRN",
+                    "Werner Syndrome Protein",
+                    "RecQ Protein-Like 2",
+                    "EC 3.6.4.12",
+                    "RECQ3 protein, human",
+                    "Werner syndrome helicase, human",
+                    "WRN Protein",
+                    "DNA Helicase, RecQ-Like Type 3"
+                  ],
+                  "description": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang.",
+                  "details": [
+                    {
+                      "tag": "taxon",
+                      "value": "9606"
+                    },
+                    {
+                      "tag": "phenotype",
+                      "value": "progeria"
+                    }
+                  ]
                 }
               ]
             }
@@ -580,7 +543,7 @@
     },
     "/statements": {
       "get": {
-        "description": "Given a specified set of [CURIE-encoded](https://www.w3.org/TR/curie/)  'source' ('s') concept identifiers,  retrieves a paged list of relationship statements where either the subject or object concept matches any of the input 'source' concepts provided.  Optionally, a set of 'target' ('t') concept  identifiers may also be given, in which case a member of the 'target' identifier set should match the concept opposing the 'source' in the  statement, that is, if the'source' matches a subject, then the  'target' should match the object of a given statement (or vice versa).\n",
+        "description": "Given a specified set of [CURIE-encoded](https://www.w3.org/TR/curie/)  source ('s') concept identifiers,  retrieves a list of relationship statements where either the subject or object concept matches any of the input 'source' concepts provided.  Optionally, a set of target ('t') concept  identifiers may also be given, in which case a member of the 'target' identifier set should match the concept opposing the 'source' in the  statement, that is, if the'source' matches a subject, then the  'target' should match the object of a given statement (or vice versa).\n",
         "tags": [
           "statements"
         ],
@@ -596,14 +559,18 @@
             }
           },
           {
-            "name": "relations",
+            "name": "edge_label",
             "in": "query",
-            "description": "an array set of strings of Biolink predicate relation name labels against which to constrain the search for statement relations associated with the given query seed concept. The predicate  relation names for this parameter should be as published by  the beacon-aggregator by the /predicates API endpoint as taken from the minimal predicate list of the Biolink Model  (see [Biolink Model](https://biolink.github.io/biolink-model)  for the full list of predicates).\n",
+            "description": "(Optional) A predicate edge label against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate edge_names for this parameter should be as published by the /predicates API endpoint and must be taken from the minimal predicate ('slot') list of the [Biolink Model](https://biolink.github.io/biolink-model).\n",
             "required": false,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "string"
+          },
+          {
+            "name": "relation",
+            "in": "query",
+            "description": "(Optional) A predicate relation against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate relations for this parameter should be as published by the /predicates API endpoint and the preferred format is a CURIE  where one exists, but strings/labels acceptable. This relation may be equivalent to the edge_label (e.g. edge_label: has_phenotype, relation: RO:0002200), or a more specific relation  in cases where the source provides more granularity (e.g. edge_label: molecularly_interacts_with, relation: RO:0002447)\n",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "t",
@@ -638,7 +605,7 @@
           {
             "name": "size",
             "in": "query",
-            "description": "maximum number of statement entries requested by the query (default 100)\n",
+            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all  the available data for the query\n",
             "required": false,
             "type": "integer"
           }
@@ -646,7 +613,7 @@
         "operationId": "getStatements",
         "responses": {
           "200": {
-            "description": "Successful response returns a list of concept-relations where there is an exact match of an input concept identifier either to the subject or object concepts of the statement\n",
+            "description": "Successful response returns a list of concept-relations where there is an exact match of an input concept identifier either to the subject or object concepts  of the statement\n",
             "schema": {
               "type": "array",
               "items": {
@@ -681,11 +648,15 @@
                     "properties": {
                       "edge_label": {
                         "type": "string",
-                        "description": "minimal Biolink model predicate term"
+                        "description": "The predicate edge label associated with this statement, which should be as published by the /predicates API endpoint and must be taken from the minimal predicate ('slot') list of the [Biolink Model](https://biolink.github.io/biolink-model).\n"
                       },
                       "relation": {
                         "type": "string",
-                        "description": "SHOULD be from maximal Biolink model predicate list, but beacon-specific extensions allowed. Preferred format is a CURIE, where one exists, but strings/labels acceptable. May be empty."
+                        "description": "The predicate relation associated with this statement, which should be as published by the /predicates API endpoint with the preferred format being a CURIE where one exists, but strings/labels acceptable. This relation may be equivalent to the edge_label (e.g. edge_label: has_phenotype, relation: RO:0002200), or a more specific relation in cases where the source provides more granularity (e.g. edge_label: molecularly_interacts_with, relation: RO:0002447)"
+                      },
+                      "negated": {
+                        "type": "boolean",
+                        "description": "(Optional) a boolean that if set to true, indicates the  edge statement is negated i.e. is not true\n"
                       }
                     }
                   },
@@ -723,8 +694,9 @@
                     "category": "gene"
                   },
                   "predicate": {
-                    "edge_label": "gene_associated_with_condition",
-                    "relation": "contributes_to_condition"
+                    "edge_label": "has_phenotype",
+                    "relation": "RO:0002200",
+                    "negated": false
                   },
                   "object": {
                     "id": [
@@ -740,9 +712,9 @@
         }
       }
     },
-    "/evidence/{statementId}": {
+    "/statements/{statementId}": {
       "get": {
-        "description": "Retrieves a (paged) list of annotations cited as evidence for a specified concept-relationship statement\n",
+        "description": "Retrieves a details relating to a specified concept-relationship statement include 'is_defined_by and 'provided_by' provenance; extended edge properties exported as tag = value; and any associated annotations (publications, etc.)  cited as evidence for the given statement.\n",
         "tags": [
           "statements"
         ],
@@ -757,7 +729,7 @@
           {
             "name": "keywords",
             "in": "query",
-            "description": "an array of keywords or substrings against which to filter citation titles",
+            "description": "an array of keywords or substrings against which to  filter annotation names (e.g. publication titles).",
             "required": false,
             "type": "array",
             "items": {
@@ -767,51 +739,110 @@
           {
             "name": "size",
             "in": "query",
-            "description": "maximum number of cited references requested by the query (default 100)\n",
+            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all  the available data for the query\n",
             "required": false,
             "type": "integer"
           }
         ],
-        "operationId": "getEvidence",
+        "operationId": "getStatementDetails",
         "responses": {
           "200": {
-            "description": "successful call returns a list of annotation with metadata\n",
             "schema": {
-              "type": "array",
-              "items": {
-                "title": "BeaconAnnotation",
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "CURIE-encoded identifier to an associated external resources (e.g. PMID of a pubmed citation)\n"
-                  },
-                  "label": {
-                    "type": "string",
-                    "description": "canonical human readable and searchable label of the annotation (i.e. comment, matched sentence, etc.)\n"
-                  },
-                  "type": {
-                    "type": "string",
-                    "description": "Gene Ontology Evidence Code (http://www.geneontology.org/page/guide-go-evidence-codes)\n"
-                  },
-                  "date": {
-                    "type": "string",
-                    "description": "publication date of annotation (generally of format 'yyyy-mm-dd')\n"
+              "title": "BeaconStatementWithDetails",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Statement identifier of the statement made in an edge (echoed back)\n"
+                },
+                "is_defined_by": {
+                  "type": "string",
+                  "description": "A CURIE/URI for the translator group that wrapped this knowledge source ('beacon') that publishes the statement made in an edge.\n"
+                },
+                "provided_by": {
+                  "type": "string",
+                  "description": "A CURIE prefix, e.g. Pharos, MGI, Monarch. The group that  curated/asserted the statement made in an edge.\n"
+                },
+                "qualifiers": {
+                  "type": "array",
+                  "description": "(Optional) terms representing qualifiers that modify or qualify the meaning of the statement made in an edge.\n",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "annotation": {
+                  "type": "array",
+                  "description": "Extra edge properties, generally compliant with Translator Knowledge Graph Standard Specification\n",
+                  "items": {
+                    "title": "BeaconStatementAnnotation",
+                    "type": "object",
+                    "properties": {
+                      "tag": {
+                        "type": "string",
+                        "description": "property name\n"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "property value\n"
+                      }
+                    },
+                    "description": "Statement edge properties returned as tag = value pairs\n"
+                  }
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "title": "BeaconStatementCitation",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "CURIE-encoded identifier to a citation to evidence supporting the given statement (e.g. PMID of a pubmed abstract)\n"
+                      },
+                      "uri": {
+                        "type": "string",
+                        "description": "(optional) expansion of the citation CURIE\n"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "canonical human readable and searchable name of the citation (i.e. publication title, comment, etc.)\n"
+                      },
+                      "evidence_type": {
+                        "type": "string",
+                        "description": "class of evidence supporting the statement made in an edge - typically a class from the ECO ontology (e.g. ECO:0000220 'sequencing assay evidence', see [Evidence Ontology](http://purl.obolibrary.org/obo/eco.owl)\n"
+                      },
+                      "date": {
+                        "type": "string",
+                        "description": "publication date of annotation (generally of format 'yyyy-mm-dd')\n"
+                      }
+                    }
                   }
                 }
               }
             },
+            "description": "successful call with statement details returned\n",
             "examples": {
-              "application/json": [
-                {
-                  "id": [
-                    "pmid:22781086"
-                  ],
-                  "label": "Neonatal diabetes mellitus and congenital diaphragmatic hernia coincidence or concurrent etiology?",
-                  "type": "TAS",
-                  "date": "2012-07-10T00:00:00.000Z"
-                }
-              ]
+              "application/json": {
+                "id": "kb:12345",
+                "is_defined_by": "http://starinformatics.com",
+                "provided_by": "https://skr3.nlm.nih.gov/SemMedDB/",
+                "qualifiers": [],
+                "annotation": [
+                  {
+                    "tag": "stage",
+                    "value": "neo-natal"
+                  }
+                ],
+                "evidence": [
+                  {
+                    "id": "PMID:22781086",
+                    "uri": "https://www.ncbi.nlm.nih.gov/pubmed/?term=22781086",
+                    "name": "Neonatal diabetes mellitus and congenital diaphragmatic hernia coincidence or concurrent etiology?",
+                    "evidence_type": "ECO_0000033",
+                    "date": "2012-07-10T00:00:00.000Z"
+                  }
+                ]
+              }
             }
           }
         }
