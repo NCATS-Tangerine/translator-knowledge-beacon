@@ -1,19 +1,19 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Translator Knowledge Beacon API",
-    "version": "1.1.0",
+    "title": "nDex Bio Translator Knowledge Beacon API",
+    "version": "1.1.1",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
     },
-    "description": "This is the Translator Knowledge Beacon web service application programming interface (API).\n",
+    "description": "This is the Translator Knowledge Beacon web service application programming interface (API) wrapping the nDex Bio (ndexbio.org) bioinformatics graph data archive..\n",
     "license": {
       "name": "MIT License",
       "url": "http://opensource.org/licenses/MIT"
     }
   },
-  "host": "rkb.ncats.io",
+  "host": "tkg.ncats.io",
   "basePath": "/",
   "schemes": [
     "https"
@@ -38,7 +38,7 @@
   "paths": {
     "/categories": {
       "get": {
-        "description": "Get a list of concept categories and number of their concept instances documented by the knowledge source. These types should be mapped onto the Translator-endorsed Biolink Model concept type classes with local types, explicitly added as mappings to the Biolink Model YAML file. \n",
+        "description": "Get a list of concept categories and number of their concept instances documented by the knowledge source. These types should be mapped onto the Translator-endorsed Biolink Model concept type classes with local types, explicitly added as mappings to the Biolink Model YAML file. A  frequency of -1 indicates the category can exist, but the count is unknown. \n",
         "tags": [
           "metadata"
         ],
@@ -222,6 +222,10 @@
                       "relation": {
                         "type": "string",
                         "description": "Human readable name of a 'maximal' Biolink Model or  beacon-specific (or Reasoner-specific) predicate relationship name.\n"
+                      },
+                      "negated": {
+                        "type": "boolean",
+                        "description": "Indicates whether edge statement is negated (i.e. is not true)\n"
                       }
                     }
                   },
@@ -266,7 +270,9 @@
                     ]
                   },
                   "predicate": {
-                    "relation": "gene_associated_with_condition"
+                    "edge_label": "gene_associated_with_condition",
+                    "relation": "gene_associated_with_condition",
+                    "negated": false
                   },
                   "object": {
                     "category": "disease or phenotypic feature",
@@ -337,8 +343,11 @@
                     "type": "string",
                     "description": "canonical human readable name of the concept\n"
                   },
-                  "category": {
-                    "type": "string",
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
                     "description": "concept semantic type 'category'. Should be specified from the\n[Biolink Model](https://biolink.github.io/biolink-model).\n"
                   },
                   "description": {
@@ -354,7 +363,9 @@
                 {
                   "id": "wd:Q6591532",
                   "name": "WRN protein, human",
-                  "category": "protein",
+                  "categories": [
+                    "protein"
+                  ],
                   "description": "Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is encoded by the human WRN gene. This protein plays a role in both magnesium and ATP-dependent DNA-helicase activity and 3\\'->5\\' exonuclease activity towards double-stranded DNA with a 5\\'-overhang."
                 }
               ]
@@ -401,8 +412,11 @@
                   "type": "string",
                   "description": "(optional) symbol, used for genomic data\n"
                 },
-                "category": {
-                  "type": "string",
+                "categories": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
                   "description": "concept semantic type 'category'. Should be specified from the\n[Biolink Model](https://biolink.github.io/biolink-model).\n"
                 },
                 "description": {
@@ -449,7 +463,9 @@
                 {
                   "id": "wd:Q6591532",
                   "name": "WRN protein, human",
-                  "category": "protein",
+                  "categories": [
+                    "protein"
+                  ],
                   "symbol": "WRN",
                   "synonyms": [
                     "RecQ3",
@@ -636,8 +652,11 @@
                         "type": "string",
                         "description": "human readable label of subject concept"
                       },
-                      "category": {
-                        "type": "string",
+                      "categories": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
                         "description": "a semantic group for the subject concept (specified as a code gene, pathway, disease, etc. - see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of categories)\n"
                       }
                     }
@@ -672,8 +691,11 @@
                         "type": "string",
                         "description": "human readable label of object concept"
                       },
-                      "category": {
-                        "type": "string",
+                      "categories": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
                         "description": "a semantic group for the object concept (specified as a code gene, pathway, disease, etc. - see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of categories)\n"
                       }
                     }
@@ -691,7 +713,9 @@
                       "wd:Q14912054"
                     ],
                     "name": "KCNJ11",
-                    "category": "gene"
+                    "categories": [
+                      "gene"
+                    ]
                   },
                   "predicate": {
                     "edge_label": "has_phenotype",
@@ -703,7 +727,9 @@
                       "wd:Q2898645"
                     ],
                     "name": "Neonatal diabetes mellitus",
-                    "category": "disease"
+                    "categories": [
+                      "disease"
+                    ]
                   }
                 }
               ]

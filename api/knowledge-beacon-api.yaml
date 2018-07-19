@@ -1,17 +1,18 @@
 swagger: '2.0'
 info:
-  title: Translator Knowledge Beacon API
-  version: 1.1.0
+  title: nDex Bio Translator Knowledge Beacon API
+  version: 1.1.1
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
   description: >
     This is the Translator Knowledge Beacon web service application programming
-    interface (API).
+    interface (API) wrapping the nDex Bio (ndexbio.org) bioinformatics graph
+    data archive..
   license:
     name: MIT License
     url: 'http://opensource.org/licenses/MIT'
-host: rkb.ncats.io
+host: tkg.ncats.io
 basePath: /
 schemes:
   - https
@@ -31,7 +32,9 @@ paths:
         Get a list of concept categories and number of their concept instances
         documented by the knowledge source. These types should be mapped onto
         the Translator-endorsed Biolink Model concept type classes with local
-        types, explicitly added as mappings to the Biolink Model YAML file. 
+        types, explicitly added as mappings to the Biolink Model YAML file. A 
+        frequency of -1 indicates the category can exist, but the count is
+        unknown. 
       tags:
         - metadata
       operationId: getConceptCategories
@@ -224,6 +227,11 @@ paths:
                         Human readable name of a 'maximal' Biolink Model or 
                         beacon-specific (or Reasoner-specific) predicate
                         relationship name.
+                    negated:
+                      type: boolean
+                      description: >
+                        Indicates whether edge statement is negated (i.e. is not
+                        true)
                 object:
                   title: BeaconKnowledgeMapObject
                   type: object
@@ -267,7 +275,9 @@ paths:
                     - CHEMBL
                     - UNIPROT
                 predicate:
+                  edge_label: gene_associated_with_condition
                   relation: gene_associated_with_condition
+                  negated: false
                 object:
                   category: disease or phenotypic feature
                   prefixes:
@@ -342,8 +352,10 @@ paths:
                   type: string
                   description: |
                     canonical human readable name of the concept
-                category:
-                  type: string
+                categories:
+                  type: array
+                  items:
+                    type: string
                   description: >
                     concept semantic type 'category'. Should be specified from
                     the
@@ -359,7 +371,8 @@ paths:
             application/json:
               - id: 'wd:Q6591532'
                 name: 'WRN protein, human'
-                category: protein
+                categories:
+                  - protein
                 description: >-
                   Werner syndrome ATP-dependent helicase (1432 aa, ~162 kDa) is
                   encoded by the human WRN gene. This protein plays a role in
@@ -404,8 +417,10 @@ paths:
                 type: string
                 description: |
                   (optional) symbol, used for genomic data
-              category:
-                type: string
+              categories:
+                type: array
+                items:
+                  type: string
                 description: |
                   concept semantic type 'category'. Should be specified from the
                   [Biolink Model](https://biolink.github.io/biolink-model).
@@ -451,7 +466,8 @@ paths:
             application/json:
               - id: 'wd:Q6591532'
                 name: 'WRN protein, human'
-                category: protein
+                categories:
+                  - protein
                 symbol: WRN
                 synonyms:
                   - RecQ3
@@ -667,8 +683,10 @@ paths:
                     name:
                       type: string
                       description: human readable label of subject concept
-                    category:
-                      type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
                       description: >
                         a semantic group for the subject concept (specified as a
                         code gene, pathway, disease, etc. - see [Biolink
@@ -714,8 +732,10 @@ paths:
                     name:
                       type: string
                       description: human readable label of object concept
-                    category:
-                      type: string
+                    categories:
+                      type: array
+                      items:
+                        type: string
                       description: >
                         a semantic group for the object concept (specified as a
                         code gene, pathway, disease, etc. - see [Biolink
@@ -729,7 +749,8 @@ paths:
                   id:
                     - 'wd:Q14912054'
                   name: KCNJ11
-                  category: gene
+                  categories:
+                    - gene
                 predicate:
                   edge_label: has_phenotype
                   relation: 'RO:0002200'
@@ -738,7 +759,8 @@ paths:
                   id:
                     - 'wd:Q2898645'
                   name: Neonatal diabetes mellitus
-                  category: disease
+                  categories:
+                    - disease
   '/statements/{statementId}':
     get:
       description: >
