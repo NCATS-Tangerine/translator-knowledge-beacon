@@ -28,7 +28,7 @@ beacons:
   name: Monarch Biolink
   description: Wraps Monarch biolink API
   wraps: https://api.monarchinitiative.org/api/
-  contact: Richard Bruskiewich (formerly Lance Hannestad)
+  contact: Lance Hannestad or Richard Bruskiewich
   status: deployed
   repo: https://github.com/NCATS-Tangerine/biolink-beacon
 - name: Monarch Ontologies
@@ -56,7 +56,7 @@ beacons:
   wraps: http://isbtranslatorapi.adversary.us/
   contact: Blue team
   status: proposed
-- url: http://ndex-kb.ncats.io
+- url: https://ndex-kb.ncats.io
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
   wraps: http://ndexbio.org

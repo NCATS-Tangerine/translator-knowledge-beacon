@@ -29,7 +29,7 @@ macromolecular_complex,GO:0032991|SIO:010046|WD:Q22325163,
 gene_family,NCIT:C20130|SIO:001380|WD:Q417841,any grouping of multiple genes or gene products related by common descent
 genotype,GENO:0000536|SIO:001079,"An information content entity that describes a genome by specifying the total variation in genomic sequence and/or gene expression, relative to some extablished background"
 allele,GENO:0000512|SIO:010277,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus
-sequence_variant,GENO:0000512|WD:Q15304597,A genomic feature representing one of a set of coexisting sequence variants at a particular genomic locus.
+sequence_variant,GENO:0000002|WD:Q15304597,An allele that varies in it sequence from what is considered the reference at that locus
 drug_exposure,ECTO:0000509|SIO:001005,A drug exposure is an intake of a particular chemical substance
 treatment,OGMS:0000090|SIO:001398,A treatment is targeted at a disease or phenotype and may involve multiple drug 'exposures'
 biological_process,GO:0008150|SIO:000006|WD:Q2996394,One or more causally connected executions of molecular functions
@@ -38,4 +38,3 @@ physiology,UMLSSG:PHYS,
 cellular_component,GO:0005575|SIO:001400|WD:Q5058355,A location in or around a cell
 cell,GO:0005623|SIO:010001|WD:Q7868,
 gross_anatomical_structure,SIO:010046|WD:Q4936952,
-
