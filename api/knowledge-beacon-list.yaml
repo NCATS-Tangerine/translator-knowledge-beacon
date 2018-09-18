@@ -35,7 +35,7 @@ beacons:
   repo: https://github.com/NCATS-Tangerine/biothings-beacon
   contact: Lance Hannestad
   status: deployed
-- url: https://translator.ncats.io/hmdb-knowledge-beacon/api
+- url: https://translator.ncats.io/hmdb-knowledge-beacon
   name: HMDB
   description: wraps Human Metabolome Database
   wraps: http://www.hmdb.ca/
