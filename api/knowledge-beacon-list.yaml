@@ -1,5 +1,5 @@
 beacons:
-- url: http://rkb.ncats.io
+- url: https://kba.ncats.io/beacon/rkb
   name: SemMedDB
   description: Reference Knowledge Beacon implementation indexed by Wikidata
   wraps: an internally (private subnet accessed) NCATS Neo4j database server populated with Semantic Medline Database
@@ -12,19 +12,19 @@ beacons:
   wraps: http://query.wikidata.org/sparql
   repo: https://github.com/stuppie/garbanzo
   contact: stuppie
-  status: deployed
+  status: DEPRECATED # deployed
 - url: http://52.14.164.71:8090/api
   name: String-db.org wrapper
   description: protein-protein interactions for demo..
   wraps: http://string-db.org/cgi/help.pl?subpage=api
   repo: https://github.com/goodb/beacons
   contact: Richard Bruskiewich (formerly Ben Good)
-  status: in_progress
+  status: DEPRECATED # in_progress
 - name: Red
   description: Drug-Drug interactions from red team
   status: in_progress
   contact: victorganic
-- url: https://biolink-kb.ncats.io/
+- url: https://kba.ncats.io/beacon/biolink
   name: Monarch Biolink
   description: Wraps Monarch biolink API
   wraps: https://api.monarchinitiative.org/api/
@@ -56,7 +56,7 @@ beacons:
   wraps: http://isbtranslatorapi.adversary.us/
   contact: Blue team
   status: proposed
-- url: https://ndex-kb.ncats.io
+- url: https://kba.ncats.io/beacon/ndex
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
   wraps: http://ndexbio.org
@@ -75,6 +75,21 @@ beacons:
   description: wrapping smartAPI as a beacon
   wraps: http://smartapi.info
   contact: Tim Putman OHSU
-  status: discussion 
+  status: discussion
+- url: https://kba.ncats.io/beacon/rhea
+  name: Rhea
+  description: the annotated database of biochemical reactions
+  wraps: https://www.rhea-db.org/
+  repo: https://github.com/NCATS-Tangerine/rhea-beacon
+  contact: Lance Hannestad
+  status: deployed
+- url: https://kba.ncats.io/beacon/biothings-beacon
+  name: Biothings Explorer
+  description: beacon wrapper for Biothings Explorer SmartAPI workflow tool
+  wraps: http://biothings.io/explorer/
+  repo: https://github.com/NCATS-Tangerine/biothings-beacon
+  contact: Lance Hannestad
+  status: deployed
+
 clients:
  - url: http://tkbio.ncats.io/
