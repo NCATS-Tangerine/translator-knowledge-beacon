@@ -1,10 +1,52 @@
 beacons:
-- url: https://kba.ncats.io/beacon/rkb
+- url: https://kba.ncats.io/beacon/biolink
+  name: Monarch Biolink
+  description: Wraps Monarch biolink API
+  wraps: https://api.monarchinitiative.org/api/
+  contact: Lance Hannestad or Richard Bruskiewich
+  status: deployed
+  repo: https://github.com/NCATS-Tangerine/biolink-beacon- url: https://kba.ncats.io/beacon/rkb
   name: SemMedDB
   description: Reference Knowledge Beacon implementation indexed by Wikidata
   wraps: an internally (private subnet accessed) NCATS Neo4j database server populated with Semantic Medline Database
-  repo: https://github.com/NCATS-Tangerine/reference-beacon
+  repo: https://github.com/NCATS-Tangerine/tkg-beacon
   contact: Richard Bruskiewich
+  status: deployed
+- url: https://kba.ncats.io/beacon/rtx
+  name: RTX
+  description: RTX Translator Knowledge Graph beacon 
+  wraps: internal clone of Translator Knowledge Graph of RTX
+  repo: https://github.com/NCATS-Tangerine/tkg-beacon
+  contact: Richard Bruskiewich
+  status: deployed
+- url: https://kba.ncats.io/beacon/ndex
+  name: nDex Bio
+  description: Knowledge Beacon wrapper for ndexbio.org
+  wraps: http://ndexbio.org
+  repo: https://github.com/NCATS-Tangerine/ndex-beacon
+  contact: Richard Bruskiewich (formerly Meera Godden (meera-gd))
+  status: deployed
+  repo: https://github.com/NCATS-Tangerine/ndex-beacon
+- url: https://kba.ncats.io/beacon/biothings-explorer
+  name: Biothings Explorer
+  description: beacon wrapper for Biothings Explorer SmartAPI workflow tool
+  wraps: http://biothings.io/explorer/
+  repo: https://github.com/NCATS-Tangerine/biothings-beacon
+  contact: Lance Hannestad
+  status: deployed
+- url: https://translator.ncats.io/hmdb-knowledge-beacon/api
+  name: HMDB
+  description: wraps Human Metabolome Database
+  wraps: http://www.hmdb.ca/
+  repo: https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon
+  contact: Vlado Dancik (vdancik, team indigo)
+  status: deployed
+- url: https://kba.ncats.io/beacon/rhea
+  name: Rhea
+  description: the annotated database of biochemical reactions
+  wraps: https://www.rhea-db.org/
+  repo: https://github.com/NCATS-Tangerine/rhea-beacon
+  contact: Lance Hannestad
   status: deployed
 - url: http://garbanzo.sulab.org/
   name: Wikidata
@@ -24,13 +66,6 @@ beacons:
   description: Drug-Drug interactions from red team
   status: in_progress
   contact: victorganic
-- url: https://kba.ncats.io/beacon/biolink
-  name: Monarch Biolink
-  description: Wraps Monarch biolink API
-  wraps: https://api.monarchinitiative.org/api/
-  contact: Lance Hannestad or Richard Bruskiewich
-  status: deployed
-  repo: https://github.com/NCATS-Tangerine/biolink-beacon
 - name: Monarch Ontologies
   description: Wraps Monarch SciGraph ontology
   wraps: https://scigraph-ontology.monarchinitiative.org/scigraph/docs/
@@ -56,40 +91,10 @@ beacons:
   wraps: http://isbtranslatorapi.adversary.us/
   contact: Blue team
   status: proposed
-- url: https://kba.ncats.io/beacon/ndex
-  name: nDex Bio
-  description: Knowledge Beacon wrapper for ndexbio.org
-  wraps: http://ndexbio.org
-  repo: https://github.com/NCATS-Tangerine/ndex-beacon
-  contact: Richard Bruskiewich (formerly Meera Godden (meera-gd))
-  status: deployed
-  repo: https://github.com/NCATS-Tangerine/ndex-beacon
-- url: https://translator.ncats.io/hmdb-knowledge-beacon/api
-  name: HMDB
-  description: wraps Human Metabolome Database
-  wraps: http://www.hmdb.ca/
-  repo: https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon
-  contact: Vlado Dancik (vdancik, team indigo)
-  status: deployed
 - name: generic smartAPI wrapper
   description: wrapping smartAPI as a beacon
   wraps: http://smartapi.info
   contact: Tim Putman OHSU
   status: discussion
-- url: https://kba.ncats.io/beacon/rhea
-  name: Rhea
-  description: the annotated database of biochemical reactions
-  wraps: https://www.rhea-db.org/
-  repo: https://github.com/NCATS-Tangerine/rhea-beacon
-  contact: Lance Hannestad
-  status: deployed
-- url: https://kba.ncats.io/beacon/biothings-beacon
-  name: Biothings Explorer
-  description: beacon wrapper for Biothings Explorer SmartAPI workflow tool
-  wraps: http://biothings.io/explorer/
-  repo: https://github.com/NCATS-Tangerine/biothings-beacon
-  contact: Lance Hannestad
-  status: deployed
-
 clients:
  - url: http://tkbio.ncats.io/
