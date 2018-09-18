@@ -5,7 +5,8 @@ beacons:
   wraps: https://api.monarchinitiative.org/api/
   contact: Lance Hannestad or Richard Bruskiewich
   status: deployed
-  repo: https://github.com/NCATS-Tangerine/biolink-beacon- url: https://kba.ncats.io/beacon/rkb
+  repo: https://github.com/NCATS-Tangerine/biolink-beacon
+- url: https://kba.ncats.io/beacon/rkb
   name: SemMedDB
   description: Reference Knowledge Beacon implementation indexed by Wikidata
   wraps: an internally (private subnet accessed) NCATS Neo4j database server populated with Semantic Medline Database
