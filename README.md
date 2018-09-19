@@ -22,8 +22,6 @@ The **KBAPI** also provides endpoints (*/exactmatches*) to report CURIE identifi
 
 # Knowledge Beacons in Action!
 
-An initial prototype web application client "Translator Knowledge.Bio" accessing Knowledge Beacons is implemented and running at **http://tkbio.ncats.io.**, the code for which is available **[here](https://github.com/NCATS-Tangerine/tkbio)**. 
-
 The pool of known beacons is currently documented in a **[master YAML-formatted catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)**. REST clients may also access aggregate data via the API from all these registered beacons, through a [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator), a public version for which is hosted online at **https://kba.ncats.io**. 
 
 Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
@@ -38,4 +36,6 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 
 Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
+# Knowledge Clients
 
+A simple web application client "Translator Knowledge.Bio" for visually browsing Knowledge Beacon Aggregator data is implemented and running at **http://tkbio.ncats.io.**, the code for which is available **[here](https://github.com/NCATS-Tangerine/tkbio)**. 
