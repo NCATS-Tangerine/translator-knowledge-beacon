@@ -1,20 +1,20 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "nDex Bio Translator Knowledge Beacon API",
-    "version": "1.1.1",
+    "title": "Translator Knowledge Beacon API",
+    "version": "1.2.0",
     "contact": {
       "url": "http://starinformatics.com",
       "email": "richard@starinformatics.com"
     },
-    "description": "This is the Translator Knowledge Beacon web service application programming interface (API) wrapping the nDex Bio (ndexbio.org) bioinformatics graph data archive..\n",
+    "description": "This is the Translator Knowledge Beacon web service application programming interface (API).\n",
     "license": {
       "name": "MIT License",
       "url": "http://opensource.org/licenses/MIT"
     }
   },
-  "host": "tkg.ncats.io",
-  "basePath": "/",
+  "host": "kba.ncats.io",
+  "basePath": "/beacon/semmeddb",
   "schemes": [
     "https"
   ],
@@ -301,8 +301,8 @@
           {
             "name": "keywords",
             "in": "query",
-            "description": "an array of keywords or substrings against which to match concept names and synonyms",
-            "required": true,
+            "description": "(Optional) array of keywords or substrings against which to match concept names and synonyms",
+            "required": false,
             "type": "array",
             "items": {
               "type": "string"
@@ -311,7 +311,7 @@
           {
             "name": "categories",
             "in": "query",
-            "description": "an array set of concept categories - specified as Biolink name labels codes gene, pathway, etc. - to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n",
+            "description": "(Optional) array set of concept categories - specified as Biolink name labels codes gene, pathway, etc. - to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of terms)\n",
             "required": false,
             "type": "array",
             "items": {
@@ -319,9 +319,16 @@
             }
           },
           {
+            "name": "offset",
+            "in": "query",
+            "description": "offset (cursor position) to next batch of statements of amount 'size' to return.\n",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "size",
             "in": "query",
-            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all  the available data for the query\n",
+            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all the available data for the query\n",
             "required": false,
             "type": "integer"
           }
@@ -374,7 +381,7 @@
         }
       }
     },
-    "/concepts/{conceptId}": {
+    "/concepts/{concept_id}": {
       "get": {
         "description": "Retrieves details for a specified concepts in the system, as specified by a (url-encoded) CURIE identifier of a concept known the given knowledge source.\n",
         "tags": [
@@ -382,7 +389,7 @@
         ],
         "parameters": [
           {
-            "name": "conceptId",
+            "name": "concept_id",
             "in": "path",
             "description": "(url-encoded) CURIE identifier of concept of interest",
             "required": true,
@@ -559,7 +566,7 @@
     },
     "/statements": {
       "get": {
-        "description": "Given a specified set of [CURIE-encoded](https://www.w3.org/TR/curie/)  source ('s') concept identifiers,  retrieves a list of relationship statements where either the subject or object concept matches any of the input 'source' concepts provided.  Optionally, a set of target ('t') concept  identifiers may also be given, in which case a member of the 'target' identifier set should match the concept opposing the 'source' in the  statement, that is, if the'source' matches a subject, then the  'target' should match the object of a given statement (or vice versa).\n",
+        "description": "Given a constrained set of some [CURIE-encoded](https://www.w3.org/TR/curie/)  's' ('source') concept identifiers, categories and/or keywords  (to match in the concept name or description), retrieves a list of relationship statements where either the subject or the object concept matches any of the input source concepts provided.  Optionally, a set of some 't' ('target') concept identifiers, categories and/or keywords (to match in the concept name  or description) may also be given, in which case a member of the 't' concept  set should matchthe concept opposite an 's' concept in the statement.   That is, if the 's' concept matches a subject, then the 't' concept  should match the object of a given statement (or vice versa).\n",
         "tags": [
           "statements"
         ],
@@ -567,8 +574,28 @@
           {
             "name": "s",
             "in": "query",
-            "description": "an array set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of  'source' concepts possibly known to the beacon. Unknown CURIES should simply be ignored (silent match failure).\n",
-            "required": true,
+            "description": "An (optional) array set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of  'source' ('start') concepts possibly known to the beacon. Unknown CURIES should simply be ignored (silent match failure).\n",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "s_keywords",
+            "in": "query",
+            "description": "An (optional) array of keywords or substrings against which to filter  'source' concept names and synonyms",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "s_categories",
+            "in": "query",
+            "description": "An (optional) array set of 'source' concept categories (specified as  Biolink name labels codes gene, pathway, etc.) to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n",
+            "required": false,
             "type": "array",
             "items": {
               "type": "string"
@@ -577,21 +604,21 @@
           {
             "name": "edge_label",
             "in": "query",
-            "description": "(Optional) A predicate edge label against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate edge_names for this parameter should be as published by the /predicates API endpoint and must be taken from the minimal predicate ('slot') list of the [Biolink Model](https://biolink.github.io/biolink-model).\n",
+            "description": "(Optional) predicate edge label against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate edge_names for this parameter should be as published by the /predicates API endpoint and must be taken from the minimal predicate ('slot') list of the [Biolink Model](https://biolink.github.io/biolink-model).\n",
             "required": false,
             "type": "string"
           },
           {
             "name": "relation",
             "in": "query",
-            "description": "(Optional) A predicate relation against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate relations for this parameter should be as published by the /predicates API endpoint and the preferred format is a CURIE  where one exists, but strings/labels acceptable. This relation may be equivalent to the edge_label (e.g. edge_label: has_phenotype, relation: RO:0002200), or a more specific relation  in cases where the source provides more granularity (e.g. edge_label: molecularly_interacts_with, relation: RO:0002447)\n",
+            "description": "(Optional) predicate relation against which to constrain the search for statements ('edges') associated with the given query seed concept. The predicate relations for this parameter should be as published by the /predicates API endpoint and the preferred format is a CURIE  where one exists, but strings/labels acceptable. This relation may be equivalent to the edge_label (e.g. edge_label: has_phenotype, relation: RO:0002200), or a more specific relation  in cases where the source provides more granularity (e.g. edge_label: molecularly_interacts_with, relation: RO:0002447)\n",
             "required": false,
             "type": "string"
           },
           {
             "name": "t",
             "in": "query",
-            "description": "(optional) an array set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of 'target' concepts possibly known to the beacon.  Unknown CURIEs should simply be ignored (silent match failure).\n",
+            "description": "An (optional) array set of [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of 'target' ('opposite' or 'end') concepts possibly known to the beacon. Unknown CURIEs should simply be ignored (silent match failure).\n",
             "required": false,
             "type": "array",
             "items": {
@@ -599,9 +626,9 @@
             }
           },
           {
-            "name": "keywords",
+            "name": "t_keywords",
             "in": "query",
-            "description": "an array of keywords or substrings against which to filter concept names and synonyms",
+            "description": "An (optional) array of keywords or substrings against which to filter 'target' concept names and synonyms",
             "required": false,
             "type": "array",
             "items": {
@@ -609,14 +636,21 @@
             }
           },
           {
-            "name": "categories",
+            "name": "t_categories",
             "in": "query",
-            "description": "an array set of concept categories (specified as Biolink name labels codes gene, pathway, etc.) to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n",
+            "description": "An (optional) array set of 'target' concept categories (specified as  Biolink name labels codes gene, pathway, etc.) to which to constrain concepts matched by the main keyword search (see [Biolink Model](https://biolink.github.io/biolink-model) for the full list of codes)\n",
             "required": false,
             "type": "array",
             "items": {
               "type": "string"
             }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset (cursor position) to next batch of statements of amount 'size' to return.\n",
+            "required": false,
+            "type": "integer"
           },
           {
             "name": "size",
@@ -738,7 +772,7 @@
         }
       }
     },
-    "/statements/{statementId}": {
+    "/statements/{statement_id}": {
       "get": {
         "description": "Retrieves a details relating to a specified concept-relationship statement include 'is_defined_by and 'provided_by' provenance; extended edge properties exported as tag = value; and any associated annotations (publications, etc.)  cited as evidence for the given statement.\n",
         "tags": [
@@ -746,7 +780,7 @@
         ],
         "parameters": [
           {
-            "name": "statementId",
+            "name": "statement_id",
             "in": "path",
             "description": "(url-encoded) CURIE identifier of the concept-relationship statement (\"assertion\", \"claim\") for which associated evidence is sought\n",
             "required": true,
@@ -763,9 +797,16 @@
             }
           },
           {
+            "name": "offset",
+            "in": "query",
+            "description": "offset (cursor position) to next batch of annotation entries of amount 'size' to return.\n",
+            "required": false,
+            "type": "integer"
+          },
+          {
             "name": "size",
             "in": "query",
-            "description": "maximum number of concept entries requested by the client; if this  argument is omitted, then the query is expected to returned all  the available data for the query\n",
+            "description": "maximum number of evidence citation entries requested by the client; if this  argument is omitted, then the query is expected to returned all of the available annotation for this statement\n",
             "required": false,
             "type": "integer"
           }
@@ -817,6 +858,7 @@
                 },
                 "evidence": {
                   "type": "array",
+                  "description": "Array of research citations serving as supporting evidence  for this knowledge statement.\n",
                   "items": {
                     "title": "BeaconStatementCitation",
                     "type": "object",

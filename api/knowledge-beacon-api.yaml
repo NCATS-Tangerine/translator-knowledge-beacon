@@ -1,19 +1,18 @@
 swagger: '2.0'
 info:
-  title: nDex Bio Translator Knowledge Beacon API
-  version: 1.1.1
+  title: Translator Knowledge Beacon API
+  version: 1.2.0
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
   description: >
     This is the Translator Knowledge Beacon web service application programming
-    interface (API) wrapping the nDex Bio (ndexbio.org) bioinformatics graph
-    data archive..
+    interface (API).
   license:
     name: MIT License
     url: 'http://opensource.org/licenses/MIT'
-host: tkg.ncats.io
-basePath: /
+host: kba.ncats.io
+basePath: /beacon/semmeddb
 schemes:
   - https
 produces:
@@ -308,29 +307,36 @@ paths:
         - name: keywords
           in: query
           description: >-
-            an array of keywords or substrings against which to match concept
-            names and synonyms
-          required: true
+            (Optional) array of keywords or substrings against which to match
+            concept names and synonyms
+          required: false
           type: array
           items:
             type: string
         - name: categories
           in: query
           description: >
-            an array set of concept categories - specified as Biolink name
-            labels codes gene, pathway, etc. - to which to constrain concepts
-            matched by the main keyword search (see [Biolink
+            (Optional) array set of concept categories - specified as Biolink
+            name labels codes gene, pathway, etc. - to which to constrain
+            concepts matched by the main keyword search (see [Biolink
             Model](https://biolink.github.io/biolink-model) for the full list of
             terms)
           required: false
           type: array
           items:
             type: string
+        - name: offset
+          in: query
+          description: >
+            offset (cursor position) to next batch of statements of amount
+            'size' to return.
+          required: false
+          type: integer
         - name: size
           in: query
           description: >
             maximum number of concept entries requested by the client; if this 
-            argument is omitted, then the query is expected to returned all  the
+            argument is omitted, then the query is expected to returned all the
             available data for the query
           required: false
           type: integer
@@ -379,7 +385,7 @@ paths:
                   both magnesium and ATP-dependent DNA-helicase activity and
                   3\'->5\' exonuclease activity towards double-stranded DNA with
                   a 5\'-overhang.
-  '/concepts/{conceptId}':
+  '/concepts/{concept_id}':
     get:
       description: >
         Retrieves details for a specified concepts in the system, as specified
@@ -388,7 +394,7 @@ paths:
       tags:
         - concepts
       parameters:
-        - name: conceptId
+        - name: concept_id
           in: path
           description: (url-encoded) CURIE identifier of concept of interest
           required: true
@@ -568,31 +574,55 @@ paths:
   /statements:
     get:
       description: >
-        Given a specified set of [CURIE-encoded](https://www.w3.org/TR/curie/) 
-        source ('s') concept identifiers,  retrieves a list of relationship
-        statements where either the subject or object concept matches any of the
-        input 'source' concepts provided.  Optionally, a set of target ('t')
-        concept  identifiers may also be given, in which case a member of the
-        'target' identifier set should match the concept opposing the 'source'
-        in the  statement, that is, if the'source' matches a subject, then the 
-        'target' should match the object of a given statement (or vice versa).
+        Given a constrained set of some [CURIE-encoded](https://www.w3.org/TR/curie/) 
+        's' ('source') concept identifiers, categories and/or keywords 
+        (to match in the concept name or description), retrieves a list of relationship
+        statements where either the subject or the object concept matches any of the
+        input source concepts provided.  Optionally, a set of some 't' ('target')
+        concept identifiers, categories and/or keywords (to match in the concept name 
+        or description) may also be given, in which case a member of the 't' concept 
+        set should matchthe concept opposite an 's' concept in the statement.  
+        That is, if the 's' concept matches a subject, then the 't' concept 
+        should match the object of a given statement (or vice versa).
       tags:
         - statements
       parameters:
         - name: s
           in: query
           description: >
-            an array set of [CURIE-encoded](https://www.w3.org/TR/curie/)
-            identifiers of  'source' ('start') concepts possibly known to the beacon.
-            Unknown CURIES should simply be ignored (silent match failure).
-          required: true
+            An (optional) array set of
+            [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of 
+            'source' ('start') concepts possibly known to the beacon. Unknown
+            CURIES should simply be ignored (silent match failure).
+          required: false
+          type: array
+          items:
+            type: string
+        - name: s_keywords
+          in: query
+          description: >-
+            An (optional) array of keywords or substrings against which to filter 
+            'source' concept names and synonyms
+          required: false
+          type: array
+          items:
+            type: string
+        - name: s_categories
+          in: query
+          description: >
+            An (optional) array set of 'source' concept categories (specified as 
+            Biolink name labels codes gene, pathway, etc.) to which to constrain
+            concepts matched by the main keyword search (see [Biolink
+            Model](https://biolink.github.io/biolink-model) for the full list of
+            codes)
+          required: false
           type: array
           items:
             type: string
         - name: edge_label
           in: query
           description: >
-            (Optional) A predicate edge label against which to constrain the
+            (Optional) predicate edge label against which to constrain the
             search for statements ('edges') associated with the given query seed
             concept. The predicate edge_names for this parameter should be as
             published by the /predicates API endpoint and must be taken from the
@@ -603,8 +633,8 @@ paths:
         - name: relation
           in: query
           description: >
-            (Optional) A predicate relation against which to constrain the
-            search for statements ('edges') associated with the given query seed
+            (Optional) predicate relation against which to constrain the search
+            for statements ('edges') associated with the given query seed
             concept. The predicate relations for this parameter should be as
             published by the /predicates API endpoint and the preferred format
             is a CURIE  where one exists, but strings/labels acceptable. This
@@ -617,35 +647,43 @@ paths:
         - name: t
           in: query
           description: >
-            (optional) an array set of
+            An (optional) array set of
             [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
-            'target' ('opposite' or 'end') concepts possibly known to the beacon.  Unknown CURIEs
-            should simply be ignored (silent match failure).
+            'target' ('opposite' or 'end') concepts possibly known to the
+            beacon. Unknown CURIEs should simply be ignored (silent match
+            failure).
           required: false
           type: array
           items:
             type: string
-        - name: keywords
+        - name: t_keywords
           in: query
           description: >-
-            an array of keywords or substrings against which to filter concept
-            names and synonyms
+            An (optional) array of keywords or substrings against which to filter
+            'target' concept names and synonyms
           required: false
           type: array
           items:
             type: string
-        - name: categories
+        - name: t_categories
           in: query
           description: >
-            an array set of concept categories (specified as Biolink name labels
-            codes gene, pathway, etc.) to which to constrain concepts matched by
-            the main keyword search (see [Biolink
+            An (optional) array set of 'target' concept categories (specified as 
+            Biolink name labels codes gene, pathway, etc.) to which to constrain
+            concepts matched by the main keyword search (see [Biolink
             Model](https://biolink.github.io/biolink-model) for the full list of
             codes)
           required: false
           type: array
           items:
             type: string
+        - name: offset
+          in: query
+          description: >
+            offset (cursor position) to next batch of statements of amount
+            'size' to return.
+          required: false
+          type: integer
         - name: size
           in: query
           description: >
@@ -761,7 +799,7 @@ paths:
                   name: Neonatal diabetes mellitus
                   categories:
                     - disease
-  '/statements/{statementId}':
+  '/statements/{statement_id}':
     get:
       description: >
         Retrieves a details relating to a specified concept-relationship
@@ -771,7 +809,7 @@ paths:
       tags:
         - statements
       parameters:
-        - name: statementId
+        - name: statement_id
           in: path
           description: >
             (url-encoded) CURIE identifier of the concept-relationship statement
@@ -787,12 +825,19 @@ paths:
           type: array
           items:
             type: string
+        - name: offset
+          in: query
+          description: >
+            offset (cursor position) to next batch of annotation entries of
+            amount 'size' to return.
+          required: false
+          type: integer
         - name: size
           in: query
           description: >
-            maximum number of concept entries requested by the client; if this 
-            argument is omitted, then the query is expected to returned all  the
-            available data for the query
+            maximum number of evidence citation entries requested by the client;
+            if this  argument is omitted, then the query is expected to returned
+            all of the available annotation for this statement
           required: false
           type: integer
       operationId: getStatementDetails
@@ -846,6 +891,9 @@ paths:
                     Statement edge properties returned as tag = value pairs
               evidence:
                 type: array
+                description: >
+                  Array of research citations serving as supporting evidence 
+                  for this knowledge statement.
                 items:
                   title: BeaconStatementCitation
                   type: object
