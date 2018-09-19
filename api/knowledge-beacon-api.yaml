@@ -583,7 +583,7 @@ paths:
           in: query
           description: >
             an array set of [CURIE-encoded](https://www.w3.org/TR/curie/)
-            identifiers of  'source' concepts possibly known to the beacon.
+            identifiers of  'source' ('start') concepts possibly known to the beacon.
             Unknown CURIES should simply be ignored (silent match failure).
           required: true
           type: array
@@ -619,7 +619,7 @@ paths:
           description: >
             (optional) an array set of
             [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
-            'target' concepts possibly known to the beacon.  Unknown CURIEs
+            'target' ('opposite' or 'end') concepts possibly known to the beacon.  Unknown CURIEs
             should simply be ignored (silent match failure).
           required: false
           type: array
