@@ -36,6 +36,6 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 * [Biothings Explorer Beacon](http://biothings.io/explorer/). Beacon wrapping the Biothings Ezplorer resource accessing SmartAPI wrapped resources. Beacon deployed at https://kba.ncats.io/beacon/biothings-explorer.
 * [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Prototype beacon deployed at https://kba.ncats.io/beacon/rhea.
 
-Other beacon wrappers (e.g. Wikidata, prototype beacon deployed at http://garbanzo.sulab.org/) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
+Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
 
