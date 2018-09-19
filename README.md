@@ -31,7 +31,7 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 * [HMBD Database](http://www.hmdb.ca). Human Metabolome database wrapped as a beacon ([beacon by Vlado Dancik, Broad](https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon)). Beacon deployed at https://translator.ncats.io/hmdb-knowledge-beacon.
 * [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. NCATS prototype beacon deployed at https://kba.ncats.io/beacon/ndex.
 * [RTX Knowledge Graph Beacon](). NCATS RTX team implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the NCATS RTX reasoner compiled knowledge graph. Beacon deployed at https://kba.ncats.io/beacon/rtx. 
-* [Biothings Explorer Beacon](http://biothings.io/explorer/). Beacon wrapping the Biothings Ezplorer resource accessing SmartAPI published resources. Beacon deployed at https://kba.ncats.io/beacon/biothings-explorer.
+* [Biothings Explorer Beacon](http://biothings.io/explorer/). Beacon wrapping the Biothings Explorer resource accessing SmartAPI published resources. Beacon deployed at https://kba.ncats.io/beacon/biothings-explorer.
 * [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Prototype beacon deployed at https://kba.ncats.io/beacon/rhea.
 
 Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
