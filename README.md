@@ -28,10 +28,13 @@ The pool of known beacons is currently documented in a **[master YAML-formatted 
 
 Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
 
-* [Reference Beacon](https://github.com/NCATS-Tangerine/reference-beacon): a Java Spring Boot KBAPI accessing a Neo4j server containing [Semantic Medline Database](https://skr3.nlm.nih.gov/SemMedDB/) concepts and relationships text-mined from PubMed abstracts. NCATS prototype beacon deployed at https://rkb.ncats.io.
-* [Monarch Database "Biolink" Beacon](https://github.com/NCATS-Tangerine/biolink-beacon): a Python KSAPI accessing the Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). NCATS prototype beacon deployed at https://biolink-kb.ncats.io/.
-* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. NCATS prototype beacon deployed at https://ndex-kb.ncats.io.
-* [StringDb Beacon](https://github.com/NCATS-Tangerine/stringdb-beacon) : a Python wrapper for the [STRING Protein-Protein interactions database](https://string-db.org/).
+* [Semantic Medline Database Beacon](https://github.com/NCATS-Tangerine/reference-beacon): a Java Spring Boot KBAPI accessing a Neo4j server containing [Semantic Medline Database](https://skr3.nlm.nih.gov/SemMedDB/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/semmeddb.
+* [Monarch Database "Biolink" Beacon](https://github.com/NCATS-Tangerine/biolink-beacon): a Python KBAPI accessing the Monarch Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). Beacon deployed at https://kba.ncats.io/beacon/biolink.
+* [HMBD Database](http://www.hmdb.ca), Human Metabolome database wrapped as a beacon (beacon by Vlado Dancik, Broad). Beacon deployed at https://translator.ncats.io/.
+* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. NCATS prototype beacon deployed at https://kba.ncats.io/beacon/ndex.
+* [RTX Knowledge Graph Beacon](http://www.hmdb.ca/). NCATS RTX team implementation of the Translator Knowledge Graph. Beacon deployed at https://kba.ncats.io/beacon/rtx. 
+* [Biothings Explorer Beacon](http://biothings.io/explorer/). Beacon wrapping the Biothings Ezplorer resource accessing SmartAPI wrapped resources. Beacon deployed at https://kba.ncats.io/beacon/biothings-explorer.
+* [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Prototype beacon deployed at https://kba.ncats.io/beacon/rhea.
 
 Other beacon wrappers (e.g. Wikidata, prototype beacon deployed at http://garbanzo.sulab.org/) are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
 
