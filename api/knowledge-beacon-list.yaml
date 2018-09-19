@@ -19,7 +19,7 @@ beacons:
   wraps: internal clone of Translator Knowledge Graph of RTX
   repo: https://github.com/NCATS-Tangerine/tkg-beacon
   contact: Richard Bruskiewich
-  status: OFFLINE # deployed
+  status: deployed
 - url: https://kba.ncats.io/beacon/ndex
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
