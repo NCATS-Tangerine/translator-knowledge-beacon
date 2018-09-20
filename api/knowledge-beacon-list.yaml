@@ -19,7 +19,7 @@ beacons:
   wraps: internal clone of Translator Knowledge Graph of RTX
   repo: https://github.com/NCATS-Tangerine/tkg-beacon
   contact: Richard Bruskiewich
-  status: OFFLINE # deployed
+  status: deployed
 - url: https://kba.ncats.io/beacon/ndex
   name: nDex Bio
   description: Knowledge Beacon wrapper for ndexbio.org
@@ -53,7 +53,7 @@ beacons:
   name: Wikidata
   description: Wikidata SPARQL
   wraps: http://query.wikidata.org/sparql
-  repo: https://github.com/stuppie/garbanzo
+  repo: https://github.com/SuLab/garbanzo
   contact: stuppie
   status: DEPRECATED # deployed
 - url: http://52.14.164.71:8090/api
