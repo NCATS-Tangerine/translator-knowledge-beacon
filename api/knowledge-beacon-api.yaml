@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Translator Knowledge Beacon API
-  version: 1.2.0
+  version: 1.3.0
   contact:
     url: 'http://starinformatics.com'
     email: richard@starinformatics.com
@@ -11,8 +11,6 @@ info:
   license:
     name: MIT License
     url: 'http://opensource.org/licenses/MIT'
-host: kba.ncats.io
-basePath: /beacon/semmeddb
 schemes:
   - https
 produces:
@@ -31,9 +29,9 @@ paths:
         Get a list of concept categories and number of their concept instances
         documented by the knowledge source. These types should be mapped onto
         the Translator-endorsed Biolink Model concept type classes with local
-        types, explicitly added as mappings to the Biolink Model YAML file. A 
+        types, explicitly added as mappings to the Biolink Model YAML file. A
         frequency of -1 indicates the category can exist, but the count is
-        unknown. 
+        unknown.
       tags:
         - metadata
       operationId: getConceptCategories
@@ -45,28 +43,12 @@ paths:
               title: BeaconConceptCategory
               type: object
               properties:
-                id:
-                  type: string
-                  description: the CURIE of the concept category
-                uri:
-                  type: string
-                  description: >-
-                    The category URI which should generally resolves to  the
-                    full semantic description of the category
                 category:
                   type: string
                   description: 'human readable name ("rdfs:label")'
-                local_id:
-                  type: string
-                  description: the locally designated CURIE of the concept category
-                local_uri:
-                  type: string
-                  description: >-
-                    This locally designated category URI should generally 
-                    resolve to the full semantic description of the category
                 local_category:
                   type: string
-                  description: 'human readable local semantic type name ("rdfs:label")'
+                  description: the locally designated CURIE of the concept category
                 description:
                   type: string
                   description: human readable name definition of the category
@@ -79,14 +61,11 @@ paths:
             Successful response with categories and frequency returned
           examples:
             application/json:
-              - id: 'biolink:CellularComponent'
-                uri: 'http://bioentity.io/vocab/CellularComponent'
+              - uri: 'http://bioentity.io/vocab/CellularComponent'
                 category: cellular component
-                local_id: 'GO:0005575'
-                local_uri: 'http://amigo.geneontology.org/amigo/term/GO:0005575'
-                local_category: cellular_component
+                local_category: 'GO:0005575'
                 description: |
-                  The part of a cell, extracellular environment or virus in 
+                  The part of a cell, extracellular environment or virus in
                   which a gene product is located.
                 frequency: 12355
   /predicates:
@@ -105,15 +84,6 @@ paths:
               title: BeaconPredicate
               type: object
               properties:
-                id:
-                  type: string
-                  description: |
-                    CURIE-encoded identifier of predicate relation
-                uri:
-                  type: string
-                  description: >-
-                    The predicate URI which should generally resolves to the 
-                    full semantic description of the predicate relation
                 edge_label:
                   type: string
                   description: >
@@ -130,23 +100,6 @@ paths:
                     specific relation in cases where the source provides more
                     granularity  (e.g. edge_label: molecularly_interacts_with,
                     relation: RO:0002447)
-                local_id:
-                  type: string
-                  description: >
-                    CURIE-encoded identifier of the locally defined predicate
-                    relation. Such terms should be formally documented as
-                    mappings in the [Biolink
-                    Model](https://biolink.github.io/biolink-model)
-                local_uri:
-                  type: string
-                  description: >-
-                    The predicate URI which should generally resolves  to the
-                    local predicate relation
-                local_relation:
-                  type: string
-                  description: >
-                    human readable name of the locally defined predicate
-                    relation
                 description:
                   type: string
                   description: >
@@ -162,15 +115,10 @@ paths:
             indexed by beacons which support the relation
           examples:
             application/json:
-              - id: 'biolink:has_phenotype'
-                uri: 'http://bioentity.io/vocab/has_phenotype'
-                edge_label: has_phenotype
+              - edge_label: has_phenotype
                 relation: 'RO:001279'
-                local_id: 'SIO:000983'
-                local_uri: 'http://semanticscience.org/resource/SIO_001279'
-                local_relation: has phenotype
                 description: |
-                  has phenotype is a relation between an object and an 
+                  has phenotype is a relation between an object and an
                   observable/measurable characteristic
                 frequency: 1234
   /kmap:
@@ -196,7 +144,7 @@ paths:
                     category:
                       type: string
                       description: >
-                        the concept semantic type of a statement subject. This 
+                        the concept semantic type of a statement subject. This
                         should be specified as Biolink concept semantic type
                         names like gene, pathway, etc. (see [Biolink
                         Model](https://biolink.github.io/biolink-model) for the
@@ -223,7 +171,7 @@ paths:
                     relation:
                       type: string
                       description: >
-                        Human readable name of a 'maximal' Biolink Model or 
+                        Human readable name of a 'maximal' Biolink Model or
                         beacon-specific (or Reasoner-specific) predicate
                         relationship name.
                     negated:
@@ -238,7 +186,7 @@ paths:
                     category:
                       type: string
                       description: >
-                        the concept semantic type of a statement object. This 
+                        the concept semantic type of a statement object. This
 
                         should be specified as Biolink concept semantic type
                         names
@@ -291,15 +239,15 @@ paths:
   /concepts:
     get:
       description: |
-        Retrieves a list of whose concept in the 
-        beacon knowledge base with names and/or synonyms 
-        matching a set of keywords or substrings. 
-        The results returned should generally 
-        be returned in order of the quality of the match, 
-        that is, the highest ranked concepts should exactly 
-        match the most keywords, in the same order as the 
-        keywords were given. Lower quality hits with fewer 
-        keyword matches or out-of-order keyword matches, 
+        Retrieves a list of whose concept in the
+        beacon knowledge base with names and/or synonyms
+        matching a set of keywords or substrings.
+        The results returned should generally
+        be returned in order of the quality of the match,
+        that is, the highest ranked concepts should exactly
+        match the most keywords, in the same order as the
+        keywords were given. Lower quality hits with fewer
+        keyword matches or out-of-order keyword matches,
         should be returned lower in the list.
       tags:
         - concepts
@@ -327,6 +275,7 @@ paths:
             type: string
         - name: offset
           in: query
+          min: 0
           description: >
             offset (cursor position) to next batch of statements of amount
             'size' to return.
@@ -334,8 +283,9 @@ paths:
           type: integer
         - name: size
           in: query
+          min: 0
           description: >
-            maximum number of concept entries requested by the client; if this 
+            maximum number of concept entries requested by the client; if this
             argument is omitted, then the query is expected to returned all the
             available data for the query
           required: false
@@ -465,7 +415,7 @@ paths:
                       description: |
                         property value
                   description: |
-                    Any other metadata returned by the beacon as tag = value 
+                    Any other metadata returned by the beacon as tag = value
           description: |
             Successful response with concept details returned
           examples:
@@ -510,10 +460,10 @@ paths:
         retrieves the list of [CURIE](https://www.w3.org/TR/curie/) identifiers
         of additional concepts that are deemed by the given knowledge source to
         be exact matches to one or more of the input concepts **plus** whichever
-        concept identifiers from the input list were specifically matched to 
+        concept identifiers from the input list were specifically matched to
         these additional concepts, thus giving the whole known set of equivalent
-        concepts known to this particular knowledge source.  If an empty set is 
-        returned, the it can be assumed that the given knowledge source does 
+        concepts known to this particular knowledge source.  If an empty set is
+        returned, the it can be assumed that the given knowledge source does
         not know of any new equivalent concepts matching the input set. The
         caller of this endpoint can then decide whether or not to treat  its
         input identifiers as its own equivalent set.
@@ -523,7 +473,7 @@ paths:
         - name: c
           in: query
           description: >
-            an array set of [CURIE-encoded](https://www.w3.org/TR/curie/) 
+            an array set of [CURIE-encoded](https://www.w3.org/TR/curie/)
             identifiers of concepts thought to be exactly matching concepts, to
             be used in a search for additional exactly matching concepts
             [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch).
@@ -574,15 +524,15 @@ paths:
   /statements:
     get:
       description: >
-        Given a constrained set of some [CURIE-encoded](https://www.w3.org/TR/curie/) 
-        's' ('source') concept identifiers, categories and/or keywords 
+        Given a constrained set of some [CURIE-encoded](https://www.w3.org/TR/curie/)
+        's' ('source') concept identifiers, categories and/or keywords
         (to match in the concept name or description), retrieves a list of relationship
         statements where either the subject or the object concept matches any of the
         input source concepts provided.  Optionally, a set of some 't' ('target')
-        concept identifiers, categories and/or keywords (to match in the concept name 
-        or description) may also be given, in which case a member of the 't' concept 
-        set should matchthe concept opposite an 's' concept in the statement.  
-        That is, if the 's' concept matches a subject, then the 't' concept 
+        concept identifiers, categories and/or keywords (to match in the concept name
+        or description) may also be given, in which case a member of the 't' concept
+        set should matchthe concept opposite an 's' concept in the statement.
+        That is, if the 's' concept matches a subject, then the 't' concept
         should match the object of a given statement (or vice versa).
       tags:
         - statements
@@ -591,7 +541,7 @@ paths:
           in: query
           description: >
             An (optional) array set of
-            [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of 
+            [CURIE-encoded](https://www.w3.org/TR/curie/) identifiers of
             'source' ('start') concepts possibly known to the beacon. Unknown
             CURIES should simply be ignored (silent match failure).
           required: false
@@ -601,7 +551,7 @@ paths:
         - name: s_keywords
           in: query
           description: >-
-            An (optional) array of keywords or substrings against which to filter 
+            An (optional) array of keywords or substrings against which to filter
             'source' concept names and synonyms
           required: false
           type: array
@@ -610,7 +560,7 @@ paths:
         - name: s_categories
           in: query
           description: >
-            An (optional) array set of 'source' concept categories (specified as 
+            An (optional) array set of 'source' concept categories (specified as
             Biolink name labels codes gene, pathway, etc.) to which to constrain
             concepts matched by the main keyword search (see [Biolink
             Model](https://biolink.github.io/biolink-model) for the full list of
@@ -639,7 +589,7 @@ paths:
             published by the /predicates API endpoint and the preferred format
             is a CURIE  where one exists, but strings/labels acceptable. This
             relation may be equivalent to the edge_label (e.g. edge_label:
-            has_phenotype, relation: RO:0002200), or a more specific relation 
+            has_phenotype, relation: RO:0002200), or a more specific relation
             in cases where the source provides more granularity (e.g.
             edge_label: molecularly_interacts_with, relation: RO:0002447)
           required: false
@@ -668,7 +618,7 @@ paths:
         - name: t_categories
           in: query
           description: >
-            An (optional) array set of 'target' concept categories (specified as 
+            An (optional) array set of 'target' concept categories (specified as
             Biolink name labels codes gene, pathway, etc.) to which to constrain
             concepts matched by the main keyword search (see [Biolink
             Model](https://biolink.github.io/biolink-model) for the full list of
@@ -679,6 +629,7 @@ paths:
             type: string
         - name: offset
           in: query
+          min: 0
           description: >
             offset (cursor position) to next batch of statements of amount
             'size' to return.
@@ -686,8 +637,9 @@ paths:
           type: integer
         - name: size
           in: query
+          min: 0
           description: >
-            maximum number of concept entries requested by the client; if this 
+            maximum number of concept entries requested by the client; if this
             argument is omitted, then the query is expected to returned all  the
             available data for the query
           required: false
@@ -757,7 +709,7 @@ paths:
                     negated:
                       type: boolean
                       description: >
-                        (Optional) a boolean that if set to true, indicates the 
+                        (Optional) a boolean that if set to true, indicates the
                         edge statement is negated i.e. is not true
                 object:
                   title: BeaconStatementObject
@@ -827,6 +779,7 @@ paths:
             type: string
         - name: offset
           in: query
+          min: 0
           description: >
             offset (cursor position) to next batch of annotation entries of
             amount 'size' to return.
@@ -834,6 +787,7 @@ paths:
           type: integer
         - name: size
           in: query
+          min: 0
           description: >
             maximum number of evidence citation entries requested by the client;
             if this  argument is omitted, then the query is expected to returned
@@ -861,7 +815,7 @@ paths:
               provided_by:
                 type: string
                 description: >
-                  A CURIE prefix, e.g. Pharos, MGI, Monarch. The group that 
+                  A CURIE prefix, e.g. Pharos, MGI, Monarch. The group that
                   curated/asserted the statement made in an edge.
               qualifiers:
                 type: array
@@ -892,7 +846,7 @@ paths:
               evidence:
                 type: array
                 description: >
-                  Array of research citations serving as supporting evidence 
+                  Array of research citations serving as supporting evidence
                   for this knowledge statement.
                 items:
                   title: BeaconStatementCitation

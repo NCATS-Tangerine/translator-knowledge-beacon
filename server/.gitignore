@@ -1,9 +1,0 @@
-build/
-target/
-src/
-.swagger-codegen-ignore
-/README.md
-/pom.xml
-/.settings/
-/.classpath
-/.project

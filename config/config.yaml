@@ -1,0 +1,23 @@
+################################################################################
+# This yaml file will be loaded as a python dictionary and once the root package
+# is installed these properties can be accessed in the following way:
+#
+#     import beacon_controller
+#     beacon_controller.config['port']
+#
+################################################################################
+
+# By default we will use "tornado" for production. Alternatively "flask" can be
+# used for the default non-concurrent flask server can be used for debugging.
+# Or you can install and use another.
+server: tornado
+
+basepath: /api/
+
+title: Biothings Explorer Translator Knowledge Beacon API
+
+port: 8080
+
+redirect_404: True
+
+include_nulls: True
