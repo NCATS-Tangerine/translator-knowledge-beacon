@@ -43,8 +43,7 @@ paths:
               $ref: "#/definitions/BeaconConceptCategory"
           examples:
             application/json:
-            - uri: "http://bioentity.io/vocab/CellularComponent"
-              category: "cellular component"
+            - category: "cellular component"
               local_category: "GO:0005575"
               description: "The part of a cell, extracellular environment or virus\
                 \ in\nwhich a gene product is located.\n"

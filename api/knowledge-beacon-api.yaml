@@ -61,8 +61,7 @@ paths:
             Successful response with categories and frequency returned
           examples:
             application/json:
-              - uri: 'http://bioentity.io/vocab/CellularComponent'
-                category: cellular component
+              - category: cellular component
                 local_category: 'GO:0005575'
                 description: |
                   The part of a cell, extracellular environment or virus in
