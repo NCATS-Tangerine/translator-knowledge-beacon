@@ -33,7 +33,6 @@ def get_concepts(keywords=None, categories=None, offset=None, size=None):  # noq
 
     :rtype: List[BeaconConcept]
     """
-    return [category in blm.schema().classes for category in categories]
     return 'do some magic!'
 
 
