@@ -710,6 +710,37 @@ paths:
                       description: >
                         (Optional) a boolean that if set to true, indicates the
                         edge statement is negated i.e. is not true
+                    qualification:
+                      title: BeaconStatementPredicateQualification
+                      type: object
+                      required: false
+                      properties:
+                        description:
+                          type: string
+                          enum: [inferred, tentitive]
+                          description: >
+                            Either whether we have drawn a failable inference, or the knowledge
+                            source is tentitively reporting the given statement.
+                        explanation:
+                          type: string
+                          description: >
+                            If the qualification is inferred then a detailed explanation of the
+                            assumptions that have gone into our inference, and why this is a good
+                            conclusion to have drawn. If the qualification is tentitive, then
+                            an explanation of the confidence the knowledge source expresses in
+                            the given statement.
+                        unqualified_edge_label:
+                          type: string
+                          description: >
+                            A more general edge label that the given edge label inherits from
+                            that the user can take this statement to entail even if they don't
+                            trust the qualification. For example, if we state that one thing
+                            increases the abundance of another, but qualify that it might
+                            decrease abundance instead, we could say unqualifiedly that the
+                            one affects the abundance of the other. We can thus be confident
+                            that the one affects the abundance of the other, even if we
+                            cannot be confident that the one increases the abundance of the
+                            other.
                 object:
                   title: BeaconStatementObject
                   type: object
@@ -816,13 +847,37 @@ paths:
                 description: >
                   A CURIE prefix, e.g. Pharos, MGI, Monarch. The group that
                   curated/asserted the statement made in an edge.
-              qualifiers:
-                type: array
-                description: >
-                  (Optional) terms representing qualifiers that modify or
-                  qualify the meaning of the statement made in an edge.
-                items:
-                  type: string
+              qualification:
+                      title: BeaconStatementPredicateQualification
+                      type: object
+                      required: false
+                      properties:
+                        description:
+                          type: string
+                          enum: [inferred, tentitive]
+                          description: >
+                            Either whether we have drawn a failable inference, or the knowledge
+                            source is tentitively reporting the given statement.
+                        explanation:
+                          type: string
+                          description: >
+                            If the qualification is inferred then a detailed explanation of the
+                            assumptions that have gone into our inference, and why this is a good
+                            conclusion to have drawn. If the qualification is tentitive, then
+                            an explanation of the confidence the knowledge source expresses in
+                            the given statement.
+                        unqualified_edge_label:
+                          type: string
+                          description: >
+                            A more general edge label that the given edge label inherits from
+                            that the user can take this statement to entail even if they don't
+                            trust the qualification. For example, if we state that one thing
+                            increases the abundance of another, but qualify that it might
+                            decrease abundance instead, we could say unqualifiedly that the
+                            one affects the abundance of the other. We can thus be confident
+                            that the one affects the abundance of the other, even if we
+                            cannot be confident that the one increases the abundance of the
+                            other.
               annotation:
                 type: array
                 description: >
