@@ -35,7 +35,3 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 * [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Prototype beacon deployed at https://kba.ncats.io/beacon/rhea.
 
 Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
-
-# Knowledge Clients
-
-A simple web application client "Translator Knowledge.Bio" for visually browsing Knowledge Beacon Aggregator data is implemented and running at **http://tkbio.ncats.io.**, the code for which is available **[here](https://github.com/NCATS-Tangerine/tkbio)**. 
