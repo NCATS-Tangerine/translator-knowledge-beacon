@@ -26,12 +26,12 @@ The pool of known beacons is currently documented in a **[master YAML-formatted 
 
 Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
 
-* [Semantic Medline Database Beacon](now uses code from https://github.com/NCATS-Tangerine/tkg-beacon). Implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the [Semantic Medline Database](https://skr3.nlm.nih.gov/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/rkb.(note, this beacon may soon be reconfigured to resolved as https://kba.ncats.io/beacon/semmeddb).
+* [Semantic Medline Database Beacon](now uses code from https://github.com/NCATS-Tangerine/tkg-beacon). Implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the [Semantic Medline Database](https://skr3.nlm.nih.gov/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/semmedb.
 * [Monarch Database "Biolink" Beacon](now uses code from https://github.com/NCATS-Tangerine/tkg-beacon): Implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the Monarch Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). Beacon deployed at https://kba.ncats.io/beacon/biolink.
-* [HMDB](http://www.hmdb.ca). Human Metabolome Database wrapped as a beacon ([beacon by Vlado Dancik, Broad](https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon)). Beacon deployed at https://translator.ncats.io/hmdb-knowledge-beacon.
-* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. NCATS prototype beacon deployed at https://kba.ncats.io/beacon/ndex.
-* [RTX Knowledge Graph Beacon](). NCATS RTX team implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the NCATS RTX reasoner compiled knowledge graph. Beacon deployed at https://kba.ncats.io/beacon/rtx. 
-* [Biothings Explorer Beacon](http://biothings.io/explorer/). Beacon wrapping the Biothings Explorer resource accessing SmartAPI published resources. Beacon deployed at https://kba.ncats.io/beacon/biothings-explorer.
-* [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Prototype beacon deployed at https://kba.ncats.io/beacon/rhea.
+* [HMDB](http://www.hmdb.ca). Human Metabolome Database wrapped as a beacon ([beacon by Vlado Dancik, Broad](https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon)). Beacon deployed at https://kba.ncats.io/beacon/hmdb.
+* [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Beacon deployed at https://kba.ncats.io/beacon/rhea.
+* [SMPDB Beacon](http://smpdb.ca). Small Molecular Pathways database. Beacon deployed at https://kba.ncats.io/beacon/smpdb.
+* [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. Beacon deployed at https://kba.ncats.io/beacon/ndex.
+
 
 Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/develop/api/knowledge-beacon-list.yaml)).
