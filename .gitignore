@@ -1,13 +1,2 @@
-/build/
-/.settings/
-/.gradle/
 /bin/
-/log/
-/logs/
-/target/
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-.project
-.classpath
+/.project
