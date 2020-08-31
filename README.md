@@ -35,3 +35,10 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 
 
 Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)).
+
+##Beacon Validation##
+
+A [Knowledge Beacon Validator](https://github.com/NCATS-Tangerine/beacon-validator) was developed to check Beacon function.
+
+##Beacon Clients##
+
