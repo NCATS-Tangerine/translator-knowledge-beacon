@@ -26,8 +26,8 @@ The pool of known beacons is currently documented in a **[master YAML-formatted 
 
 Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
 
-* [Semantic Medline Database Beacon](now uses code from https://github.com/NCATS-Tangerine/tkg-beacon). Implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the [Semantic Medline Database](https://skr3.nlm.nih.gov/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/semmedb.
-* [Monarch Database "Biolink" Beacon](now uses code from https://github.com/NCATS-Tangerine/tkg-beacon): Implementation of the [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the Monarch Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). Beacon deployed at https://kba.ncats.io/beacon/biolink.
+* **Semantic Medline Database:** Implementation of a [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the June 2019 release of the [Semantic Medline Database](https://skr3.nlm.nih.gov/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/semmedb.
+* **Monarch Database "Biolink" Beacon:** Implementation of a [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the Monarch Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). Beacon deployed at https://kba.ncats.io/beacon/biolink.
 * [HMDB](http://www.hmdb.ca). Human Metabolome Database wrapped as a beacon ([beacon by Vlado Dancik, Broad](https://github.com/NCATS-Tangerine/HMDB-knowledge-beacon)). Beacon deployed at https://kba.ncats.io/beacon/hmdb.
 * [Rhea Beacon](https://www.rhea-db.org/). Rhea biochemical reactions database. Beacon deployed at https://kba.ncats.io/beacon/rhea.
 * [SMPDB Beacon](http://smpdb.ca). Small Molecular Pathways database. Beacon deployed at https://kba.ncats.io/beacon/smpdb.
