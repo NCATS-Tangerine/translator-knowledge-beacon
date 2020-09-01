@@ -22,9 +22,7 @@ The **KBAPI** also provides endpoints (*/exactmatches*) to report CURIE identifi
 
 # Knowledge Beacons in Action!
 
-The pool of known beacons is currently documented in a **[master YAML-formatted catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)**. REST clients may also access aggregate data via the API from all these registered beacons, through a [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator), a public version for which is hosted online at **https://kba.ncats.io**. 
-
-Some of these KBAPI wrappers are locally published in other repositories within the NCATS-Tangerine organization, as follows:
+The pool of known active and proposed beacons is enumerated in a **[master YAML-formatted catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)**. The significant currently active ones are as follows:
 
 * **Semantic Medline Database:** Implementation of a [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the June 2019 release of the [Semantic Medline Database](https://skr3.nlm.nih.gov/) concepts and relationships text-mined from PubMed abstracts. Beacon deployed at https://kba.ncats.io/beacon/semmedb.
 * **Monarch Database "Biolink" Beacon:** Implementation of a [Translator Knowledge Graph Beacon](https://github.com/NCATS-Tangerine/tkg-beacon) wrapping the Monarch Biolink API of the [Monarch Initiative Biomedical Resource](https://monarchinitiative.org/). Beacon deployed at https://kba.ncats.io/beacon/biolink.
@@ -33,15 +31,16 @@ Some of these KBAPI wrappers are locally published in other repositories within 
 * [SMPDB Beacon](http://smpdb.ca). Small Molecular Pathways database. Beacon deployed at https://kba.ncats.io/beacon/smpdb.
 * [nDex Beacon](https://github.com/NCATS-Tangerine/ndex-beacon): a Java wrapper accessing the [nDex biomedical graph archive](http://www.home.ndexbio.org/index/) biomedical network data exchange archive. Beacon deployed at https://kba.ncats.io/beacon/ndex.
 
+Other beacon wrappers may be hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)).
 
-Other beacon wrappers are hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)).
+# Knowledge Beacon Aggregator #
 
-## Beacon Validation ##
+REST clients may also access aggregate data obtained from a pool of Knowledge Beacons through an instance of the [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator), a public version for which is hosted online at **https://kba.ncats.io**. 
+
+# Beacon Validation #
 
 A [Knowledge Beacon Validator](https://github.com/NCATS-Tangerine/beacon-validator) was developed to check Beacon function.
 
-## Knowledge Beacon Clients ##
+# Knowledge Beacon Clients #
 
-A basic [command line client (and associated Python client access library)](https://github.com/NCATS-Tangerine/beacon-aggregator-client) was developed for simple access to the [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator). 
-
-
+A basic [command line client (and associated Python client access library)](https://github.com/NCATS-Tangerine/beacon-aggregator-client) was developed for simple access to the [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator). The documentation for the client calls of the API are documented in relative detail [here](https://github.com/NCATS-Tangerine/beacon-aggregator-client/blob/master/README.md#documentation-for-api-endpoints).
