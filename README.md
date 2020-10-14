@@ -10,7 +10,21 @@ Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/transla
 
 # Knowledge Beacons Workflow
 
-The **KBAPI** is primarily designed to support a simple knowledge discovery workflow, as illustrated in following diagram:
+The **KBAPI** is primarily designed to support a simple knowledge discovery workflow. The endpoint are generally summarized in the following table:
+
+Section | Endpoint |Description 
+ --- | --- | --- 
+Metadata | `/categories` | List of available concept categories
+| | `/predicates` | List of available predicates
+| | `/kmap` | Knowledge map of the beacon
+Concepts | `/concepts` | Query concepts by keywords
+| | `/concepts/{conceptId}` | Details about concept
+| | `/exactmatches` | Retrieve equivalent concept identifiers
+Statements | `/statements` | Query statements by concept id
+| | `/statements/{statementId}` | Details about statements
+
+
+The workflow captured by the **KBAPI** is generally as illustrated in the following diagram:
 
 ![Knowledge Beacon Application Programming Interface](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/docs/KBAPI_Workflow.png "Knowledge Beacon Workflow")
 
