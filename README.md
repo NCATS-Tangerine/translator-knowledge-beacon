@@ -47,6 +47,154 @@ The pool of known active and proposed beacons is enumerated in a **[master YAML-
 
 Other beacon wrappers may be hosted in other repositories elsewhere (see the [catalog of beacons](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/blob/master/api/knowledge-beacon-list.yaml)).
 
+# Sample Usage of the API
+
+A concept by keywords search on the Semantic Medline Database Knowledge Beacon Endpoint:
+
+```
+https://kba.ncats.io/beacon/semmeddb/concepts?keywords=hyperhomocysteinemia
+```
+gives the following result:
+
+```json
+[
+  {
+    "categories": [
+      "disease or phenotypic feature"
+    ],
+    "description": null,
+    "id": "UMLS:C0598608",
+    "name": "Hyperhomocysteinemia"
+  }
+]
+```
+
+Taking the concept id (with additional constraints) may be used to search for knowledge statements that answer questions like "what could treat Hyperhomocysteinemia?"
+
+```
+https://kba.ncats.io/beacon/semmeddb/statements?s_keywords=vitamin&edge_label=treats&t=UMLS%3AC0598608&offset=1&size=5
+```
+
+gives the following result:
+
+```json
+[
+  {
+    "id": "UMLS:C0301532:treats:UMLS:C0598608",
+    "object": {
+      "categories": [
+        "disease or phenotypic feature"
+      ],
+      "id": "UMLS:C0598608",
+      "name": "Hyperhomocysteinemia"
+    },
+    "predicate": {
+      "edge_label": "treats",
+      "negated": true,
+      "relation": "semmeddb:treats"
+    },
+    "subject": {
+      "categories": [
+        "chemical substance"
+      ],
+      "id": "UMLS:C0301532",
+      "name": "Multivitamin preparation"
+    }
+  },
+  {
+    "id": "UMLS:C0087162:treats:UMLS:C0598608",
+    "object": {
+      "categories": [
+        "disease or phenotypic feature"
+      ],
+      "id": "UMLS:C0598608",
+      "name": "Hyperhomocysteinemia"
+    },
+    "predicate": {
+      "edge_label": "treats",
+      "negated": true,
+      "relation": "semmeddb:treats"
+    },
+    "subject": {
+      "categories": [
+        "chemical substance"
+      ],
+      "id": "UMLS:C0087162",
+      "name": "Vitamin B6"
+    }
+  },
+  {
+    "id": "UMLS:C0042890:treats:UMLS:C0598608",
+    "object": {
+      "categories": [
+        "disease or phenotypic feature"
+      ],
+      "id": "UMLS:C0598608",
+      "name": "Hyperhomocysteinemia"
+    },
+    "predicate": {
+      "edge_label": "treats",
+      "negated": true,
+      "relation": "semmeddb:treats"
+    },
+    "subject": {
+      "categories": [
+        "chemical substance"
+      ],
+      "id": "UMLS:C0042890",
+      "name": "Vitamins"
+    }
+  },
+  {
+    "id": "UMLS:C0042849:treats:UMLS:C0598608",
+    "object": {
+      "categories": [
+        "disease or phenotypic feature"
+      ],
+      "id": "UMLS:C0598608",
+      "name": "Hyperhomocysteinemia"
+    },
+    "predicate": {
+      "edge_label": "treats",
+      "negated": true,
+      "relation": "semmeddb:treats"
+    },
+    "subject": {
+      "categories": [
+        "chemical substance"
+      ],
+      "id": "UMLS:C0042849",
+      "name": "Vitamin B Complex"
+    }
+  },
+  {
+    "id": "UMLS:C0042845:treats:UMLS:C0598608",
+    "object": {
+      "categories": [
+        "disease or phenotypic feature"
+      ],
+      "id": "UMLS:C0598608",
+      "name": "Hyperhomocysteinemia"
+    },
+    "predicate": {
+      "edge_label": "treats",
+      "negated": true,
+      "relation": "semmeddb:treats"
+    },
+    "subject": {
+      "categories": [
+        "chemical substance"
+      ],
+      "id": "UMLS:C0042845",
+      "name": "Vitamin B 12"
+    }
+  }
+]
+```
+
+suggesting that some B vitamins can help treat Hyperhomocysteinemia.
+
+
 # Knowledge Beacon Aggregator #
 
 REST clients may also access aggregate data obtained from a pool of Knowledge Beacons through an instance of the [Knowledge Beacon Aggregator](https://github.com/NCATS-Tangerine/beacon-aggregator), a public version for which is hosted online at **https://kba.ncats.io**. 
