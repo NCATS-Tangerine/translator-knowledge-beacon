@@ -8,6 +8,12 @@ Specifically, this repository holds the OpenAPI ("Swagger") definition of the [*
 
 Check out our [Knowledge Beacon Wiki](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/wiki) for additional documentation on the status of Knowledge Beacon API implementations and some additional notes on how to build your own.
 
+This API was developed as an early research and development during the Feasibility Phase of the [Biomedical Knowledge Translator Consortium ("Translator")](https://ncats.nih.gov/translator), funded by the [National Center for Advancing Translational Sciences ("NCATS")](https://ncats.nih.gov) program of the US National Institutes of Health. In the "Development" phase of Translator, the concept of the Knowledge Beacon API has been supplanted by the [Translator Reasoner Application Programming Interface ("TRAPI")](https://github.com/NCATSTranslator/ReasonerAPI/) although Knowledge Beacons remain hosted online at https://kba.ncats.io as documented in our paper (citation below).
+
+### Citation
+
+Hannestad LM, Dančík V, Godden M, Suen IW, Huellas-Bruskiewicz KC, Good BM, et al. (2021) Knowledge Beacons: Web services for data harvesting of distributed biomedical knowledge. PLoS ONE 16(3): e0231916. https://doi.org/10.1371/journal.pone.0231916
+
 # Knowledge Beacons Workflow
 
 The **KBAPI** is primarily designed to support a simple knowledge discovery workflow. The endpoint are generally summarized in the following table:
